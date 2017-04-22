@@ -1,0 +1,23 @@
+<h2>Help Me Vote</h2>
+<h5>4/21/2017</h5>
+
+<p>For the past few months I have been working on a politics website called <a href="https://www.helpme.vote" target="_blank">Help Me Vote (www.helpme.vote)</a>. The goal of it is to help people make more informed decisions when they vote. I want to show people how closely their legislator's actions align with their beliefs and preferences. I believe that this knowledge will cause many people to change how they vote in future elections.<p>
+
+<h3>Site Contents</h3>
+<p>I am focusing on federal senators and representatives right now because they are some of the most influential decision makers in the country. Not only do they handle bill creation and maintenance, they drive the federal budget that impacts every aspect of society. It is critical that we have legislators who represent the wishes of the majority, not the whims of a minority. Through informed voting, we can force our politicians to align with what we want, limiting the unjust and manipulative practices that currently occur.<p>
+
+<p>The most challenging part of this project is deciding how to show relevant information about each legislator in a clear, unbiased format. I think visualizations do a better job at this than a wall of text. I've created a few interactive charts to show interesting areas. One of my favorite charts shows the legislator's bill vote history based on 'nay' vs 'yea' votes for each major issue. Nearly each legislator has their own unique trend with which issues' bills they vote for and against.</p>
+
+<p>Note that I have yet to determine if a bill vote is actually good or bad for that issue. This is a difficult process, requiring insight and potentially introducing bias. I'm developing a machine learning system to handle this task automatically.</p>
+
+<h3>Infrastructure</h3>
+<p>Help Me Vote is currently running on <a href="https://www.squarespace.com" target="_blank">Squarespace</a>. Squarespace is amazing because they allow you to quickly get up and running with a beautiful, responsive website while handling the infrastructure and security of the site. I wanted to use Squarespace for the complete site, however, the site will require access to an external database which Squarespace doesn't support. I'm developing a new site using Django that should handle all the features I want, but it'll take some time before it's finished.</p>
+
+<p>The new website will have its complete stack in Docker containers running on DigitalOcean servers. I want to also get all the containers working with Kubernetes. This will do a good job of handling scalability and redundancy. The stack right now is pretty normal, containing Django, Postgres, and Nginx. I will be able to add Redis and Celery when the site gets more developed with extra features.<p>
+
+<h3>Getting Involved</h3>
+<p>Since the last election, I have seen more and more people wanting to get involved with politics. This ranges from calling their representatives to attending protests to raising political awareness for others. I think this call to action is extremely important for ensuring the long-term success of our democracy and society. I am getting involved through this project. I believe I can have a much greater impact building this website than attending protests.</p>
+
+<p>I want to alter the root of the problem, not the downstream outcomes.</p>
+
+<p> Questions or comments? <a href="https://joshschertz.com/contact/" target="_blank">Email</a> or <a href="https://twitter.com/joshuaschertz" target="_blank">Tweet</a> me!</p>
