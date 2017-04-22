@@ -1,6 +1,6 @@
 # Josh Schertz Personal Website
 
-This is storing the files for my personal website, [joshschertz.com](joshschertz.com).
+This is storing the files for my personal website, [joshschertz.com](https://www.joshschertz.com).
 
 Currently, the website is using WordPress, thus I don't have HTML files for most pages. However, I am starting to duplicate the pages in HTML.
 
