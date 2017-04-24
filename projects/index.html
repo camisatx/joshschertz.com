@@ -1,0 +1,10 @@
+---
+layout: page
+title: Projects
+---
+
+<ul>
+{% for project in site.data.projects %}
+    <li><a href="{{ project.url | prepend: site.baseurl }}">{{ project.name }}</a> - {{ project.descr | markdownify }}</li>
+{% endfor %}
+</ul>

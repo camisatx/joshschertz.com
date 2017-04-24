@@ -1,0 +1,7 @@
+- name:  Help Me Vote
+  url:   /projects/help-me-vote/
+  descr: Website to help you learn about your legislators and how they act in office.
+
+- name:  pySecMaster
+  url:   https://github.com/camisatx/pySecMaster
+  descr: An automated system to store and maintain financial data.
