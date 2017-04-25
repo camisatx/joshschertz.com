@@ -39,4 +39,3 @@ defaults:
         path: "assets/img"
     values:
         image: true
-  
