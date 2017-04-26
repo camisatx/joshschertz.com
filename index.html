@@ -2,6 +2,28 @@
 layout: default
 ---
 
-<h2>Josh Schertz</h2>
+<h2>Recent posts:</h2>
 
-Homepage
+<div>
+    <ul>
+    {% for post in site.posts limit:5 %}
+        <a href="{{ post.url | prepend: site.baseurl }}">
+        <li>
+            <h4><a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h4>
+            <info>{{ post.date | date: "%b %Y" }}</info>
+            <div>
+                <p>
+                {% if post.description %}
+                {{ post.description | markdownify | strip_html }}
+                {% else %}
+                {{ post.content | strip_html | truncatewords:50 }}
+                {% endif %}
+                <a href="{{ post.url | prepend: site.baseurl }}">more</a>
+                </p>
+            </div>
+        </li>
+    {% endfor %}
+    </ul>
+</div>
+
+<h4><a href="{{ "/blog" | prepend: site.baseurl }}">View more</a></h4>

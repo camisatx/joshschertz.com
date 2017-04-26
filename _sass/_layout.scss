@@ -58,6 +58,11 @@ img {
 time {
 	color: #898989;
 }
+info {
+    display: inline;
+    color: #ddd;
+    white-space: nowrap;
+}
 .container {
 	max-width: $content-width;
 	margin: 0 auto;
