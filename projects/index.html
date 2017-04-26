@@ -3,8 +3,11 @@ layout: page
 title: Projects
 ---
 
-<ul>
+<ul class="posts">
 {% for project in site.data.projects %}
-    <li><a href="{{ project.url | prepend: site.baseurl }}">{{ project.name }}</a> - {{ project.descr | markdownify }}</li>
+    <li>
+        <a href="{{ project.url | prepend: site.baseurl }}">{{ project.name }}</a>
+        <p>{{ project.descr | markdownify }}</p>
+    </li>
 {% endfor %}
 </ul>

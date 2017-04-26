@@ -5,12 +5,11 @@ layout: default
 <h2>Recent posts:</h2>
 
 <div>
-    <ul>
+    <ul class="posts">
     {% for post in site.posts limit:5 %}
-        <a href="{{ post.url | prepend: site.baseurl }}">
         <li>
             <h4><a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h4>
-            <info>{{ post.date | date: "%b %Y" }}</info>
+            <p class="info">{{ post.date | date: "%b %Y" }}</p>
             <div>
                 <p>
                 {% if post.description %}

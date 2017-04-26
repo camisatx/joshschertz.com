@@ -3,13 +3,23 @@ layout: page
 title: Blog
 ---
 
-<ul>
-{% for post in site.posts %}
-    <li>    
-        <h4><a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h4>
-        <p>{{ post.date | date: "%b %-d, %Y" }}</p>
-    </li>
-{% endfor %}
-</ul>
-
-<p>subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
+<div>
+    <ul class="posts">
+    {% for post in site.posts %}
+        <li>    
+            <h4><a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h4>
+            <p class="info">{{ post.date | date: "%b %-d, %Y" }}</p>
+            <div>
+                <p>
+                {% if post.description %}
+                {{ post.description | markdownify | strip_html }}
+                {% else %}
+                {{ post.content | strip_html | truncatewords:50 }}
+                {% endif %}
+                <a href="{{ post.url | prepend: site.baseurl }}">more</a>
+                </p>
+            </div>
+        </li>
+    {% endfor %}
+    </ul>
+</div>

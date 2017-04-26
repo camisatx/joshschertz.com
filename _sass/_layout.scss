@@ -55,12 +55,17 @@ img {
     width: 100%;
     height: auto;
 }
+ul.posts {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
 time {
 	color: #898989;
 }
-info {
+p.info {
     display: inline;
-    color: #ddd;
+    color: #535353;
     white-space: nowrap;
 }
 .container {
