@@ -1,0 +1,28 @@
+---
+layout: post
+title: "Over-Engineering the pySecMaster"
+date: 2016-03-07
+tags: [finance, programming]
+---
+
+<p>I am very happy that I over-engineered the <a href="https://github.com/camisatx/pySecMaster" target="_blank">pySecMaster</a>. What I originally considered a cool feature turned out to have saved me many days of intense methodology redesign. All I had to do was simply by change one variable.</p>
+
+<p>This all started when Ricardo and I were reviewing how we could implement a function for calculating our own adjusted prices to the raw stock prices from the pySecMaster.</p>
+
+<p>For the non-finance people who read this, every stock price period has five standard fields: open, high, low, close and volume. These values represent the respective price level during the time period (second, minute, day, etc.). This is great for viewing the latest stock prices, but things get more complicated when you want to view historical stock prices. Stock distributions (cash dividends, stock dividends and stock splits) change what the absolute stock price would have been during <b>all</b> periods before the distribution date. These <i>adjusted</i> values are called (straight forwardly enough) <b>adjusted open, adjusted high</b> ... you get the idea.</p>
+
+<p>The little part that I overlooked when I originally built the pySecMaster was that these adjustments are not static. The <b>entire</b> adjusted price history is updated for each and every distribution. Whoops!</p>
+
+<p>Over the short term, the differences would be within cents of each other, but over months (and years and decades!), the price difference between an static adjusted close and an updated adjusted close would be substantial. This difference is magnified when using the data to backtest trading strategies. You can imagine the damage that can be done by using wrong historical prices during a backtest whose results you'd use for live trading. Yikes!</p>
+
+<p>So back to this blog's title; the glory of over-engineering a system. I say that because by doing this, I was able to use a system feature to correct for the prices not being updated (instead of having to engineer a more comprehensive solution). Originally, I was concerned with the data source (namely <a href="https://www.quandl.com/" target="_blank">Quandl</a>) providing incorrect price data to the latest prices that they published. Thus, I'd want to be able to replace the stored data within a certain range of the latest date with the latest (and revised) data from Quandl. I could then expect to <i>catch</i> any data corrections that Quandl published within this period[1]. By default, I set this value at 30 days (to update prices over the past month).</p>
+
+<p>To correct for the issue of the adjusted prices not updating, all I had to do was change this update period variable to a very large number (I settled on 30,000 days). By using a large period, I was essentially telling the system to update all prices between the latest date and the date 30,000 days ago (I forgot if this is business days or calendar days...). This forces the system to replace <b>all</b> price values (including OHLC and all adjustments) with the latest values from Quandl.</p>
+
+<p>Whew! That fixed that critical problem. I know it's not the most efficient fix[2], but it was quick to implement and the system is solid enough to handle the extra updates. I think the optimal solution to this would be to manually calculate all price adjustments. In addition to the absolute prices, this would require the dividend history and stock split history. All <a href="https://www.quandl.com/data/WIKI" target="_blank">Quandl WIKI</a> values have this, but any other price data source would have to get these values from a third party. We have the ability to get this data from Yahoo, but I'm not sure we want to open source those extractors. We'll see how things progress over the next few months.</p>
+
+<p>In the end though, both of us were a disappointed that we did not catch this bug sooner, as we've been utilizing this data for many months now. But, at least we did catch it, especially before any hard money was at stake. And the solution was quick. Isn't there a saying that says you are always one step away from disaster? You just have to prepare the for unexpected and stay quick on your feet.</p>
+
+<p>[1]<i>I know that there is a better way to watch for data corrections from Quandl via looking through the latest price updates file they publish.</i></p>
+
+<p>[2]<i>The inefficiency comes from having to download the entire price history from Quandl (before I only downloaded the most recent data), along with having to update a much larger number of periods in the database. But from the testing I've done, neither of these are a substantial problem. Especially since Quandl does not restrict you any more/less by downloading the whole data history versus a small fraction of the history (I think that's weird).</i></p>

@@ -1,0 +1,18 @@
+---
+layout: post
+title: "Risk of Storing Live Data"
+date: 2016-03-18
+tags: [finance, programming]
+---
+
+<p>Storing live data is a risky activity. The largest concern is that once the live event has passed, it is not longer possible to get access to that data. This means that if your data extractor has an issue, or isn't storing data that it should, you are left with a damaged or incomplete database.</p>
+
+<p>I recently became aware of a <a href="https://github.com/camisatx/pySecMaster/issues/8" target="_blank">critical bug</a> with the <a href="https://github.com/camisatx/pySecMaster" target="_blank">pySecMaster's</a> Google finance minute price extractor. This extractor downloads the latest minute data from Google finance. However, only the prior 15 business days are available. Thus, to get a (more) complete minute price database, the extractor must be run every few days. And after about a month, it is no longer possible to get access to those first day's prices.</p>
+
+<p>The problem with the extractor involved the way the time variable was being calculated for each minuter period. In an effort to save bandwidth and hard drive space, Google does not provide the complete time for each minute period in their downloadable data. Instead, they only provide the UNIX time for the first minute period of each day, with each subsequent minute period getting an offset to that first period. This would do no good in the database, thus the extractor has to calculate the time that each minute period represented (by adding the UNIX time to the time interval). This is a simple calculation, but apparently I messed it up when I originally coded it... whoops.</p>
+
+<p>By this point in time, I had seven month's worth of minute data for about 9,000 tickers whose times were all incorrect. So how did I recover from this? After committing the extractor fix (gotta think of the other non-existent users!), I did consider the worst case scenario where I would've had to restart the minute price database from scratch. That would have been really catastrophic, as I would have lost seven months worth of valuable data (roughly 250 million lines of prices).</p>
+
+<p>Fortunately, there was some hope of salvaging the situation. After reverse engineering the incorrect extractor code, I determined a set of rules for adjusting the incorrect times to a likely correct time. Since I did not have any other source for minute data, I could not cross validate the prices to ensure that the times were correct, so I had to make do with educated guesses. For active stocks (with prices every minute during market hours), I'd estimate that these guesses are right 98% of the time. Given the situation, this is good enough for me. We will just have to ensure that any time we use this data for backtests, we understand the risks of incorrect minute times from 7/1/15 through 3/1/16. Going forward though, the extractor will be able to store the correct times.</p>
+
+<p>Overall, this exercise increased my awareness of the difficulty in storing live data. This is especially pertinent as I build code for storing tick data. Due to the quantity and frequency of ticks, I really don't want to mess it up! The best ailment to this concern that I've thought of is to use the stored data as soon as possible. Thus, if there is a issue with the data, it'd come to light sooner. Honestly, anything would work as long as it <b>forces me to actually look at the data</b>.</p>

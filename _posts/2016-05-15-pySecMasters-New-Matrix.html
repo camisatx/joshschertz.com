@@ -1,0 +1,41 @@
+---
+layout: post
+title: pySecMaster's New Matrix
+date: 2016-05-15
+tags: [programming, database]
+---
+
+<p>I am happy to say that I have successfully moved the pySecMaster's database from Sqlite3 to PostgreSQL. The struggle was real, but the end result was well worth it. Most of the issues arose from the 'strict' nature of Postgres, which I discussed in my <a href="{{ site.github.url }}/2016/04/30/Database-Big-League">last post</a>. However, I found this entire process an excellent learning opportunity for discovering how to build truly efficient databases, indices and queries.</p>
+
+<h4>A Whole New Experience</h4>
+
+<p>The new database is a magnitude better than the prior database. The improvements came from three areas:</p>
+
+<ul>
+ 	<li>More specific table parameters</li>
+ 	<li>Optimized queries</li>
+ 	<li>Aligning queries with Postgres' strengths</li>
+</ul>
+
+<p>Changing the database to Postgres required me to alter every table's structure in order for the symbology foreign key to work. In turn, this forced me to update every query in the pySecMaster; quite the undertaking! A benefit of this, however, is that I was able to optimize the <i>brute force</i> queries to ones that efficiently use the table indices.</p>
+
+<p>For example, take a look at the two queries in the picture below. The query on the left is the old structure, and the query on the right is the optimized structure. The old query simply iterates through each row of the table, arranging the relevant rows in descending order by date; a brute force approach. Meanwhile, the optimized query uses a lateral join between the unique symbology table and the daily_prices table's index, which is already sorted in descending order by date. Since the index is already sorted, the optimized query only has to match the first row of the index with the corresponding value in the symbology table.</p>
+
+<figure>
+    <img src="{{ site.github.url }}/assets/img/pySecMaster_daily_prices_56M_updated_date_query_comparison.JPG" alt="Brute force query (left) and optimized query (right); optimized query is over 42 times faster on a 56 million rows table" width="1124" height="651">
+    <figcaption>Brute force query (left) and optimized query (right); optimized query is over 42 times faster on a 56 million rows table</figcaption>
+</figure>
+
+<p>If you look at the bottom right corner of each query window, you can see the time that each query took. The brute force query took nearly 55 seconds to complete, whereas the optimized query only took 1.3 seconds. That's over 42 times faster on a table with 56 million rows of data. You can imagine how crazy things would be on the minute_prices table, where a years worth of prices for about 8,000 tickers would be well over 300 million rows.</p>
+
+<p>When I was using the Sqlite database (which used the brute force style query), performing this query on the minute_prices table took well over 10 minutes to complete. Having just run it on the new Postgres based database took 1.5 seconds on a table with about 210 million rows. Wow! I can comfortably say that this new query does scale.</p>
+
+<h4>Knowing When to Upgrade</h4>
+
+<p>Looking back at the whole process, I know that I should have moved the system over to Postgres much sooner than I did. Sqlite3 is a great, light weight database, but I believe it's ideal for prototyping systems, not for large, production based systems. Especially as I explore ways to move the pySecMaster to a remote host, Sqlite3 had to go.</p>
+
+<p>I think a good take away from this is to build a system flexible enough so that it can adapt as your needs do. In a sense, that's all about good planning. Select the right tools and structure to allow you to easily change as the environment changes.</p>
+
+<p>As Nassim Taleb says [1], stay <a href="https://en.wikipedia.org/wiki/Antifragile" target="_blank"><i>antifragile</i></a>.</p>
+
+<p>[1] I'm not a fan of Taleb's randomness (squirrel...), but I do like the idea of being antifragile.</p>
