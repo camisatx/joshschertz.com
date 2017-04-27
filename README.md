@@ -1,9 +1,9 @@
 # Josh Schertz Personal Website
 
-This is storing the files for my personal website, [joshschertz.com](https://www.joshschertz.com).
+This is my website v2. My first site was in Wordpress, and it was slow and bloated. This new site is built on [Jekyll](https://jekyllrb.com/), which is a static web framework. This means that it is super fast!!
 
-Currently, the website is using WordPress, thus I don't have HTML files for most pages. However, I am starting to duplicate the pages in HTML.
+My website lists my main projects and my amazing blog posts.
 
-All future blog posts I write will be created in HTML and stored here.
+Check it out [here](https://joshschertz.com)
 
-Eventually I want to move my website to a static framework, either Hugo or Jekyll.
+Enjoy!
