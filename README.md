@@ -4,6 +4,6 @@ This is my website v2. My first site was in Wordpress, and it was slow and bloat
 
 My website lists my main projects and my amazing blog posts.
 
-Check it out [here](https://joshschertz.com)
+Check it out [here](https://joshschertz.com).
 
 Enjoy!
