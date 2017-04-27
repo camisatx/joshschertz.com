@@ -7,9 +7,13 @@ title: Projects
 {% for project in site.data.projects %}
     <li>
         {% if project.url %}
-        <h3><a href="{{ project.url | prepend: site.baseurl }}" target="_blank">{{ project.name }}</a></h3>
+            {% if project.url contains "https://" %}
+                <h3><a href="{{ project.url }}" target="_blank">{{ project.name }}</a></h3>
+            {% else %}
+                <h3><a href="{{ project.url | prepend: site.baseurl }}" target="_blank">{{ project.name }}</a></h3>
+            {% endif %}
         {% else %}
-        <h3>{{ project.name }}</h3>
+            <h3>{{ project.name }}</h3>
         {% endif %}
         <p>{{ project.descr | markdownify }}</p>
     </li>
