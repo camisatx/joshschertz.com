@@ -6,7 +6,11 @@ title: Projects
 <ul class="posts">
 {% for project in site.data.projects %}
     <li>
-        <a href="{{ project.url | prepend: site.baseurl }}">{{ project.name }}</a>
+        {% if project.url %}
+        <h3><a href="{{ project.url | prepend: site.baseurl }}" target="_blank">{{ project.name }}</a></h3>
+        {% else %}
+        <h3>{{ project.name }}</h3>
+        {% endif %}
         <p>{{ project.descr | markdownify }}</p>
     </li>
 {% endfor %}
