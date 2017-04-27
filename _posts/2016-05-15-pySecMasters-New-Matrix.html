@@ -5,7 +5,7 @@ date: 2016-05-15
 tags: [programming, database]
 ---
 
-<p>I am happy to say that I have successfully moved the pySecMaster's database from Sqlite3 to PostgreSQL. The struggle was real, but the end result was well worth it. Most of the issues arose from the 'strict' nature of Postgres, which I discussed in my <a href="{{ site.github.url }}/2016/04/30/Database-Big-League">last post</a>. However, I found this entire process an excellent learning opportunity for discovering how to build truly efficient databases, indices and queries.</p>
+<p>I am happy to say that I have successfully moved the pySecMaster's database from Sqlite3 to PostgreSQL. The struggle was real, but the end result was well worth it. Most of the issues arose from the 'strict' nature of Postgres, which I discussed in my <a href="{{ site.baseurl }}/2016/04/30/Database-Big-League">last post</a>. However, I found this entire process an excellent learning opportunity for discovering how to build truly efficient databases, indices and queries.</p>
 
 <h4>A Whole New Experience</h4>
 
@@ -22,7 +22,7 @@ tags: [programming, database]
 <p>For example, take a look at the two queries in the picture below. The query on the left is the old structure, and the query on the right is the optimized structure. The old query simply iterates through each row of the table, arranging the relevant rows in descending order by date; a brute force approach. Meanwhile, the optimized query uses a lateral join between the unique symbology table and the daily_prices table's index, which is already sorted in descending order by date. Since the index is already sorted, the optimized query only has to match the first row of the index with the corresponding value in the symbology table.</p>
 
 <figure>
-    <img src="{{ site.github.url }}/assets/img/pySecMaster_daily_prices_56M_updated_date_query_comparison.JPG" alt="Brute force query (left) and optimized query (right); optimized query is over 42 times faster on a 56 million rows table" width="1124" height="651">
+    <img src="{{ site.baseurl }}/assets/img/pySecMaster_daily_prices_56M_updated_date_query_comparison.JPG" alt="Brute force query (left) and optimized query (right); optimized query is over 42 times faster on a 56 million rows table" width="1124" height="651">
     <figcaption>Brute force query (left) and optimized query (right); optimized query is over 42 times faster on a 56 million rows table</figcaption>
 </figure>
 
