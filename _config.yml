@@ -17,8 +17,11 @@ title: Josh Schertz
 description: >
   Techie, visionary, optimist.
 url: "https://joshschertz.com"
-twitter_username: joshuaschertz
+
+# Social media usernames
 github_username: camisatx
+twitter_username: joshuaschertz
+linkedin_username: joshuaschertz
 
 # Build settings
 markdown: kramdown

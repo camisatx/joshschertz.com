@@ -118,8 +118,50 @@ aside {
 			clear: both;
 		}
 	}
+    social {
+        float: right;
+        margin: 0 auto;
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            li {
+                float: right;
+                position: relative;
+                a {
+                    text-decoration: none;
+                    display: block;
+                    padding: 11px;
+                    margin-bottom: -1px;
+                    box-shadow: 0;
+                    &:hover,
+                    &:active {
+                        background: $header;
+                        text-decoration: none;
+                        color: $main;
+                    }
+                }
+            }
+        }
+    }
 }
 footer {
 	text-align: center;
 	padding: 40px;
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        li {
+            display: inline;
+            padding: 10px;
+            a {
+                text-decoration: none;
+                &:hover,
+                &:active {
+                    text-decoration: none;
+                }
+            }
+        }
+    }
 }
