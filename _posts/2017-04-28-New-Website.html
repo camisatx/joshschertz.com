@@ -1,0 +1,20 @@
+---
+layout: post
+title: "New Website"
+date: 2017-04-28
+tags: ["web development"]
+---
+
+<p>While publishing my last post I noticed that many parts of the website were not working. About a third of the images were no longer working, and many Javascript sections were very buggy. With all of these issues, I decided that it was a good time to upgrade my website to a version 2.</p>
+
+<p>I originally built my website in Wordpress, which was good for getting things off the ground quickly. This was my first real experience with managing my own server infrastructure, too, so it was a big learning curve overall. As with most Wordpress sites, they become bloated very easily with unnecessary plugins. The extra plugins in addition to the general nature of Wordpress meant my site was very slow.</p>
+
+<p>I had wanted to switch the site to a static framework, either <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> or <a href="https://gohugo.io/" target="_blank">Hugo</a>. Hugo looked interesting because it was built in Go, which is very quick. However, I decided to go with Jekyll because it is the default framework used with Github Pages, along with it being more widely used.</p>
+
+<p>Static frameworks are perfect for all projects that only need to display data to the user without requiring any input. Example projects include blogs, portfolios, wikis, and other informative sites. You couldn't build Facebook in a static framework because users need to be able to contribute content (posts, comments, likes, pictures), which alters the way the website looks for other uses (via there profile pages).</p>
+
+<p>The main benefits of static frameworks is that they are extremely quick to load, and they are more secure since all pages are prebuilt with no database to worry about. The disadvantages include them not being able to include dynamic content on the site, and the time it takes to prebuild all the website pages when changes are made to files. For modest websites, the prebuild time normally takes a few seconds, but for large websites, it can take several minutes.</p>
+
+<p>Since <a href="https://pages.github.com/" target="_blank">Github Pages</a> works with Jekyll, I decided that it was worth it to host the site with Github. This makes my life much easier since I don't have to worry about the infrastructure of the website, nor securing it. All I have to do is update the master branch of the site repository to get new content showing on the website. Github builds the site when I push new commits. Awesome!</p>
+
+<p>I'm extremely happy with the site. You will see dramatic speed increases compared to before. You can also view all the code for the website in this <a href="https://github.com/camisatx/joshschertz.com" target="_blank">repository</a>.</p>
