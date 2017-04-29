@@ -33,6 +33,10 @@ sass:
 kramdown:
   input: GFM
 
+# Github Pages will automatically generate a sitemap
+gems:
+  - jekyll-sitemap
+
 # Treat each image in `assets/img` as if it had front matter of `image: true`.
 # This allows you to use a for loop to iterate through images.
 # https://jekyllrb.com/docs/static-files/
