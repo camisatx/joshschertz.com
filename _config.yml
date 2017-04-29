@@ -19,6 +19,9 @@ description: >
 url: "https://joshschertz.com"
 logo: /assets/img/logo-black.PNG
 
+# Google services
+google_analytics: UA-66373915-1
+
 # Social media usernames
 github:
     username: camisatx
