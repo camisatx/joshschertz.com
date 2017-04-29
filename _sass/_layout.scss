@@ -41,7 +41,7 @@ header {
 	padding: 0px 15px;
 	text-align: center;
 	margin: 50px 0 0;
-	height: 20vh;
+	height: 30vh;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -142,6 +142,10 @@ aside {
                     }
                 }
             }
+        }
+        @media screen and (max-width: 450px) {
+            visibility: hidden;
+            display: none; 
         }
     }
 }
