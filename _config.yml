@@ -17,25 +17,41 @@ title: Josh Schertz
 description: >
   Techie, visionary, optimist.
 url: "https://joshschertz.com"
+logo: /assets/img/logo-black.PNG
 
 # Social media usernames
-github_username: camisatx
-twitter_username: joshuaschertz
-linkedin_username: joshuaschertz
+github:
+    username: camisatx
+twitter:
+    username: joshuaschertz
+linkedin:
+    username: joshuaschertz
+
+# Social media profiles used by Google's Knowledge Graph
+social:
+    name: Josh Schertz
+    links:
+      - https://twitter.com/joshuaschertz
+      - https://linkedin.com/in/joshuaschertz
+      - https://github.com/camisatx
 
 # Build settings
 markdown: kramdown
 exclude:
     - Gemfile
     - Gemfile.lock
+    - .gitignore
+    - README.md
 sass:
     sass_dir: _sass
 kramdown:
   input: GFM
 
-# Github Pages will automatically generate a sitemap
 gems:
-  - jekyll-sitemap
+  - jekyll-feed     # Enable automatic Atom feed creation
+  - jekyll-sitemap  # Github Pages will automatically generate a sitemap
+  - jekyll-seo-tag  # Enable automatic generation of metadata for seo
+
 
 # Treat each image in `assets/img` as if it had front matter of `image: true`.
 # This allows you to use a for loop to iterate through images.
