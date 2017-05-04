@@ -49,6 +49,7 @@ sass:
     sass_dir: _sass
 kramdown:
   input: GFM
+permalink: pretty
 
 gems:
   - jekyll-feed     # Enable automatic Atom feed creation
