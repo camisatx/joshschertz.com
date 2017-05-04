@@ -54,7 +54,7 @@ gems:
   - jekyll-feed     # Enable automatic Atom feed creation
   - jekyll-sitemap  # Github Pages will automatically generate a sitemap
   - jekyll-seo-tag  # Enable automatic generation of metadata for seo
-
+  - jekyll-redirect-from    # Redirect prior URL to the current URL
 
 # Treat each image in `assets/img` as if it had front matter of `image: true`.
 # This allows you to use a for loop to iterate through images.
