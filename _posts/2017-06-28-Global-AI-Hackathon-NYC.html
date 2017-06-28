@@ -1,0 +1,56 @@
+---
+layout: post
+title: "Global AI Hackathon (NYC) 2017"
+date: 2017-06-28
+tags: ["AI", "hackathon"]
+---
+
+<p>This past weekend (6/23 - 6/25) was the first ever <a href="http://ai.hackathon.com/" target="_blank">Global AI Hackathon</a>, which was an AI focused hackathon taking place in 15 cities around the world with over 4,000 people attending. I competed in the New York City based event that was hosted at Hack Reactor's NYC facility. This was my first hackathon, and it was a blast! I've never had the opportunity to code for 19 hours straight (okay, there was one trip to Starbucks and a 30 min trip back to Ricardo's place), with only 10 hours of sleep during the 42 hour event. What an experience!</p>
+
+<p>Check out the final code <a href="https://github.com/bradmiro/fake_news_detector" target="_blank">here</a>.</p>
+
+<h3>Application</h3>
+
+<p>My team consisted of Brad, Agnes and myself. We decided to tackle the fake news challenge that we face everyday. We brainstormed some unique characteristics of online articles that we wanted to pass through a machine learning algorithm to get insight into the article. We knew that trying to rely on the article text was a significantly challenging solution, thus we included article metadata into our analysis.</p>
+
+<p>Some of the article metadata we used include:</p>
+<ul>
+    <li>Article title</li>
+    <li>Article date</li>
+    <li>Article text spelling</li>
+    <li>Article text sentiment</li>
+    <li>Webpage title</li>
+    <li>Webpage language</li>
+    <li>Website domain</li>
+    <li>Website WHOIS history</li>
+    <li>Article image topics</li>
+    <li>Contents of ad images around the article</li>
+</ul>
+
+<p>Each of these variables added extra parameters to the data set that we passed into our ML algorithm. Initially, we were not sure which parameters would impact the analysis the most, but we suspected that a few of them would be useful.</p>
+
+<p>We used a few APIs to help process some features out of the text and images. <a href="https://azure.microsoft.com/en-us/services/cognitive-services/?cdn=disable" target="_blank">Microsoft's Azure Cognitive Service</a> was very useful for calculating the spelling accuracy (<a href="https://azure.microsoft.com/en-us/services/cognitive-services/spell-check/" target="_blank">Bing Spell Check API</a>) and the article sentiment (<a href="https://azure.microsoft.com/en-us/services/cognitive-services/spell-check/" target="_blank">Text Analytics API</a>). <a href="https://www.clarifai.com/" target="_blank">Clarifai</a> was used to process the topics of the images. Microsoft also has an image processing API, but we decided that Clarifai's API was a better fit for our application.</p>
+
+<p>For the machine learning algorithm, we used Scikit-Learn's support gradient decent algorithm for article classification. We trained that model on 13,000 classified articles provided from the <a href="https://www.kaggle.com/mrisdal/fake-news" target="_blank">Kaggle fake news challenge</a>. This dataset provided enough information that we could derive all parameters required for our model.</p>
+
+<h3>Pipeline</h3>
+
+<p>The application pipeline was built to allow a user to link an article and have the detector's results passed back to them, showing insight into how the article ranked.</p>
+
+<p>The process starts once the user has submitted an article's URL. The URL is cross checked against a database of known fake news sites (including satirical, biased and fake news sources). If a match is found, the user is notified about the type of data the site has historically provided. Meanwhile, the article's content is scraped from the source, included a snapshot of how the webpage looks.</p>
+
+<p>With all the data available, we extract the raw parameters we need from the HTML and pass these values into the APIs to calculate more parameters. Once all parameters are prepared, we pass all values into the previously trained machine learning model.</p>
+
+<p>With the machine learning model's results, we send the values to the user and display relevant values so the user knows how this article compares to known fake news articles.</p>
+
+<h3>Expandability</h3>
+
+<p>To expand this project further, there are many things that can be improved upon. For one, the system requires custom web scrapers for any news source the user provides. Currently, we only have scrapers for Bloomberg and Fox News. There may be a more flexible approach to this that would not require a scraper for every site.</p>
+
+<p>The machine learning model can also be improved. We decided to use a support gradient decent classifier because of it's efficiency and simplicity. However, a neural net would provide better results and training times. For greater results, a reinforcement learning model would make the model much more future proof by allowing the system to continually improve when it notices changes in article composition (important to prevent content providers from 'gaming' the system).</p>
+
+<p>Lastly, a better website and API infrastructure would provide a better experience for users. We currently are using raw HTML and CSS for the web interface, with no API accessibility. A browser extension would also be a great addition.</p>
+
+<h3>Code</h3>
+
+<p>If you would like to view the code we developed for this project, check it out <a href="https://github.com/bradmiro/fake_news_detector" target="_blank">here</a>.</p>
