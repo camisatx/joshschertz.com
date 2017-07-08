@@ -1,3 +1,7 @@
+- name:  Robotics
+  url:   https://github.com/camisatx/RoboticsND
+  descr: Experimenting with all forms of robotics, from rovers to manipulators to drones. I am enrolled in the <a href="https://www.udacity.com/robotics" target="_blank">Udacity Robitics Nanodegree</a>, which is a 6 month project based course. Topics include <font color="red">ROS</font>, <font color="red">kinematics</font>, <font color="red">computer vision</font>, <font color="red">control algorithms</font>, and <font color="red">hardware integration</font>. Additional content includes the ethics of robotics, human-robotic interactions, biologically inspired robots and soft robots.
+
 - name:  Help Me Vote
   url:   https://helpme.vote
   descr: Revolutionizing how people prepare for elections. Help Me Vote is a website that visualizes how politicians act in office, showing relationships that might influence their descisions. Transparency is required for health democracies. The site is built on <font color="red">Django</font> using <font color="red">Postgres</font> and <font color="red">Nginx</font>, run in <font color="red">Docker</font> containers on an <font color="red">Ubuntu</font> server.
