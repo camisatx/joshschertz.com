@@ -10,7 +10,7 @@ redirect_from:
 
 <p>Adjusted prices are essential when working with historical stock prices. Any time there is a corporate split or dividend, all stock prices prior to that event need to be adjusted to reflect the change.</p>
 
-<p>For one-off projects, it is easy enough to get the current adjusted close prices for any stock from Yahoo Finance or Quandl. It is convenient to let the provider handle all of the calculations of adjusting the prior prices. Using provided adjusted prices becomes impracticable when you are storing all prices for all symbols in a database. Not only would you have to store twice the number of values (the raw and adjusted price), but you would have to download the entire price history to update your adjusted prices. Alternatively, if you calculate your own adjusted prices, you only need to store the raw prices and update the latest prices for day to day database updates.</p>
+<p>For one-off projects, it is easy enough to get the current adjusted close prices for any stock from Yahoo Finance or Quandl. It is convenient to let the provider handle all of the calculations of adjusting the prior prices. Using provided adjusted prices becomes impracticable when you are storing all prices for all symbols in a database. Not only would you have to store twice the number of values (the raw and adjusted price), but you would have to download the entire price history to update your adjusted prices. Alternatively, if you calculate your own adjusted prices, you only need to store the raw prices and download the latest prices for day to day database updates.</p>
 
 <p>Calculating your own adjusted prices requires a few extra components in addition to the raw prices, including all historical corporate stock splits and cash dividends. To actually calculate the adjusted prices, you will need to have an efficient function to process the adjusted price formula.</p>
 
@@ -26,7 +26,7 @@ redirect_from:
 
 <p>The <a href="http://www.investopedia.com/ask/answers/06/adjustedclosingprice.asp" target="_blank">simplistic approach</a> is to subtract the dividend out of the stock price going back to the IPO, and then adjusting the dividend adjustment for stock splits along the way. The main problem with this approach is that due to inflation, it is possible for the adjusted prices to go below zero, causing all sorts of issues in subsequent calculations.</p>
 
-<p>The second approach involves calculating adjustments in percentage terms instead of absolute dollar value. This avoids the negative adjusted stock prices but skews profit and loss calculations. Mathematically, this approach makes more sense to me. Plus, Yahoo Finance uses it in their adjusted price calculation.</p>
+<p>The second approach involves calculating adjustments in percentage terms instead of absolute dollar value. This avoids the negative adjusted stock prices but skews profit and loss calculations. Mathematically, this approach makes more sense to me. Plus, Yahoo Finance uses it in their adjusted price calculation, so you can cross-check your work with theirs.</p>
 
 <p>In this <a href="https://marubozu.blogspot.co.uk/2006/09/how-yahoo-calculates-adjusted-closing.html" target="_blank">old blog post</a> from Armand, he derived the approach and formula that produces the adjusted prices exactly as Yahoo Finance shows.</p>
 
@@ -38,7 +38,7 @@ redirect_from:
     <li>Repeat steps 2 and 3 for all other historic days.</li>
 </ol>
 
-<p>I used the same formula structure but tweaked it to work with dates in descending order (newest to oldest). The formula looks like:</p>
+<p>I used the same formula structure, but tweaked it to work with dates in descending order (newest to oldest). The formula looks like <a href="https://joshschertz.com/assets/img/adjusted_price_formula.PNG" target="_blank">this</a>:</p>
 $$ A_0 = A_1 + A_1 \frac{P_0 * S - P_1 - D_1}{P_1} $$
 <p>where:</p>
 <div style="padding: 0 0 10px 50px;">
@@ -56,9 +56,9 @@ $$ A_0 = A_1 + A_1 \frac{P_0 * S - P_1 - D_1}{P_1} $$
 
 <h3>Programming the Calculation</h3>
 
-<p>I implemented two ways of this adjusted price formula in Python. An <b>iterative</b> function and a <b>vectorized</b> function. Both functions use Pandas to organize and hold the data.</p>
+<p>There are two ways to program this formula in Python. An <b>iterative</b> function and a <b>vectorized</b> function. Both functions use Pandas to organize and hold the data.</p>
 
-<p>The function input variables include a Pandas DataFrame and a string of the column that should have adjusted prices calculated for it (i.e. 'close'). Both functions return a DataFrame similar to the input DataFrame, but with an additional column for the new adjusted prices. All of my code is written in Python 3.5.</p>
+<p>The function input variables include a Pandas DataFrame, and a string of the column that should have adjusted prices calculated for it (i.e. 'close'). Both functions return a DataFrame similar to the input DataFrame, but with an additional column for the new adjusted prices. All of my code is written in Python 3.5.</p>
 
 <h4>Preparing the Input DataFrame</h4>
 
@@ -148,19 +148,19 @@ def calculate_adjusted_prices_iterative(df, column):
 
 <p>The problem with the iterative function is that it is very resource intensive because it has to loop through each row of the DataFrame. For stocks with decades of historical prices, this is very inefficient.</p>
 
-<p>Testing AAPL's entire price history (12/12/1980 - 8/26/2016; 8948 periods), the iterative approach took a massive <b>12.616 seconds to complete</b>. This is way too long for an essential calculation, especially when you need to prepare the adjusted price history for dozens or hundreds of symbols (which would take dozens of minutes if not more). I thought of three ways to make this faster.</p>
+<p>Testing AAPL's entire price history (12/12/1980 - 8/26/2016; 8948 periods), the iterative approach took a massive <b>12.616 seconds to complete</b>. This is way too long for an essential calculation, especially when you need to prepare the adjusted price history for dozens or hundreds of symbols (which would take dozens of minutes, if not more). I thought of three ways to make this faster.</p>
 
 <p>One way is to pre-calculate all the adjusted prices ahead of time and store the values in the database ready for use. The problems with this are that you have to store all these adjusted prices (doubling your database size), and you have to recalculate the entire adjusted price history any time the company has a new stock split or dividend. Admittedly, these corporate events happen about once a quarter, so it's not too bad, but we can do better.</p>
 
-<p>The second band-aid to speed up the calculation is to multiprocess the function based on symbols. Each symbol being calculated past the first would be multiprocessed up until the CPU core count (or hyper-thread count) is reached. This is a respectable approach, but it bypasses the core of the problem; the function itself is inefficient.</p>
+<p>The second band-aid to speed up the calculation is to multiprocess the function based on symbols. Each symbol being calculated past the first would be multiprocessed up to the CPU core count (or hyper-thread count). This is a respectable approach, but it bypasses the core of the problem; the function itself is inefficient.</p>
 
 <p>The best fix for the iterative function is to scrap it and vectorize it (utilizing the efficiencies of NumPy). By vectorizing the adjusted price calculation, the function is able to perform all price calculations at the same time. Fancy!</p>
 
 <h4>Vectorized Function</h4>
 
-<p>Put simply, <a href="https://en.wikipedia.org/wiki/Automatic_vectorization" target="_blank">vectorization</a> is the process of rewriting a loop so that instead of processing a single element of an array N times, it processes multiple elements of the array simultaneously.</p>
+<p>Put simply, <a href="https://en.wikipedia.org/wiki/Automatic_vectorization" target="_blank">vectorization</a> is the process of rewriting a loop so that instead of processing a single element of an array N times, multiple elements of the array are processed simultaneously.</p>
 
-<p>Vectorizing the adjusted price calculation is possible because all of the values are already in an array. However, the vectorization is not a textbook case because the adjusted price calculation relies on data from adjacent rows. Normally, vectorization uses only values from columns of the same row.</p>
+<p>Vectorizing the adjusted price calculation is possible because all of the values are already in an array. However, the vectorization here is not a textbook case because the adjusted price calculation relies on data from adjacent rows. Normally, vectorization uses only values from columns of the same row.</p>
 
 <p>Through considerable trial and error, I eventually found a code structure that allowed for the vectorization that made this possible. It uses <a href="http://www.numpy.org/" target="_blank">NumPy</a> to facilitate the vectorization.</p>
 
