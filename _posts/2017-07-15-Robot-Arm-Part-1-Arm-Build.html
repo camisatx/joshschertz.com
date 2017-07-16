@@ -13,7 +13,15 @@ tags: ["robotics"]
 
 <h2>Components</h2>
 
-<p>I ordered a <a href="http://amzn.to/2t37yp6" target="_blank">SainSmart 6 DoF Robotic Arm kit</a> that included the robot arm, Arduino MEGA 2560, and Arduino Uno based remote controller. In addition, I also ordered this <a href="http://amzn.to/2t3EGNy" target="_blank">rotatable platform</a>, so that the arm and electronics could be based on a stable platform. I'd recommend also ordering these <a href="http://amzn.to/2t3iOBN" target="_blank">servo extension cables</a> since the gripper servo cables don't reach Arduino at the arm base.</p>
+<p>SainSmart provides multiple robot arm kits with differing levels of complexity. They have a 3, 4, 5, and 6 axis robot arm kits, however, most of those only include the arm hardware and servos, not any electronics.</p>
+
+<p>I ordered this <a href="http://amzn.to/2t37yp6" target="_blank">6 Axis Robotic Arm kit</a>, which is the only kit that includes the arm and electronics. The box contains the basic 6 axis robot arm, an Arduino MEGA 2560, and a Arduino Uno based remote controller.</p>
+
+<p>I also ordered this <a href="http://amzn.to/2t3EGNy" target="_blank">rotatable platform</a>, so that the arm and electronics could be based on a stable platform. I found this highly beneficial because the default metal base is tiny, often not providing enough stability for the arm when it is moving around.</p>
+
+<p>These <a href="http://amzn.to/2t3iOBN" target="_blank">servo extension cables</a> also came in handy, since the gripper servo cables don't reach the Arduino at the arm base.</p>
+
+<h2>Kit Expectations</h2>
 
 <p>Based on the Amazon reviews of this kit, I knew that the manufacturer did not provide much guidance on how to assemble or program the system. Many people are surprised by this lack of support, but I welcomed the uphill struggle. Instead of viewing the kit as a ready to run system, I considered it a rudimentary kit of pieces that should work together to eventually build a robotic arm.</p>
 
@@ -35,7 +43,7 @@ tags: ["robotics"]
 
 <p>Before starting the build process, I think it is critical to test the servos and notate their neutral locations.</p>
 
-<p>I used a cheap <a href="http://amzn.to/2t3Ef5A" target="_blank">servo tester</a> to easily test each servo. To power the tester, I plugged in the positive and negative connectors into the included Arduino's 5 volt and ground sockets.</p>
+<p>I used a cheap <a href="http://amzn.to/2t3Ef5A" target="_blank">servo tester</a> to easily test each servo. To power the tester, I plugged in the positive and negative connectors into the Arduino's 5 volt and ground sockets. To power the Arduino, I plugged it into my computer via USB.</p>
 
 <img src="{{ site.baseurl }}/assets/img/robot-arm/arm/servo-testing.jpg" alt="Testing each servo with a cheap servo tester plugged into an Arduino MEGA 2560">
 
