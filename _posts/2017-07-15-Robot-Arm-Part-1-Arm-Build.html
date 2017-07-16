@@ -1,0 +1,123 @@
+---
+layout: post
+title: "Robot Arm Part 1: Arm Build"
+date: 2017-07-15
+tags: ["robotics"]
+---
+
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm-finished.jpg" alt="Finished SainSmart 6 DoF robot arm on rotatable base with remote controller" width="1024" height="768">
+
+<p>The best way to reinforce new concepts is to use them in a project. Thus, to solidify my knowledge of working with robotic arms, I decided to get a DIY robot arm kit, and program it's movements using the skills I've learned from my last kinematics project.</p>
+
+<p>I will break this story into multiple parts, allowing me time to build and program the different components of the system. This first part will follow the process of building the arm. Subsequent sections will cover building the rotatable platform, building the remote controller, and programming the arm itself.</p>
+
+<h3>Components</h3>
+
+<p>I ordered a <a href="http://amzn.to/2t37yp6" target="_blank">SainSmart 6 DoF Robotic Arm kit</a> that included the robot arm, Arduino MEGA 2560, and Arduino Uno based remote controller. In addition, I also ordered this <a href="http://amzn.to/2t3EGNy" target="_blank">rotatable platform</a>, so that the arm and electronics could be based on a stable platform. I'd recommend also ordering these <a href="http://amzn.to/2t3iOBN" target="_blank">servo extension cables</a> since the gripper servo cables don't reach Arduino at the arm base.</p>
+
+<p>Based on the Amazon reviews of this kit, I knew that the manufacturer did not provide much guidance on how to assemble or program the system. Many people are surprised by this lack of support, but I welcomed the uphill struggle. Instead of viewing the kit as a ready to run system, I considered it a rudimentary kit of pieces that should work together to eventually build a robotic arm.</p>
+
+<p>SainSmart does provide a <a href="https://youtu.be/ynKPdVpr-nE" target="_blank">no audio YouTube video</a> of how the arm should be assembled, but it leaves a lot to be desired. I'd say it gets you 90% there, but it omits certain key aspects that make the process smoother. Some experimentation is still required when assembling the pieces.</p>
+
+<h3>Robot Arm Pieces</h3>
+
+<p>Here are all of the pieces that came with the robot arm:</p>
+
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/components-2.jpg" alt="SainSmart Robotic 6 DoF Arm Components" width="1024" height="768">
+
+<p>I liked this arm kit because it contained decently strong meta gear servos, including four <a href="http://amzn.to/2t3HQ3P" target="_blank">MG 996R servos</a> (11 kg-cm at 6v) and two <a href="http://amzn.to/2t3C7uC" target="_blank">DS3218 servos</a> (~15 kg-cm at 6v).</p>
+
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/servos.jpg" alt="6 included metal gear servos; 4 MG 996R servos and 2 DS3218 servos">
+
+<p>Surprisingly, the kit contains exactly all of the parts required. Well done SainSmart!</p>
+
+<h3>Pre-Build Steps</h3>
+
+<p>Before starting the build process, I think it is critical to test the servos and notate their neutral locations.</p>
+
+<p>I used a cheap <a href="http://amzn.to/2t3Ef5A" target="_blank">servo tester</a> to easily test each servo. To power the tester, I plugged in the positive and negative connectors into the included Arduino's 5 volt and ground sockets.</p>
+
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/servo-testing.jpg" alt="Testing each servo with a cheap servo tester plugged into an Arduino MEGA 2560">
+
+<p>I'd recommend using <a href="http://amzn.to/2t3mUtS" target="_blank">jumper wires</a> to connect the servo tester to the Arduino. At the time I didn't have any, thus I had to cannibalize one of the servo extension cables I bought.</p>
+
+<h3>Robot Arm Build</h3>
+
+<p>The following pictures follows the build process for the robot arm.</p>
+
+<p>First the robot base needs to be assembled.</p>
+
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-01.jpg" alt="SainSmart 6 DoF robot arm build">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-02.jpg" alt="SainSmart 6 DoF robot arm build">
+
+<p>This will allow the arm to rotate, acting as the arm's waist.</p>
+
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-03.jpg" alt="SainSmart 6 DoF robot arm build">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-04.jpg" alt="SainSmart 6 DoF robot arm build">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-05.jpg" alt="SainSmart 6 DoF robot arm build">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-07.jpg" alt="SainSmart 6 DoF robot arm build">
+
+<p>With the base complete, the arm can be started.</p>
+
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-09.jpg" alt="SainSmart 6 DoF robot arm build">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-11.jpg" alt="SainSmart 6 DoF robot arm build">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-12.jpg" alt="SainSmart 6 DoF robot arm build">
+
+<p>For these bearings, I placed the large flange between the static and rotatable brackets. This will allow for some space between the two moving pieces of frame.</p>
+
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-13.jpg" alt="SainSmart 6 DoF robot arm build">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-14.jpg" alt="SainSmart 6 DoF robot arm build">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-16.jpg" alt="SainSmart 6 DoF robot arm build">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-17.jpg" alt="SainSmart 6 DoF robot arm build">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-18.jpg" alt="SainSmart 6 DoF robot arm build">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-19.jpg" alt="SainSmart 6 DoF robot arm build">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-20.jpg" alt="SainSmart 6 DoF robot arm build">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-21.jpg" alt="SainSmart 6 DoF robot arm build">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-22.jpg" alt="SainSmart 6 DoF robot arm build">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-23.jpg" alt="SainSmart 6 DoF robot arm build">
+
+<p>The two lower arm servos use the stronger DS3218 servos. These servos have the extra torque required to handle the extra weight of the gripper mechanism.</p>
+
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-24.jpg" alt="SainSmart 6 DoF robot arm build">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-25.jpg" alt="SainSmart 6 DoF robot arm build">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-26.jpg" alt="SainSmart 6 DoF robot arm build">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-27.jpg" alt="SainSmart 6 DoF robot arm build">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-28.jpg" alt="SainSmart 6 DoF robot arm build">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-29.jpg" alt="SainSmart 6 DoF robot arm build">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-30.jpg" alt="SainSmart 6 DoF robot arm build">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-32.jpg" alt="SainSmart 6 DoF robot arm build">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-33.jpg" alt="SainSmart 6 DoF robot arm build">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-34.jpg" alt="SainSmart 6 DoF robot arm build">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-35.jpg" alt="SainSmart 6 DoF robot arm build">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-36.jpg" alt="SainSmart 6 DoF robot arm build">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-37.jpg" alt="SainSmart 6 DoF robot arm build">
+
+<p>The majority of the arm is built. Now the focus is on building the gripper mechanism</p>
+
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-38.jpg" alt="SainSmart 6 DoF robot arm build">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-39.jpg" alt="SainSmart 6 DoF robot arm build">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-40.jpg" alt="SainSmart 6 DoF robot arm build">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-41.jpg" alt="SainSmart 6 DoF robot arm build">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-42.jpg" alt="SainSmart 6 DoF robot arm build">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-43.jpg" alt="SainSmart 6 DoF robot arm build">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-44.jpg" alt="SainSmart 6 DoF robot arm build">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-45.jpg" alt="SainSmart 6 DoF robot arm build">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-46.jpg" alt="SainSmart 6 DoF robot arm build">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-47.jpg" alt="SainSmart 6 DoF robot arm build">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-48.jpg" alt="SainSmart 6 DoF robot arm build">
+
+<p>Slide in the servo horn between the gripper's base and left finger.</p>
+
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-49.jpg" alt="SainSmart 6 DoF robot arm build">
+
+<h3>Finished Arm</h3>
+
+<p>The finished standard arm looks like this:</p>
+
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-49.jpg" alt="SainSmart 6 DoF robot arm build">
+
+<p>The metal base is sufficient for basic arm movements, but it is not completely stable without some type of clamping mechanism. This is why the optional <a href="http://amzn.to/2t3EGNy" target="_blank">SainSmart rotatable platform</a> is a good addition!</p>
+
+<!--
+<p>Continue to the next robot arm blog post <a href="">here</a>.</p>
+-->
