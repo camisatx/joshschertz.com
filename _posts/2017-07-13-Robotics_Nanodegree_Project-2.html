@@ -1,0 +1,132 @@
+---
+layout: post
+title: "Robotics Nanodegree Project 2 - Pick and Place"
+date: 2017-07-13
+tags: ["robotics", "udacity"]
+---
+
+<p>The second project of the Udacity Robotics Nanodegree was extremely challenging. The project required writing the code to direct a simulated Kuka KR210 6 DoF arm to pickup a can from a shelf and place it within a bin next to the robot.</p>
+
+<p>Since the locations of the can and the bin were already known, I had to use inverse kinematics to calculate what angles each joint of the robot should be in to put the arm's gripper in the right position and orientation to grab and release the can. I used the Denavit-Hartenberg convention to aid this process.</p>
+
+<h3>Denavit-Hartenberg</h3>
+
+<p>To plan out the calculations, I used the <a href="https://en.wikipedia.org/wiki/Denavit%E2%80%93Hartenberg_parameters#Modified_DH_parameters" target="_blank"> modified Denavit-Hartenberg (DH) convention</a>. The DH convention aids in performing kinematic analysis for robotic systems. DH parameters allow four parameters to indicate the location and orientation of subsequent arm links instead of 12 through the use of a homogeneous transformation matrix.</p>
+
+<p>This table includes all of the DH parameters for the arm that were sourced from the arm's specifications.</p>
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;border-color:#ccc;}
+.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:0px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#fff;}
+.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:0px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#f0f0f0;}
+.tg .tg-baqh{text-align:center;vertical-align:top}
+.tg .tg-amwm{font-weight:bold;text-align:center;vertical-align:top}
+</style>
+<table class="tg">
+  <tr>
+    <th class="tg-amwm">n</th>
+    <th class="tg-amwm">θ</th>
+    <th class="tg-amwm">d</th>
+    <th class="tg-amwm">a</th>
+    <th class="tg-amwm">α</th>
+  </tr>
+  <tr>
+    <td class="tg-amwm">0</td>
+    <td class="tg-baqh">-</td>
+    <td class="tg-baqh">-</td>
+    <td class="tg-baqh">0</td>
+    <td class="tg-baqh">0</td>
+  </tr>
+  <tr>
+    <td class="tg-amwm">1</td>
+    <td class="tg-baqh">θ1</td>
+    <td class="tg-baqh">0.75</td>
+    <td class="tg-baqh">0.35</td>
+    <td class="tg-baqh">90</td>
+  </tr>
+  <tr>
+    <td class="tg-amwm">2</td>
+    <td class="tg-baqh">θ2</td>
+    <td class="tg-baqh">0</td>
+    <td class="tg-baqh">1.25</td>
+    <td class="tg-baqh">0</td>
+  </tr>
+  <tr>
+    <td class="tg-amwm">3</td>
+    <td class="tg-baqh">θ3</td>
+    <td class="tg-baqh">0</td>
+    <td class="tg-baqh">-0.054</td>
+    <td class="tg-baqh">90</td>
+  </tr>
+  <tr>
+    <td class="tg-amwm">4</td>
+    <td class="tg-baqh">θ4</td>
+    <td class="tg-baqh">1.5</td>
+    <td class="tg-baqh">0</td>
+    <td class="tg-baqh">-90</td>
+  </tr>
+  <tr>
+    <td class="tg-amwm">5</td>
+    <td class="tg-baqh">θ5</td>
+    <td class="tg-baqh">0</td>
+    <td class="tg-baqh">0</td>
+    <td class="tg-baqh">90</td>
+  </tr>
+  <tr>
+    <td class="tg-amwm">6</td>
+    <td class="tg-baqh">θ6</td>
+    <td class="tg-baqh">0.303</td>
+    <td class="tg-baqh">0</td>
+    <td class="tg-baqh">0</td>
+  </tr>
+</table>
+
+<p>With these parameters, I was able to build this diagram of all arm joints and links.</p>
+
+<img src="{{ site.baseurl }}/assets/img/robotics-nd/dh-diagram.svg" alt="DH diagram of the Kuka KR210 6 DoF arm">
+
+<p>With this diagram, it is possible to work on the kinematics of the arm.</p>
+
+<h3>Kinematics</h3>
+
+<p>Kinematics is the study of movement in a system, and not about the forces involved with that movement. Kinematics is heavily used within robotics for the purpose of measuring robotic arm movements. There are two areas of kinematics: forward kinematics and inverse kinematics.</p>
+
+<h4>Forward Kinematics</h4>
+
+<p>Forward kinematics uses the **joint angles** to derive the **position and orientation** of the end effector (gripper) of the robot after it moves. This process is relatively easy, requiring linear algebra to calculate and manipulate homogeneous transformation matrices, which are a combination of rotation matrices and displacement vectors.</p>
+
+<p>Rotation matrices are 3 x 3 matrices that represent the 3D orientation of an object. These orientations are often referred to as roll, pitch and yaw.</p>
+
+<p>The displacement vectors are a 3 x 1 vector that represent the 3D position of an object. These values are the *X*, *Y*, and *Z* values of an object.</p>
+
+<p>The combination of the rotation matrix and displacement vector creates a homogeneous transformation matrix. This matrix is a 4 x 4 matrix, with the rotation matrix making up the top left 3 x 3 cells, and the displacement vector making up the top right 3 x 1 cells. The bottom row of the matrix contains [0, 0, 0, 1], which is used as a filler, so the matrix can be 4 x 4 in size for easier computation.</p>
+
+<p>Each joint has its own homogeneous transformation matrix. Multiple homogeneous transformation matrices can be multiplied together to determine the position and orientation from the first matrix's object to the final matrix's object (i.e. from the base to the end effector). This is forward kinematics.</p>
+
+<h4>Inverse Kinematics</h4>
+
+<p>Inverse kinematics is much more involved than forward kinematics. With inverse kinematics, the end effector's **position and orientation** is already known, but the **joint angles** need to be found. This is a non-linear problem, thus it can't be solved analytically (i.e. by using the forward kinematics matrices in reverse). The two main approaches for solving inverse kinematics is to use a numerical approach, or a geometric approach (graphical method). I used the geometric approach below.</p>
+
+<p>The geometrical approach uses trigonometric calculations to derive the appropriate angles needed for each joint. These calculations can be found by drawing the 3D arm in a 2D frame where normal trigonometric rules apply.</p>
+
+<p>The following image shows the trigonometric diagrams I used to derive the right calculations to get the first three joint angles.</p>
+
+<img src="{{ site.baseurl }}/assets/img/robotics-nd/trigonometric-diagram.svg" alt="Trigonometric diagram of the Kuka KR210 6 DoF arm">
+
+<p>This diagram only has calculations for the first three joints, which determine the end effector's position. The last three joints are used to get the orientation of the end effector. These last three joints are commonly referred to as a *spherical wrist* since they can orient the end effector in any direction required.</p>
+
+<p>I calculated the inverse kinematic orientation by first calculating the rotation matrix for joints 4, 5 and 6. Once I had this rotation matrix, I was able to calculate the <a href="https://en.wikipedia.org/wiki/Euler_angles" target="_blank">Euler angles</a> that represent the joint angles required.</p>
+
+<h2>Code</h2>
+
+<p>You can view the code I built for this project in this <a href="https://github.com/camisatx/RoboticsND/tree/master/projects/kinematics/kuka_kr210" target="_blank">repository</a>.</p>
+
+<p><a href="https://github.com/camisatx/RoboticsND/blob/master/projects/kinematics/kuka_kr210/kuka_fk.py" target="_blank">kuka_fk.py</a> contains test code covering forward kinematics. This code can build transformation matrices for each arm joint.</p>
+
+<p><a href="https://github.com/camisatx/RoboticsND/blob/master/projects/kinematics/kuka_kr210/kuka_ik.py" target="_blank">kuka_ik.py</a> contains test code covering the inverse kinematics of the project. It uses the predetermined trigonometric calculations to determine the correct joint angles the arm should use to place the end effector in the right position.</p>
+
+<p><a href="https://github.com/camisatx/RoboticsND/blob/master/projects/kinematics/kuka_kr210/IK_server.py" target="_blank">IK_server.py</a> contains code that links into the ROS/Gazebo/Rviz simulator. To run the simulator, you first need to install this <a href="https://github.com/udacity/RoboND-Kinematics-Project" target="_blank">Udacity Kinematics Project</a> code. Then change the inverse kinematics flag to *false*.</p>
+
+<h2>Next</h2>
+
+<p>Now that I've learned the basics of using kinematics to control a robotic arm, the next step is to use that knowledge to work with an actual arm. I've already ordered a simple 6 axis arm that uses hobby servos and an Arduino to run. That will be a fun challenge, so stay tuned for that!</p>
