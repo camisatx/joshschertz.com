@@ -7,15 +7,15 @@ tags: ["robotics", "udacity"]
 
 <img src="{{ site.baseurl }}/assets/img/robotics-nd/kuka_pick_and_place.png" alt="Kuka KR210 pick and place simulation">
 
-<p>The second project of the Udacity Robotics Nanodegree was the most challenging project I've done with Udacity of the past 3 years, and over dozens of their courses. The project required writing the code to direct a simulated Kuka KR210 6 DoF arm to pickup a can from a shelf and place it within a bin next to the robot.</p>
+<p>The second project of the Udacity Robotics Nanodegree was the most challenging project I've done with Udacity over the past 3 years covering dozens of their courses. The project required writing the code to direct a simulated Kuka KR210 6 DoF arm to pickup a can from a shelf and place it within a bin next to the robot. A simple sounding task that required lots of work.</p>
 
-<p>In addition to kinematics being new to me, I found the course guidance very lacking. They covered the basic theory of what needed to be done, but not enough details on the technical implementation. This meant that I had to do a lot of self learning. That's nothing too unusual for me, but it just requires extra time. In total, I've been working on this project for the past 5 weeks!</p>
+<p>In addition to kinematics being new to me, I found the course guidance very lacking. They covered the basic theory of what needed to be done, but not enough details on the technical implementation. This meant I had to do a lot of self learning. That's nothing too unusual for me, but it just requires extra time. In total, I've been working on this project for the past 5 weeks!</p>
 
 <p>For the project, the locations of the can and the bin were already known, thus inverse kinematics is used to calculate what angles each joint of the robot should be in to put the arm's gripper in the right position and orientation to grab and release the can. I used the Denavit-Hartenberg convention to aid this process.</p>
 
 <h3>Denavit-Hartenberg</h3>
 
-<p>To plan out the calculations, I used the <a href="https://en.wikipedia.org/wiki/Denavit%E2%80%93Hartenberg_parameters#Modified_DH_parameters" target="_blank"> modified Denavit-Hartenberg (DH) convention</a>. The DH convention aids in performing kinematic analysis for robotic systems. DH parameters allow four parameters to indicate the location and orientation of subsequent arm links instead of 12 through the use of a homogeneous transformation matrix.</p>
+<p>The <a href="https://en.wikipedia.org/wiki/Denavit%E2%80%93Hartenberg_parameters#Modified_DH_parameters" target="_blank"> modified Denavit-Hartenberg (DH) convention</a> aids in performing kinematic analysis for robotic systems. DH parameters allow four parameters to indicate the location and orientation of subsequent arm links instead of the 12 parameters required through the use of a homogeneous transformation matrix.</p>
 
 <p>This table includes all of the DH parameters for the arm that were sourced from the arm's specifications.</p>
 
@@ -46,7 +46,7 @@ tags: ["robotics", "udacity"]
     <td class="tg-baqh">θ1</td>
     <td class="tg-baqh">0.75</td>
     <td class="tg-baqh">0.35</td>
-    <td class="tg-baqh">90</td>
+    <td class="tg-baqh">-90</td>
   </tr>
   <tr>
     <td class="tg-amwm">2</td>
@@ -60,21 +60,21 @@ tags: ["robotics", "udacity"]
     <td class="tg-baqh">θ3</td>
     <td class="tg-baqh">0</td>
     <td class="tg-baqh">-0.054</td>
-    <td class="tg-baqh">90</td>
+    <td class="tg-baqh">-90</td>
   </tr>
   <tr>
     <td class="tg-amwm">4</td>
     <td class="tg-baqh">θ4</td>
     <td class="tg-baqh">1.5</td>
     <td class="tg-baqh">0</td>
-    <td class="tg-baqh">-90</td>
+    <td class="tg-baqh">90</td>
   </tr>
   <tr>
     <td class="tg-amwm">5</td>
     <td class="tg-baqh">θ5</td>
     <td class="tg-baqh">0</td>
     <td class="tg-baqh">0</td>
-    <td class="tg-baqh">90</td>
+    <td class="tg-baqh">-90</td>
   </tr>
   <tr>
     <td class="tg-amwm">6</td>
@@ -93,11 +93,11 @@ tags: ["robotics", "udacity"]
 
 <h3>Kinematics</h3>
 
-<p>Kinematics is the study of movement in a system, and not about the forces involved with that movement. Kinematics is heavily used within robotics for the purpose of measuring robotic arm movements. There are two areas of kinematics: forward kinematics and inverse kinematics.</p>
+<p><a href="https://en.wikipedia.org/wiki/Kinematics" target="_blank">Kinematics</a> is the study of movement in a system, and not about the forces involved with that movement. Kinematics is heavily used within robotics for the purpose of measuring robotic arm movements. There are two areas of kinematics: forward kinematics and inverse kinematics.</p>
 
 <h4>Forward Kinematics</h4>
 
-<p>Forward kinematics uses the <b>joint angles</b> to derive the <b>position and orientation</b> of the end effector (gripper) of the robot after it moves. This process is relatively easy, requiring linear algebra to calculate and manipulate homogeneous transformation matrices, which are a combination of rotation matrices and displacement vectors.</p>
+<p>Forward kinematics uses the <b>joint angles</b> to derive the <b>position and orientation</b> of the end effector (gripper) of the robot after it moves. This process is relatively easy to calculate, requiring linear algebra to calculate and manipulate homogeneous transformation matrices, which are a combination of rotation matrices and displacement vectors.</p>
 
 <p>Rotation matrices are 3 x 3 matrices that represent the 3D orientation of an object. These orientations are often referred to as roll, pitch and yaw.</p>
 
@@ -131,7 +131,7 @@ tags: ["robotics", "udacity"]
 
 <p><a href="https://github.com/camisatx/RoboticsND/blob/master/projects/kinematics/kuka_kr210/kuka_ik.py" target="_blank">kuka_ik.py</a> contains test code covering the inverse kinematics of the project. It uses the predetermined trigonometric calculations to determine the correct joint angles the arm should use to place the end effector in the right position.</p>
 
-<p><a href="https://github.com/camisatx/RoboticsND/blob/master/projects/kinematics/kuka_kr210/IK_server.py" target="_blank">IK_server.py</a> contains code that links into the ROS/Gazebo/Rviz simulator. To run the simulator, you first need to install this <a href="https://github.com/udacity/RoboND-Kinematics-Project" target="_blank">Udacity Kinematics Project</a> code. Then change the inverse kinematics flag to <i>false</i>.</p>
+<p><a href="https://github.com/camisatx/RoboticsND/blob/master/projects/kinematics/kuka_kr210/IK_server.py" target="_blank">IK_server.py</a> contains code that links into the ROS/Gazebo/Rviz simulator. To run the simulator, you first need to install this <a href="https://github.com/udacity/RoboND-Kinematics-Project" target="_blank">Udacity Kinematics Project</a> code. View the notes <a href="https://github.com/camisatx/RoboticsND/blob/master/projects/kinematics/kuka_kr210/README.md#running-the-simulator" target="_blank">here</a> for more details on getting the IK_server.py code running with the simulator.</p>
 
 <h2>Next Step</h2>
 
