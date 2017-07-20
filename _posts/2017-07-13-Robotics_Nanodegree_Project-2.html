@@ -5,9 +5,13 @@ date: 2017-07-13
 tags: ["robotics", "udacity"]
 ---
 
-<p>The second project of the Udacity Robotics Nanodegree was extremely challenging. The project required writing the code to direct a simulated Kuka KR210 6 DoF arm to pickup a can from a shelf and place it within a bin next to the robot.</p>
+<img src="{{ site.baseurl }}/assets/img/robotics-nd/kuka_pick_and_place.png" alt="Kuka KR210 pick and place simulation">
 
-<p>Since the locations of the can and the bin were already known, I had to use inverse kinematics to calculate what angles each joint of the robot should be in to put the arm's gripper in the right position and orientation to grab and release the can. I used the Denavit-Hartenberg convention to aid this process.</p>
+<p>The second project of the Udacity Robotics Nanodegree was the most challenging project I've done with Udacity of the past 3 years, and over dozens of their courses. The project required writing the code to direct a simulated Kuka KR210 6 DoF arm to pickup a can from a shelf and place it within a bin next to the robot.</p>
+
+<p>In addition to kinematics being new to me, I found the course guidance very lacking. They covered the basic theory of what needed to be done, but not enough details on the technical implementation. This meant that I had to do a lot of self learning. That's nothing too unusual for me, but it just requires extra time. In total, I've been working on this project for the past 5 weeks!</p>
+
+<p>For the project, the locations of the can and the bin were already known, thus inverse kinematics is used to calculate what angles each joint of the robot should be in to put the arm's gripper in the right position and orientation to grab and release the can. I used the Denavit-Hartenberg convention to aid this process.</p>
 
 <h3>Denavit-Hartenberg</h3>
 
