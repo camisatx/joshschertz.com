@@ -117,6 +117,8 @@ tags: ["robotics", "udacity"]
 
 <p>I calculated the inverse kinematic orientation by first calculating the rotation matrix for joints 4, 5 and 6. Once I had this rotation matrix, I was able to calculate the <a href="https://en.wikipedia.org/wiki/Euler_angles" target="_blank">Euler angles</a> that represent the joint angles required.</p>
 
+<p>I used a <a href="http://www.lfd.uci.edu/~gohlke/code/transformations.py.html" target="_blank">tf transformations</a> function called <i>euler_from_matrix</i> that takes a numpy rotation matrix and Euler axis definition, and returns the three Euler angles (alpha, beta and gamma). The rotation matrix I provided used the Euler definition of <i>XYZ</i>, which is a Tait-Bryan angle combination. With the alpha, beta and gamma angles, I mapped them to θ4, θ5 and θ6, respectively. However, θ4 needed to have pi/2 added to it, and θ5 needed to be subtracted from pi/2. </p>
+
 <h2>Code</h2>
 
 <p>You can view the code I built for this project in this <a href="https://github.com/camisatx/RoboticsND/tree/master/projects/kinematics/kuka_kr210" target="_blank">repository</a>.</p>
