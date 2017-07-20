@@ -1,0 +1,78 @@
+---
+layout: post
+title: "Robot Arm Part 2: Rotatable Platform"
+date: 2017-07-17
+tags: ["robotics"]
+---
+
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm-finished.jpg" alt="Finished SainSmart 6 axis robotic arm on rotatable base with remote controller">
+
+<p>To continue this robot arm series, I will now add a rotatable platform to the basic robot arm I build in the <a href="{{ site.baseurl }}{% post_url 2017-07-15-Robot-Arm-Part-1-Arm-Build %}">last post</a>. In addition to providing a heavy base for the arm, the platform provides a secure place to mount the Arduino that controls the arm. The platform also gives the system a nice look.</p>
+
+<h2>Components</h2>
+
+<p>The <a href="http://amzn.to/2t3EGNy" target="_blank">rotatable platform</a> is a separate purchase from the <a href="http://amzn.to/2t37yp6" target="_blank">6 axis robotic arm kit</a> that I built in the last post. I think it's kind of evil to show the platform in the main image of the kit's sales page, but at least it's not that expensive.</p>
+
+<p>This platform will work with some of the other SainSmart robotic arms, such as their <a href="http://amzn.to/2ubYjps" target="_blank">3, 5 or 6 axis arms kits</a>.</p>
+
+<h2>Pieces</h2>
+
+<p>Here are all of the pieces that came with the rotatable base, plus the basic arm I built in the last post:</p>
+
+<img src="{{ site.baseurl }}/assets/img/robot-arm/rotation-base/components.jpg" alt="SainSmart rotational base for robotic arm components">
+
+<p>This kit is pretty basic, with two pieces of acrylic, a solid rotation bearing assembly, brass standoffs, and multiple screws, nuts and washers.</p>
+
+<h2>Assembly</h2>
+
+<p>The only instructions SainSmart provides is in the <a href="https://youtu.be/ynKPdVpr-nE" target="_blank">YouTube video</a> they use to show the arm construction (it is the last section). As with the arm build, the video is decent, but there are a few issues with build order and part selection.</p>
+
+<p>These are the pictures I took while integrating the base with my arm.</p>
+
+<p>The first step actually requires disassembling the bottom two joints of the arm I just built. Basically, the bottom two servos need to be removed.</p>
+
+<img src="{{ site.baseurl }}/assets/img/robot-arm/rotation-base/build-01.jpg" alt="SainSmart rotational base integration with 6 axis robotic arm">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/rotation-base/build-02.jpg" alt="SainSmart rotational base integration with 6 axis robotic arm">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/rotation-base/build-03.jpg" alt="SainSmart rotational base integration with 6 axis robotic arm">
+
+<p>With the base bracket secured to the top acrylic piece, it's time to integrate the arm in.</p>
+
+<img src="{{ site.baseurl }}/assets/img/robot-arm/rotation-base/build-04.jpg" alt="SainSmart rotational base integration with 6 axis robotic arm">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/rotation-base/build-05.jpg" alt="SainSmart rotational base integration with 6 axis robotic arm">
+
+<p>Now to add the metal bearing ring to the acrylic platform. It is important to add the brass standoff to the ring before attaching the ring to the acrylic platform since you can't reach the screws otherwise (the YouTube video doesn't do it this way...).</p>
+
+<img src="{{ site.baseurl }}/assets/img/robot-arm/rotation-base/build-06.jpg" alt="SainSmart rotational base integration with 6 axis robotic arm">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/rotation-base/build-07.jpg" alt="SainSmart rotational base integration with 6 axis robotic arm">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/rotation-base/build-08.jpg" alt="SainSmart rotational base integration with 6 axis robotic arm">
+
+<p>With the metal ring secured to the arm, the waist rotation servo can be added. The servo only slots into the servo horn that's already attached to the top acrylic base, it doesn't screw in to anything. The shorter brass standoff secure the servo to the bottom acrylic base.</p>
+
+<img src="{{ site.baseurl }}/assets/img/robot-arm/rotation-base/build-09.jpg" alt="SainSmart rotational base integration with 6 axis robotic arm">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/rotation-base/build-10.jpg" alt="SainSmart rotational base integration with 6 axis robotic arm">
+
+<p>With the rotation servo hanging from the servo horn, installing the bottom acrylic base required some finesse. In my kit, the servo's brass standoff were too short to reach the bottom acrylic base while still secured in the servo horn above. To solve this, I used two extra nuts per standoff. The screws were long enough to reach the standoffs, but I should have used washers instead.</p>
+
+<img src="{{ site.baseurl }}/assets/img/robot-arm/rotation-base/build-11.jpg" alt="SainSmart rotational base integration with 6 axis robotic arm">
+
+<p>Note that I did not use these seven screws during this step. Six of them are used to install the Arduino in the next step.</p>
+
+<img src="{{ site.baseurl }}/assets/img/robot-arm/rotation-base/build-12.jpg" alt="SainSmart rotational base integration with 6 axis robotic arm">
+
+<p>Now the Arduino can be secured to the base. Even though there are six holes to secure the board down with, two of the holes on the Arduino don't have enough room for a nut. But securing the board with four screws is more than enough to hold it down.</p>
+
+<img src="{{ site.baseurl }}/assets/img/robot-arm/rotation-base/build-13.jpg" alt="SainSmart rotational base integration with 6 axis robotic arm">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/rotation-base/build-14.jpg" alt="SainSmart rotational base integration with 6 axis robotic arm">
+
+<p>The servo shield can now be attached on top of the Arduino. This is a delicate process because you need to ensure that all of the pins from the shield go into the correct slot on the Arduino. The last thing you want is to bend one of the pins!</p>
+
+<img src="{{ site.baseurl }}/assets/img/robot-arm/rotation-base/build-15.jpg" alt="SainSmart rotational base integration with 6 axis robotic arm">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/rotation-base/build-16.jpg" alt="SainSmart rotational base integration with 6 axis robotic arm">
+
+<h2>Complete Base</h2>
+
+<p>The robot arm is now successfully installed on the rotatable base! The arm can now nearly reach all the way out without falling over. I think this arm is now a show worthy piece; perfect for any fireplace mantle.</p>
+
+<img src="{{ site.baseurl }}/assets/img/robot-arm/rotation-base/arm-finished.jpg" alt="SainSmart rotational base integration with 6 axis robotic arm">
+
+<p>Next I will document the steps to build the Arduino Uno based controller that came with the arm kit.</p>
