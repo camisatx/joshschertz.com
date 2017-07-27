@@ -1,6 +1,6 @@
 - name:  Robotics
   url:   https://github.com/camisatx/RoboticsND
-  descr: Experimenting with all forms of robotics, from rovers to manipulators to drones. I am enrolled in the <a href="https://www.udacity.com/robotics" target="_blank">Udacity Robitics Nanodegree</a>, which is a 6 month project based course. Topics include <font color="red">ROS</font>, <font color="red">kinematics</font>, <font color="red">computer vision</font>, <font color="red">control algorithms</font>, and <font color="red">hardware integration</font>. Additional content includes the ethics of robotics, human-robotic interactions, biologically inspired robots and soft robots.
+  descr: Experimenting with all forms of robotics, from rovers to manipulators to drones. I am enrolled in the <a href="https://www.udacity.com/robotics" target="_blank">Udacity Robitics Nanodegree</a>, which is a 6 month project based course. Topics include <font color="red">ROS</font>, <font color="red">kinematics</font>, <font color="red">computer vision</font>, <font color="red">control algorithms</font>, and <font color="red">hardware integration</font>. Additional content includes the ethics of robotics, human-robotic interactions, biologically inspired robots and soft robots. View the work I've done with this <a href="https://joshschertz.com/2017/07/15/Robot-Arm-Part-1-Arm-Build">6 servo robotic arm</a>.
 
 - name:  Help Me Vote
   url:   https://helpme.vote
