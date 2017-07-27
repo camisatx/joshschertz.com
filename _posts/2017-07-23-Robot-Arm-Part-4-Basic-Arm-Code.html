@@ -1,0 +1,289 @@
+---
+layout: post
+title: "Robot Arm Part 4: Basic Arm Code"
+date: 2017-07-23
+tags: ["robotics"]
+---
+
+<p>Having finished building all parts of the <a href="http://amzn.to/2t37yp6" target="_blank">robotic arm kit</a> I bought (<a href="{{ site.baseurl }}{% post_url 2017-07-15-Robot-Arm-Part-1-Arm-Build %}">part 1</a>), it is now time to start programming the arm to make it do stuff. SainSmart provides a file with basic code, so I'll start with that.</p>
+
+<h2>Provided File</h2>
+
+<p>SainSmart provides this <a href="https://s3-ap-northeast-1.amazonaws.com/sain-amzn/20/20-014-310/20-014-310.zip" target="_blank">large zip file (162 MB)</a>, which includes a video showing arm movement, a C++ script of basic arm commands, and a text file documenting the basics of the C++ script.</p>
+
+<p>The C++ script provides a basic idea for how to interact with the arm's servos. This code has some documentation, however, it's all in Mandarin.</p>
+
+<p>The text file seems promising at first glance, but it assumes you are using an Arduino Uno, not the MEGA the kit includes. It also only mentions the how of working with some of the code, not the why of the code structure.</p>
+
+<p>Seeing that there is no hand holding from SainSmart, I had to debug the script line by line to learn its most inner mysteries.</p>
+
+<h2>Code</h2>
+
+<p>After scanning the code, I realized that the code was not very good. I rewrote sections to provide better functionality with lots of documentation. All of the code below has been tested on my arm, however, many of the servo angles that work for my arm may not work for your arm due to the way you setup the servo horns when assembling the arm.</p>
+
+<p>The first section of the script is normal C++ code for including the <a href="https://www.arduino.cc/en/Reference/Servo" target="_blank">Servo library</a>, and for defining all variables.</p>
+
+{% highlight c++ %}
+#include <Servo.h>
+
+Servo myservoA;
+Servo myservoB;
+Servo myservoC;
+Servo myservoD;
+Servo myservoE;
+Servo myservoF;
+int i, pos, myspeed, myshow;
+int sea, seb, sec, sed, see, sef;
+static int v=0;
+static int mycomflag=2;
+String mycommand="";
+{% endhighlight %}
+
+<p>The setup function attaches all servos to the servo objects specified, along with moving all servos to their default angles. These default angles aren't necessarily their neutral angles. A few of them are offset to provide better arm balance.</p>
+
+{% highlight c++ %}
+void setup() 
+{ 
+    // Unsure what these do and if they are required
+    pinMode(13, INPUT);
+    pinMode(12, INPUT);
+    
+    Serial.begin(9600);     // Set the boud rate to 9600
+ 
+    mycomflag=1;    // Default state of operation
+ 
+    // Attach each servo to a specific pin
+    myservoA.attach(11);    // Waist servo at port 11
+    myservoB.attach(12);    // Shoulder servo at port 12
+    myservoC.attach(13);    // Elbow servo at port 13
+    myservoD.attach(8);     // Wrist elevation servo at port 8
+    myservoE.attach(9);     // Wrist rotation servo at port 9
+    myservoF.attach(10);    // Gripper servo at port 10
+    
+    // Position the waist in the center
+    myservoA.write(90);
+    // Position shoulder to a lower angle for better arm balance
+    myservoB.write(70);
+    // Position elbow to a higher angle for better arm balance
+    myservoC.write(140);
+    // Position the wrist elevation in the center
+    myservoD.write(90);
+    // Correct for a slight offset for the wrist rotation
+    myservoE.write(100);
+    // Default to a wide open gripper
+    myservoF.write(30);
+}
+{% endhighlight %}
+
+<p>The loop function runs the main processing of the script. It identifies any commands that are entered into the serial monitor (changing modes and specifying joint angles in computer control mode), along with executing the computer control commands and auto run commands. The auto run commands cycle through a set range of joint angles.</p>
+
+{% highlight c++ %}
+void loop() 
+{ 
+    // Set mycommand if a message is being entered into the serial port
+    while (Serial.available() > 0)
+    {
+        mycommand += char(Serial.read());
+        delay(2);
+    }
+
+    // If a command is provided, identify what it is before resetting it
+    if (mycommand.length() > 0)
+    {
+        if(mycommand=="#auto")
+        {
+            mycomflag=2;
+            Serial.println("auto station");
+            mycommand="";
+        }
+        if(mycommand=="#com")
+        {
+            mycomflag=1;
+            Serial.println("computer control station");
+            mycommand="";
+        }
+        if(mycommand=="#stop")
+        {
+            mycomflag=0;
+            Serial.println("stop station");
+            mycommand="";
+        }
+    }
+  
+    // If performing computer control use this
+    if(mycomflag==1)
+    {      
+        /* Calculate the new angle for the specific servo then move it there
+
+        Expect format of <int><alpha>
+            where <int> represents the servo angle between 0 and 180
+            and <alpha> represents the specific servo between a and f
+            
+        For example, 90a moves servo a to 90 degrees, etc. */
+        for(int m=0; m<mycommand.length(); m++)
+        {
+            char ch = mycommand[m];
+            switch(ch)
+            {
+                /* When ch is between 0 and 9, calculate the servo angle
+                
+                If there is an existing value for v, multiply it by 10 to put
+                it in the tens place, then put the second command value in the
+                ones place */
+                case '0'...'9':
+                v = v*10 + ch - '0';
+                break;
+                
+                // Move waist
+                case 'a':
+                myservoA.write(v);
+                Serial.print("moving waist to ");
+                Serial.print(v);
+                Serial.println(" degrees");
+                v = 0;
+                break;
+
+                // Move shoulder
+                case 'b':
+                myservoB.write(v);
+                Serial.print("moving shoulder to ");
+                Serial.print(v);
+                Serial.println(" degrees");
+                v = 0;
+                break;
+
+                // Move elbow only if it's greater than 35 degrees
+                case 'c':
+                if(v >= 35) myservoC.write(v);
+                Serial.print("moving elbow to ");
+                Serial.print(v);
+                Serial.println(" degrees");
+                v = 0;
+                break;
+
+                // Move wrist elevation
+                case 'd':
+                myservoD.write(v);
+                Serial.print("elevating wrist to ");
+                Serial.print(v);
+                Serial.println(" degrees");
+                v = 0;
+                break;
+
+                // Move wrist rotation
+                case 'e':
+                myservoE.write(v);
+                Serial.print("rotating waist to ");
+                Serial.print(v);
+                Serial.println(" degrees");
+                v = 0;
+                break;
+
+                // Move gripper only between 30 and 90 degrees
+                case 'f':
+                if(v >= 30 || v <= 90) myservoF.write(v);
+                Serial.print("moving gripper to ");
+                Serial.print(v);
+                Serial.println(" degrees");
+                v = 0;
+                break;
+            }
+        }
+        mycommand="";
+    }
+    
+    // If performing auto control, use this to cycle through these joint angles
+    if(mycomflag==2)
+    {    
+        delay(3000); 
+        Serial.println("starting auto mode");
+
+        // Cycle through the joint angle from specified start to end
+
+        myspeed=500;
+        for(pos=0; pos<=myspeed; pos+=1)  
+        {                                
+            myservoA.write(int(map(pos, 1, myspeed, 90, 60)));
+            myservoB.write(int(map(pos, 1, myspeed, 70, 90)));
+            delay(1);                       
+        }
+        delay(1000);
+
+        myspeed=500;
+        for(pos=0; pos<=myspeed; pos+=1)  
+        {                                
+            myservoA.write(int(map(pos, 1, myspeed, 60, 90)));
+            myservoC.write(int(map(pos, 1, myspeed, 140, 90)));
+            myservoD.write(int(map(pos, 1, myspeed, 90, 30)));
+            myservoE.write(int(map(pos, 1, myspeed, 100, 10))); 
+            delay(1);                       
+        }
+        delay(1000);
+
+        myspeed=1000;
+        for(pos=0; pos<=myspeed; pos+=1)  
+        {                                
+            myservoB.write(int(map(pos, 1, myspeed, 90, 50)));
+            myservoC.write(int(map(pos, 1, myspeed, 90, 150)));
+            delay(1);                       
+        }
+        delay(1000);
+
+        myspeed=500;
+        for(pos=0; pos<=myspeed; pos+=1)  
+        {                                
+            myservoC.write(int(map(pos, 1, myspeed, 150, 120)));
+            myservoD.write(int(map(pos, 1, myspeed, 30, 140)));
+            myservoE.write(int(map(pos, 1, myspeed, 10, 100)));
+            myservoF.write(int(map(pos, 1, myspeed, 30, 85)));
+            delay(1);                       
+        }
+        delay(1000);
+
+        myspeed=1000;
+        for(pos=0; pos<=myspeed; pos+=1)  
+        {                                
+            myservoA.write(int(map(pos, 1, myspeed, 90, 140)));
+            myservoF.write(int(map(pos, 1, myspeed, 85, 30)));    
+            delay(1);                       
+        }  
+        delay(1000);
+
+        myspeed=500;
+        for(pos=0; pos<=myspeed; pos+=1)  
+        {                                
+            myservoA.write(int(map(pos, 1, myspeed, 140, 90)));
+            myservoB.write(int(map(pos, 1, myspeed, 50, 70)));
+            myservoC.write(int(map(pos, 1, myspeed, 120, 140)));
+            delay(1);                       
+        } 
+        delay(1000);
+    }
+    
+    // No command was specified
+    if(mycomflag==0)
+    {
+        Serial.println("no mode specified; use either #com or #auto");
+    }
+}
+{% endhighlight %}
+
+<p>You can find a complete copy of this script <a href="{{ site.baseurl }}/assets/code/robot-arm/controller_1.ino" target="_blank">here</a>.</p>
+
+<h2>Running the Code</h2>
+
+<p>To run this script, first open the file within the Arduino IDE. You can view and edit the code within this window. Next specify the correct board you are using within <i>Tools > Board > Arduino Mega 2560</i>. Select the correct device within <i>Tools > Serial Port > /dev/ttyACM0</i>.</p>
+
+<p>Now you can upload the script to the Arduino by pressing the Upload button on the toolbar or select <i>File > Upload</i>.</p>
+
+<p>Note that once uploaded, the Arduino will execute the program immediately. If you are using the Arduino servo shield, the servos will not start moving until the shield is connected to a 12 volt DC power input, and the power button is pressed down.</p>
+
+<p>Open the serial monitor by selecting <i>Tools > Serial Monitor</i>, or pressing <i>Ctrl+Shift+m</i>. You will be able to send commands to the Arduino via the serial monitor. To make the arm use auto control, type <i>#auto</i>, and to use the computer control, type <i>#com</i>.</p>
+
+<p>When using computer control, you can specify specific joint angles by typing the angle (int between 0 and 180) and joint identifier (a - f) into the serial monitor. For example, typing <i>90b</i> will move the second joint (shoulder) to 90 degrees. Typing <i>90f</i> will close the gripper while typing <i>30f</i> will open the gripper as wide as it can go.</p>
+
+<h2>Next</h2>
+
+<p>This basic script does a good job at showing how to work with the arm. I think it illustrates just how easy it is to work with these servos.</p>
+
+<p>Next I want to expand the capability of what the file can do. I also want to explore how to integrate the remote controller with the arm, so that I can control the arm using the joysticks on the controller. That will require programming the controller's Arduino Uno to talk with the arm's Arduino using the 2.4 Ghz radios. Stay tuned for that!</p>
