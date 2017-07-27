@@ -17,9 +17,11 @@ tags: ["robotics"]
 
 <p><b>It is important to know that SainSmart misstates the actual number of axis many of the arms have.</b> For example, the <a href="http://amzn.to/2eJAwbh" target="_blank">am style</a> I purchased claims to be a 6-axis arm, however, it is actually a 5-axis arm since it doesn't have a spherical wrist. SainSmart does offer this true <a href="http://amzn.to/2uS6WXo" target="_blank">6 DoF robot arm</a> that has three servos for position control and three servos for the spherical wrist. Do note that the arm does not include a gripper nor any electronics, so you'd have to source a gripper, a servo to power it, and the electronics to control everything. This arm is also more than twice the price of the arm style I bought, so you are paying a premium for a true 6 DoF robot arm.</p>
 
-<p>I ordered this <a href="http://amzn.to/2t37yp6" target="_blank">6 servo robotic arm kit</a>, which is the only kit that includes the arm and electronics. The box contains the basic 6 servo robot arm (including gripper), an Arduino MEGA 2560, and a Arduino Uno based remote controller. I wanted a complete package for my first arm, thus I choose this kit over buying individual parts.</p>
+<p>I ordered this <a href="http://amzn.to/2t37yp6" target="_blank">6 servo robotic arm kit</a>, which is the only kit that includes the arm and electronics. The box contains the basic 6 servo robot arm (including gripper), an Arduino Mega 2560, and a Arduino Uno based remote controller. I wanted a complete package for my first arm, thus I choose this kit over buying individual parts.</p>
 
 <p>I also ordered this <a href="http://amzn.to/2t3EGNy" target="_blank">rotatable platform</a>, so that the arm and electronics could be based on a stable platform. I found this highly beneficial because the default metal base is tiny, often not providing enough stability for the arm when it is moving around.</p>
+
+<p>The Arduino servo shield must be supplied with 12 volt DC power, which powers the servos. To handle this, I purchased this <a href="http://amzn.to/2uFKpuj" target="_blank">12V at 0-2A AC to DC power plug</a>. I had to cut off the end connector and strip the wires in order to secure them to the power connector on the shield. Alternatively, a variable DC power supply like this <a href="http://amzn.to/2uFS5wC" target="_blank">Tekpower 0-30V at 0-5A power supply</a> would handle the job easily. I have not tested the exact power draw of the servos, but I think they use around 200mA in operation, thus a 2A power supply should be sufficient for the 6 servos and electronics.</p>
 
 <p>These <a href="http://amzn.to/2t3iOBN" target="_blank">servo extension cables</a> also came in handy, since the gripper servo cables don't reach the Arduino at the arm base.</p>
 
@@ -47,7 +49,7 @@ tags: ["robotics"]
 
 <p>I used a cheap <a href="http://amzn.to/2t3Ef5A" target="_blank">servo tester</a> to easily test each servo. To power the tester, I plugged in the positive and negative connectors into the Arduino's 5 volt and ground sockets. To power the Arduino, I plugged it into my computer via USB.</p>
 
-<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/servo-testing.jpg" alt="Testing each servo with a cheap servo tester plugged into an Arduino MEGA 2560">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/arm/servo-testing.jpg" alt="Testing each servo with a cheap servo tester plugged into an Arduino Mega 2560">
 
 <p>I'd recommend using <a href="http://amzn.to/2t3mUtS" target="_blank">jumper wires</a> to connect the servo tester to the Arduino. At the time I didn't have any, thus I had to cannibalize one of the servo extension cables I bought.</p>
 
@@ -92,6 +94,9 @@ tags: ["robotics"]
 <img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-25.jpg" alt="SainSmart 6 servo robot arm build">
 <img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-26.jpg" alt="SainSmart 6 servo robot arm build">
 <img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-27.jpg" alt="SainSmart 6 servo robot arm build">
+
+<p>Now to build the wrist mechanism. As I noted above, this arm does not have a full spherical wrist since it omits the third elevation joint. The wrist joints use the weaker MG 996R servos. For the wrist rotation joint this is fine, however, I've noticed that the wrist elevation servo strains to maintain some angles when it's outstretched.</p>
+
 <img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-28.jpg" alt="SainSmart 6 servo robot arm build">
 <img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-29.jpg" alt="SainSmart 6 servo robot arm build">
 <img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-30.jpg" alt="SainSmart 6 servo robot arm build">
@@ -102,7 +107,7 @@ tags: ["robotics"]
 <img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-36.jpg" alt="SainSmart 6 servo robot arm build">
 <img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-37.jpg" alt="SainSmart 6 servo robot arm build">
 
-<p>The majority of the arm is built. Now the focus is on building the gripper mechanism</p>
+<p>Installing the bracket where the wrist rotation servo goes is tricky because you cannot access the screw heads. Thus you will only be able to secure the bracket by hand tightening the nuts. Time will tell if this is enough to hold the nuts in place. The servo will prevent the nuts from completely backing off, but that would create wobble in the bracket.</p>
 
 <img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-38.jpg" alt="SainSmart 6 servo robot arm build">
 <img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-39.jpg" alt="SainSmart 6 servo robot arm build">
@@ -110,6 +115,9 @@ tags: ["robotics"]
 <img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-41.jpg" alt="SainSmart 6 servo robot arm build">
 <img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-42.jpg" alt="SainSmart 6 servo robot arm build">
 <img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-43.jpg" alt="SainSmart 6 servo robot arm build">
+
+<p>The majority of the arm is built. Now the focus is on building the gripper mechanism. Nearly all of the gripper's screws are loose, but since they use locking nuts, this shouldn't be a problem. They do this so that the gripper pieces can move freely around. Otherwise, each joint would require a bearing which would be expensive. This causes some wobble in the gripper fingers, but nothing too severe.</p>
+
 <img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-44.jpg" alt="SainSmart 6 servo robot arm build">
 <img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-45.jpg" alt="SainSmart 6 servo robot arm build">
 <img src="{{ site.baseurl }}/assets/img/robot-arm/arm/build-46.jpg" alt="SainSmart 6 servo robot arm build">

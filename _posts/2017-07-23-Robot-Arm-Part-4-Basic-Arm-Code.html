@@ -5,7 +5,7 @@ date: 2017-07-23
 tags: ["robotics"]
 ---
 
-<p>Having finished building all parts of the <a href="http://amzn.to/2t37yp6" target="_blank">robotic arm kit</a> I bought (<a href="{{ site.baseurl }}{% post_url 2017-07-15-Robot-Arm-Part-1-Arm-Build %}">part 1</a>), it is now time to start programming the arm to make it do stuff. SainSmart provides a file with basic code, so I'll start with that.</p>
+<p>Having finished building all parts of the <a href="http://amzn.to/2t37yp6" target="_blank">robotic arm kit</a> I bought (see <a href="{{ site.baseurl }}{% post_url 2017-07-15-Robot-Arm-Part-1-Arm-Build %}">part 1</a>), it is now time to start programming the arm to make it do stuff. SainSmart provides a file with basic code, so I'll start with that.</p>
 
 <h2>Provided File</h2>
 
@@ -13,13 +13,15 @@ tags: ["robotics"]
 
 <p>The C++ script provides a basic idea for how to interact with the arm's servos. This code has some documentation, however, it's all in Mandarin.</p>
 
-<p>The text file seems promising at first glance, but it assumes you are using an Arduino Uno, not the MEGA the kit includes. It also only mentions the how of working with some of the code, not the why of the code structure.</p>
+<p>The text file seems promising at first glance, but it assumes you are using an Arduino Uno, not the Mega the kit includes. It also only mentions the how of working with some of the code, not the why of the code structure.</p>
 
-<p>Seeing that there is no hand holding from SainSmart, I had to debug the script line by line to learn its most inner mysteries.</p>
+<p>Seeing that there is no hand holding from SainSmart, I had to debug the script line by line to learn its mysteries.</p>
 
 <h2>Code</h2>
 
 <p>After scanning the code, I realized that the code was not very good. I rewrote sections to provide better functionality with lots of documentation. All of the code below has been tested on my arm, however, many of the servo angles that work for my arm may not work for your arm due to the way you setup the servo horns when assembling the arm.</p>
+
+<p>You can find a complete copy of this script <a href="{{ site.baseurl }}/assets/code/robot-arm/controller_1.ino" target="_blank">here</a>.</p>
 
 <p>The first section of the script is normal C++ code for including the <a href="https://www.arduino.cc/en/Reference/Servo" target="_blank">Servo library</a>, and for defining all variables.</p>
 
@@ -278,9 +280,9 @@ void loop()
 
 <p>Note that once uploaded, the Arduino will execute the program immediately. If you are using the Arduino servo shield, the servos will not start moving until the shield is connected to a 12 volt DC power input, and the power button is pressed down.</p>
 
-<p>Open the serial monitor by selecting <i>Tools > Serial Monitor</i>, or pressing <i>Ctrl+Shift+m</i>. You will be able to send commands to the Arduino via the serial monitor. To make the arm use auto control, type <i>#auto</i>, and to use the computer control, type <i>#com</i>.</p>
+<p>Open the serial monitor by selecting <i>Tools > Serial Monitor</i>, or pressing <i>Ctrl+Shift+m</i>. You will be able to send commands to the Arduino via the serial monitor. To make the arm use auto control, type <i>#auto</i>. To use the computer control, type <i>#com</i>.</p>
 
-<p>When using computer control, you can specify specific joint angles by typing the angle (int between 0 and 180) and joint identifier (a - f) into the serial monitor. For example, typing <i>90b</i> will move the second joint (shoulder) to 90 degrees. Typing <i>90f</i> will close the gripper while typing <i>30f</i> will open the gripper as wide as it can go.</p>
+<p>When using computer control, you can specify specific joint angles by typing the angle (integer between 0 and 180) and joint identifier (a - f) into the serial monitor. For example, typing <i>90b</i> will move the second joint (shoulder) to 90 degrees. Typing <i>90f</i> will close the gripper while typing <i>30f</i> will open the gripper as wide as it can go. Again, these angles work with my servos, but you may have angled you servos at different orientations, thus make sure to test the limits of each servo before moving them to extreme angles.</p>
 
 <h2>Next</h2>
 
