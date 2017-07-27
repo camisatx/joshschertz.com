@@ -1,0 +1,64 @@
+---
+layout: post
+title: "Robot Arm Part 3: Electronics"
+date: 2017-07-19
+tags: ["robotics"]
+---
+
+<p>Installing the electronics on the arm is a simple process. The only process required is hooking up the different components to each other using the right ports and connectors.</p>
+
+<h2>Components</h2>
+
+<p>Here is an image of all of the electronic pieces. In addition to the six servos, the only other electronic pieces are the Arduino and Arduino servo shield, the 2.4Ghz radio module, the 12V power supply, and the USB cable.</p>
+
+<img src="{{ site.baseurl }}/assets/img/robot-arm/electronics/electronic-components.jpg" alt="The electronic components for the robot arm">
+
+<h2>Arduino Servo Shield</h2>
+
+<p>Here is a diagram of the Arduino servo shield used on the arm. This has been the only documentation I've found about the board. Based on this diagram, the functionality seems straight forward.</p>
+
+<img src="{{ site.baseurl }}/assets/img/robot-arm/electronics/SainSmart-InstaBots-Robot-Controller-Shield-Arduino-MEGA2560-R3.jpg" alt="Diagram of the SainSmart Robot Controller Shield for the Arduino Mega 2560 R3">
+
+<h2>Power</h2>
+
+<p>As I mentioned in the component section of part 1, the Arduino servo shield requires a 12 volt DC power input in order to power the servos. The servos are not able to use power from the USB input from the Arduino. This is done because using multiple servos would draw too much power from the Arduino, risking damage to it.</p>
+
+<p>I am using this <a href="http://amzn.to/2uFKpuj" target="_blank">12V at 0-2A AC to DC power plug</a> to supply the servo shield.</p>
+
+<img src="{{ site.baseurl }}/assets/img/robot-arm/electronics/ac-to-dc-12v-2a-power-supply.jpg" alt="The AC to DC 12V 2A power supply I am using to power the robot arm servos">
+
+<p>You will note that this power plug has a standard DC plug at the end, however, the servo shield has no receptacle for it. The servo shield has a direct power connector (the green piece) where wires can be inserted and screwed down. In order to work with this, I clipped off the end connector and stripped the wires so that they could be inserted into this receptacle. Take note of which port is for the voltage and ground wires!</p>
+
+<p>For a more flexible solution, a variable DC power supply like this <a href="http://amzn.to/2uFS5wC" target="_blank">Tekpower 0-30V at 0-5A power supply</a> would easily handle the job. In addition to allowing you to monitor the exact power draw of the arm, you could use the supply for many more projects in the future.</p>
+
+<p>I have not tested the exact power draw of the servos and electronics, but the 2A power plug should be able to handle it. Each servo should draw a little more than 200mA, and the Arduino Mega draws much less than 200mA.</p>
+
+<h2>Servo Connections</h2>
+
+<p>The servos are connected directly to the Arduino servo shield. They need to be connected to the right number in the right orientation to ensure they work with the code I'll build later.</p>
+
+<p>Servos cables have a specific orientation required when being plugged in. The servo cables include a ground connector (<b>G</b>), a 5V power connector (<b>V</b>), and a signal connector (<b>S</b>). Normally, the ground cable is black or brown, the voltage cable is red, and the signal cable is either white or yellow/orange.</p>
+
+<p>Here is the structure I used when connecting the servos to the ports:</p>
+<ul>
+    <li>Waist servo to port 8</li>
+    <li>Shoulder servo to port 9</li>
+    <li>Elbow servo to port 10</li>
+    <li>Wrist elevation servo to port 11</li>
+    <li>Wrist rotation servo to port 12</li>
+    <li>Gripper servo to port 13</li>
+</ul>
+
+<p>Another important aspect is to check the output voltage for the servos. The switch near the servo ports allows you to change what voltage is being sent to the servos. The servos included with the kit can only handle up to 6 volts. Thus, only the 5V option can be used. The more voltage used, the more torque the servos will provide, however, too much voltage will damage the servos.</p>
+
+<h2>RF Module</h2>
+
+<p>The 2.4Ghz wireless module will allow the controller to connect to the arm wirelessly. The wireless module connects directly into the servo shield.</p>
+
+<h2>Complete Electronics</h2>
+
+<p>Here is a picture of the fully hooked up electronics. The servos, DC power, USB and wireless module are all connected and powered up.</p>
+
+<img src="{{ site.baseurl }}/assets/img/robot-arm/electronics/complete-electronics.jpg" alt="All of the electronics are wired up to the Arduino and servo shield">
+
+<p>Read the next part <a href="{{ site.baseurl }}{% post_url 2017-07-20-Robot-Arm-Part-4-Controller-Build %}">here</a> where I document the steps to build the Arduino Uno based controller that came with the arm kit.</p>
