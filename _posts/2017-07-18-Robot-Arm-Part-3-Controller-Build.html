@@ -5,9 +5,9 @@ date: 2017-07-18
 tags: ["robotics"]
 ---
 
-<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/finished-controller.jpg" alt="Finished controller for the SainSmart 6 axis robotic arm">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/finished-controller.jpg" alt="Finished controller for the SainSmart 6 servo robotic arm">
 
-<p>In the last robot arm <a href="{{ site.baseurl }}{% post_url 2017-07-17-Robot-Arm-Part-2-Rotatable-Platform %}">post</a>, I integrated the robot arm with the rotatable platform. In this post I will show the construction of the controller included with the <a href="http://amzn.to/2t37yp6" target="_blank">6 axis robotic arm kit</a> I purchased. This controller has two joysticks that plug into an Arduino Uno, which will connect to the robot arm's Arduino via a 2.4 Ghz wireless module.</p>
+<p>In the last robot arm <a href="{{ site.baseurl }}{% post_url 2017-07-17-Robot-Arm-Part-2-Rotatable-Platform %}">post</a>, I integrated the robot arm with the rotatable platform. In this post I will show the construction of the controller included with the <a href="http://amzn.to/2t37yp6" target="_blank">6 servo robotic arm kit</a> I purchased. This controller has two joysticks that plug into an Arduino Uno, which will connect to the robot arm's Arduino via a 2.4 Ghz wireless module.</p>
 
 <h2>Pieces</h2>
 
@@ -15,7 +15,7 @@ tags: ["robotics"]
 
 <p>Here are all of the pieces that come with it:</p>
 
-<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/components.jpg" alt="Controller components for the SainSmart 6 axis robotic arm">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/components.jpg" alt="Controller components for the SainSmart 6 servo robotic arm">
 
 <h2>Assembly</h2>
 
@@ -23,50 +23,50 @@ tags: ["robotics"]
 
 <p>The first steps involve attaching the Arduino Uno and two joysticks onto the bottom acrylic sheet. The bottom acrylic sheet is identified by it not having an opening for the rectangular display at the top, which the top piece does.</p>
 
-<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/build-01.jpg" alt="Controller assembly for the SainSmart 6 axis robotic arm">
-<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/build-02.jpg" alt="Controller assembly for the SainSmart 6 axis robotic arm">
-<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/build-03.jpg" alt="Controller assembly for the SainSmart 6 axis robotic arm">
-<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/build-04.jpg" alt="Controller assembly for the SainSmart 6 axis robotic arm">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/build-01.jpg" alt="Controller assembly for the SainSmart 6 servo robotic arm">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/build-02.jpg" alt="Controller assembly for the SainSmart 6 servo robotic arm">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/build-03.jpg" alt="Controller assembly for the SainSmart 6 servo robotic arm">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/build-04.jpg" alt="Controller assembly for the SainSmart 6 servo robotic arm">
 
 <p>My controller kit included many plastic screws and washers, but no nuts. This is problematic when the Arduino and joysticks are supposed to be secured to the acrylic sheet, but washers can't secure anything. Since I didn't have any extra nuts, I used some standard Elmer's glue to secure the washers to the screws. This should be more than sufficient for these low stress components. I let the glue dry overnight to prevent any issues.</p>
 
-<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/build-05.jpg" alt="Controller assembly for the SainSmart 6 axis robotic arm">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/build-05.jpg" alt="Controller assembly for the SainSmart 6 servo robotic arm">
 
 <p>Next I installed the shield on top of the Arduino, along with connecting the joysticks to this shield. Make sure to plug the cables into the same pin type on the joysticks and shield. Each has the specific type notated next to the connector.</p>
 
-<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/build-06.jpg" alt="Controller assembly for the SainSmart 6 axis robotic arm">
-<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/build-07.jpg" alt="Controller assembly for the SainSmart 6 axis robotic arm">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/build-06.jpg" alt="Controller assembly for the SainSmart 6 servo robotic arm">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/build-07.jpg" alt="Controller assembly for the SainSmart 6 servo robotic arm">
 
 <p>The display can now be connected to the shield. As with the joysticks, make sure you connect the cables to the correct pins for both the display and the shield. SainSmart's image provides a close up image of which pins to use.</p>
 
-<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/build-08.jpg" alt="Controller assembly for the SainSmart 6 axis robotic arm">
-<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/build-09.jpg" alt="Controller assembly for the SainSmart 6 axis robotic arm">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/build-08.jpg" alt="Controller assembly for the SainSmart 6 servo robotic arm">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/build-09.jpg" alt="Controller assembly for the SainSmart 6 servo robotic arm">
 
 <p>The plastic standoffs are installed next. Use the four shorter standoffs at the top of the controller, and the two longer standoffs in the bottom corners. The standoffs are threaded, thus the plastic screws can be screwed into them.</p>
 
-<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/build-10.jpg" alt="Controller assembly for the SainSmart 6 axis robotic arm">
-<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/build-11.jpg" alt="Controller assembly for the SainSmart 6 axis robotic arm">
-<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/build-12.jpg" alt="Controller assembly for the SainSmart 6 axis robotic arm">
-<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/build-13.jpg" alt="Controller assembly for the SainSmart 6 axis robotic arm">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/build-10.jpg" alt="Controller assembly for the SainSmart 6 servo robotic arm">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/build-11.jpg" alt="Controller assembly for the SainSmart 6 servo robotic arm">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/build-12.jpg" alt="Controller assembly for the SainSmart 6 servo robotic arm">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/build-13.jpg" alt="Controller assembly for the SainSmart 6 servo robotic arm">
 
 <p>Now to create the battery compartment. Route the battery connector cable through the hole in the top plate. Make sure to <b>install the battery</b> in this stage. Otherwise, you won't be able to access the compartment when the top controller base is installed.</p>
 
-<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/build-14.jpg" alt="Controller assembly for the SainSmart 6 axis robotic arm">
-<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/build-15.jpg" alt="Controller assembly for the SainSmart 6 axis robotic arm">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/build-14.jpg" alt="Controller assembly for the SainSmart 6 servo robotic arm">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/build-15.jpg" alt="Controller assembly for the SainSmart 6 servo robotic arm">
 
 <p>Move the display so the corner holes are aligned with the holes in the standoffs. Then align the top acrylic sheet above the controller so that all six holes align with the standoffs. Screw down the top sheet, making sure the display is being secured.</p>
 
-<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/build-16.jpg" alt="Controller assembly for the SainSmart 6 axis robotic arm">
-<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/build-17.jpg" alt="Controller assembly for the SainSmart 6 axis robotic arm">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/build-16.jpg" alt="Controller assembly for the SainSmart 6 servo robotic arm">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/build-17.jpg" alt="Controller assembly for the SainSmart 6 servo robotic arm">
 
 <p>Finally, attach the 2.4 Ghz radio module to the pins at the top of the shield, next to the blue power connector.</p>
 
-<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/build-18.jpg" alt="Controller assembly for the SainSmart 6 axis robotic arm">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/build-18.jpg" alt="Controller assembly for the SainSmart 6 servo robotic arm">
 
 <h2>Finished Controller</h2>
 
 <p>The controller is now finished. Aside from the gluing, this should have been a simple build.</p>
 
-<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/finished-controller.jpg" alt="Finished controller for the SainSmart 6 axis robotic arm">
+<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/finished-controller.jpg" alt="Finished controller for the SainSmart 6 servo robotic arm">
 
-<p>Now is the hard part of programming the Arduino's in the base and controller to talk to each other. That should be interesting! But first I'll document how to program the arm with basic code.</p>
+<p>Now is the hard part of programming the Arduino's in the base and controller to talk to each other. That should be interesting! But first I document how to program the arm with basic code <a href="{{ site.baseurl }}{% post_url 2017-07-23-Robot-Arm-Part-4-Basic-Arm-Code %}">here</a>.</p>
