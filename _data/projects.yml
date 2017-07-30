@@ -2,18 +2,17 @@
   url:   https://github.com/camisatx/RoboticsND
   descr: Experimenting with all forms of robotics, from rovers to manipulators to drones. I am enrolled in the <a href="https://www.udacity.com/robotics" target="_blank">Udacity Robitics Nanodegree</a>, which is a 6 month project based course. Topics include <font color="red">ROS</font>, <font color="red">kinematics</font>, <font color="red">computer vision</font>, <font color="red">control algorithms</font>, and <font color="red">hardware integration</font>. Additional content includes the ethics of robotics, human-robotic interactions, biologically inspired robots and soft robots. View the work I've done with this <a href="https://joshschertz.com/2017/07/15/Robot-Arm-Part-1-Arm-Build">6 servo robotic arm</a>.
 
-- name:  Help Me Vote
-  url:   https://helpme.vote
-  descr: Revolutionizing how people prepare for elections. Help Me Vote is a website that visualizes how politicians act in office, showing relationships that might influence their descisions. Transparency is required for health democracies. The site is built on <font color="red">Django</font> using <font color="red">Postgres</font> and <font color="red">Nginx</font>, run in <font color="red">Docker</font> containers on an <font color="red">Ubuntu</font> server.
-
 - name:  pySecMaster
   url:   https://github.com/camisatx/pySecMaster
   descr: A open sourced <font color="red">Python</font> and <font color="red">Postgres</font> based system to store and maintain financial data. Uses a custom ID structure for linking all price, fundamental and corporate data together. Included scrapers retrieve daily and minute stock prices and exchange information. Custom scrapers can retrieve corporate activities (earnings, dividends, IPOs, conference calls), economic events, financial statements, and option chains and prices.
 
 - name:  Sayv Bot
-  descr: Event driven trading system using machine learning. Built in <font color="red">Python</font> using <font color="red">Pandas</font>, <font color="red">Numpy</font>, and <font color="red">Scikit-Learn</font>. System trained neural net models then algorithmically executed strategies with live data. 
+  descr: Event driven trading system using machine learning. Built in <font color="red">Python</font> using <font color="red">Pandas</font>, <font color="red">Numpy</font>, and <font color="red">Scikit-Learn</font>. Used supervised <font color="red">Multi-layer Perceptron (MLP)</font> classifier to generate a model that placed each tradable stock into one of two buckets based on their prior trading performance. This sorted data was then used to calculate the projected profit probability of a hypothetical trade using current market prices. The hypothetical trades with the best profit probabilities were then executed with our broker. The main strategy we used generated a stable weekly return of 0.5%.
 
-- name:  Web Development
+-- name:  Help Me Vote
+  descr: Revolutionizing how people prepare for elections. Help Me Vote was a website that visualized how politicians act in office, showing relationships that might influence their descisions. Transparency is required for health democracies. The site was built on <font color="red">Django</font> using <font color="red">Postgres</font> and <font color="red">Nginx</font>, and ran in <font color="red">Docker</font> containers on an <font color="red">Ubuntu</font> server.
+
+ name:  Web Development
   url:   https://github.com/camisatx/joshschertz.com
   descr: Design and build custom websites, including this site that is built in <font color="red">Jekyll</font>. Other sites have been built in <font color="red">Wordpress</font> and <font color="red">Django</font>.
 
