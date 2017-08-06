@@ -1,0 +1,108 @@
+---
+layout: post
+title: "Wireless Issues with Ubuntu on the Dell XPS 13"
+date: 2017-08-06
+tags: ["linux"]
+---
+
+<p>The Dell XPS 13 is a great laptop for running Linux on, however, it has some known issues with the wireless adapter Dell includes on the machine. The two general solutions include changing the wireless adapter, and dealing with the driver hurdles.</p>
+
+<p>Changing the wireless adapter isn't too difficult. For some reason, Dell installed the Killer Wireless card on it, which requires a propriety Broadcom wireless driver to work with Linux. Instead, Dell should have installed the <a href="http://amzn.to/2vapG3X" target="_blank">Intel wireless 8265 card</a> which works directly with Linux. Most people claim this card solves nearly all wireless issues with the XPS 13. Here is a nice <a href="https://www.windowscentral.com/dell-xps-wifi-fix-upgrade-wireless" target="_blank">guide</a> covering how to replace the wireless card in the computer.<p>
+
+<p>However, if you don't want to swap out the wireless card, here are some tips for solving wireless issues you may experience.<p>
+
+<h3>Driver Solutions</h3>
+
+<p>There are many potential solutions to fixing the wireless driver issue. I'll start with the most likely solutions first, then move to the more obscure solutions.</p>
+
+<p>A good command for testing whether the wireless adapter is working is to run:</p>
+
+{% highlight shell %}
+sudo lshw -C network
+{% endhighlight %}
+
+<p>This will show all wireless adapters you have enabled on your computer. You will know the adapter is successfully working if you see a <b>logical name</b> under the adapter's features.</p>
+
+<h4>Restart the Network Manager</h4>
+
+<p>A good starting point is to restart the network manager.</p>
+
+{% highlight shell %}
+service network-manager restart
+{% endhighlight %}
+
+<h4>Reinstall Wireless Driver</h4>
+
+<p>Another good step is to reinstall the Broadcom wireless driver. This involves removing (or purging) the existing driver and downloading the latest driver from the internet. It is also good to ensure the linux-generic package is installed on your system.</p>
+
+{% highlight shell %}
+sudo apt purge bcmwl-kernel-source
+sudo apt install bcmwl-kernel-source linux-generic
+{% endhighlight %}
+
+<p>If the driver installs without any issue, then you know the driver is compatible with the current system and kernel.</p>
+
+<p>You can also install the Broadcom drivers from the <i>Additional Drivers</i> (or Proprietary Drivers) tab in <i>Software &  Updates</i>, however I think it is good to install the driver via command line because it allows you to monitor it's installation progress. For instance, you will see any issues that arise during the installation process.</p>
+
+<h4>Secure Boot</h4>
+
+<p>Another possible issue may be related to the BIOS having <b>Secure Boot</b> enabled. To check the current status of Secure Boot, check it in the BIOS menu. You can do this by restart the computer, but before the Ubuntu OS loads, press <b>F2</b> (or the Delete key) to access the BIOS menu. Navigate the BIOS until you find the Secure Boot setting, ensuring that it is disabled. Now you can save the settings and restart the computer.</p>
+
+<p>Once you are logged into the computer, see if the WiFi adapter has reappeared. If not, try reinstalling the driver again.</p>
+
+<h4>Kernel Incompatibility</h4>
+
+<p>If none of the solutions above worked, you might be experiencing a kernel incompatibility between the kernel and wireless driver. You will be able to identify if this is the case because the <i>bcmwl-kernel-source</i> installation is unable to install <b>wl</b>. You can test this by checking the output of <i>modprobe</i>:</p>
+
+{% highlight shell %}
+sudo modprobe wl
+{% endhighlight %}
+
+<p>If modprobe returns an error, you know that <i>wl</i> was not able install.</p>
+
+<h5>Change Kernels</h5>
+
+<p>A possible solution would be to downgrade the kernel you are running. If you recently updated the kernel you are running, you should still have your prior kernel installed. This means that you can boot to the prior kernel by specifying it in the GRUB menu at system startup. For Ubuntu 16.04, I was able to force the GRUB menu to appear at bootup by pressing the <b>Escape</b> key. This may require a few attempts before you are able to time the key press correctly.</p>
+
+<p>You can find the current kernel version you are running on your system by running this command:</p>
+
+{% highlight shell %}
+uname -sr
+{% endhighlight %}
+
+<p>Another option is to install a different kernel. This is done by downloading the kernel from the main repository <a href="http://kernel.ubuntu.com/~kernel-ppa/mainline/" target="_blank">here</a>. I recommend using a kernel version with the latest update date. You should download the <i>.deb</i> files for your system architecture (amd64 for most modern computers). Make sure you download the main linux-headers, the generic linux-headers and the generic linux-image debs; similar to this:</p>
+
+{% highlight shell %}
+wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.10.17/linux-headers-4.10.17-041017_4.10.17-041017.201705201051_all.deb
+wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.10.17/linux-headers-4.10.17-041017-generic_4.10.17-041017.201705201051_amd64.deb
+wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.10.17/linux-image-4.10.17-041017-generic_4.10.17-041017.201705201051_amd64.deb
+{% endhighlight %}
+
+<p>Once you have the kernel files downloaded, install them all using this command (make sure these are the only <i>.deb</i> files in the current folder):</p>
+
+{% highlight shell %}
+sudo dpkg -i *.deb
+{% endhighlight %}
+
+<p>If there are no errors, you can restart your computer. The system will boot directly to the latest kernel installed. If you don't want this, you can specify which kernel the system should boot to by specifying it in the GRUB menu.</p>
+
+<p>Once the system has booted, you can check which kernel you are running using:</p>
+
+{% highlight shell %}
+uname -sr
+{% endhighlight %}
+
+<p>Now that you are using a different kernel, try reinstalling the wireless driver as specified above.</p>
+
+<h3>Other Options</h3>
+
+<p>If none of these solutions worked for you, you should continue Googling your problem. You will eventually stumble on the solution. I'd also start considering changing the wireless adapter your computer has, too. A wireless adapter with built in Linux support will solve many issues directly.</p>
+
+<p>In any case, good luck with your search!</p>
+
+<h3>Sources</h3>
+
+<ul>
+    <li><p><a href="https://askubuntu.com/questions/760075/cant-view-wifi-networks-after-upgrading-to-ubuntu-16-04" target="_blank">https://askubuntu.com/questions/760075/cant-view-wifi-networks-after-upgrading-to-ubuntu-16-04</a></p></li>
+    <li><p><a href="https://www.tecmint.com/upgrade-kernel-in-ubuntu/" target="_blank">https://www.tecmint.com/upgrade-kernel-in-ubuntu</a></p></li>
+</ul>
