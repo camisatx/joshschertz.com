@@ -1,0 +1,87 @@
+---
+layout: post
+title: "Paperspace with ROS"
+date: 2017-08-01
+tags: ["robotics", "virtualization"]
+---
+
+<p>I've become very frustrated with the slow performance of running ROS simulations on my laptop. A basic simulation maxes out my CPU while only achieving about 10 to 20 frames per second. The two solutions to this include buying/building a premium computer, or renting a virtual desktop. I decided to go with renting a virtual desktop because it more cost effective in the short term, and it's immediate. <a href="https://www.paperspace.com" target="_blank">Paperspace</a> is the front runner for providing cost effective virtual desktops that utilize GPUs, essential for running simulations, machine learning and CAD programs.</p>
+
+<p>In this post, I will outline the benefits of using Paperspace, along with how to get <a href="http://www.ros.org/" target="_blank">ROS</a> working in a virtualized GPU desktop.</p>
+
+<h2>Virtual Desktops</h2>
+
+<p>It is cheap to rent a remote server from Amazon, Google or Digital Ocean, however, all but Amazon only offer command line servers, and Amazon Workspaces has very limited and expensive GPU based virtual desktops (1 as of right now). Paperspace on the other hand provides very cost efficient GPU based virtual desktops, where many machines include their own dedicated GPUs.</p>
+
+<p>GPU based virtual desktops are perfect for machine learning, heavy workstation applications (CAD, 3D design, VFX, etc.), and even gaming. This is very exciting because it means you can use a low powered laptop to access a very powerful computer from any location in the world (albeit they currently only have US east and west coast servers). You can now quickly and cheaply work on projects that require powerful hardware without spending time and money building the best system.</p>
+
+<p>Paperspace allows you to connect to the remote machines via a web browser or local application (Windows and Mac). Using a web browser is great because it means your local computer can be running Windows, Mac or Linux, and still be able to connect.</p>
+
+<p>Paperspace has many other neat features, including multiple monitor support, drag and drop functionality, shared drives, snapshots and public IPs. Do note that the later two are an extra cost per month.</p>
+
+<h2>System Setup</h2>
+
+<p>To get started, the first step is to create an account with Paperspace. You can <b><a href="https://www.paperspace.com/&R=M77NNX" target="_blank">sign up here</a>, where you will get a $10 credit</b> (I will earn a $15 credit once you spend more than $25). Next we can create a new machine!</p>
+
+<img src="{{ site.baseurl }}/assets/img/paperspace/paperspace-console.png" alt="Paperspace console">
+
+<p>Starting from the Paperspace homepage, click on <b>Launch Console</b> in the top right. The console is where you will create, access and edit machines, along with getting access to your billing and account information. Within the console, navigate to the <b>Machine</b> section, and click on <b>New Machine</b>.</p>
+
+<img src="{{ site.baseurl }}/assets/img/paperspace/paperspace-creation-1-region.png" alt="Paperspace Ubuntu 14.04 machine creation">
+
+<p>When creating a new machine, the first option is to specify the region where the machine should be located. Since I am near New York right now, I am selected the <b>East Coast</b> location.</b>
+
+<img src="{{ site.baseurl }}/assets/img/paperspace/paperspace-creation-2-os.png" alt="Paperspace Ubuntu 14.04 machine creation">
+
+<p>Next we can choose the operating system for our machine. You will notice that we can select either Windows 7 or 10, or Linux Ubuntu 14.04 or 16.04. However, ROS only works on Linux, thus we need to create a Linux based virtual desktop. But also notice that none of the Linux template machines offer a virtual desktop right now (as of Aug 2017); they only provide access via SSH. Paperspace has a single Linux virtual desktop machine, located in the <b>Public Templates</b> section, titled <b>ML-in-a-box</b>. This machine is running Ubuntu 14.04 instead of 16.04, but that's better than nothing! Go ahead and select this machine. If you are curious, this machine comes <a href="https://paperspace.zendesk.com/hc/en-us/articles/236406527" target="_blank">pre-installed</a> with TensorFlow, Python 2 & 3, OpenBLAS, Caffe, Theano, Torch and Keras.</p>
+
+<img src="{{ site.baseurl }}/assets/img/paperspace/paperspace-creation-3-machine.png" alt="Paperspace Ubuntu 14.04 machine creation">
+
+<p>Now the fun part of selecting which machine we want to run. When using the ML-in-a-box template, there are fewer machine options. You will notice that only the machines with dedicated GPUs are available. This is okay because the ROS simulations will require all the GPU power we can give them. I am going to be using the <b>GPU+</b> machine. If you determine that the machine you selected is not powerful enough, you can always resize it at a later date.</p>
+
+<p>Also select how you want the machine to be billed. The two options are billed hourly or monthly. You can save almost 50% by selecting monthly, however, for our use case right now, I think it makes better financial sense to select <b>hourly</b> and just shutdown the machine when you are not using it. If you know you are going to be running long simulations or ML training sessions on the machine, then maybe selecting monthly would be better.</p>
+
+<img src="{{ site.baseurl }}/assets/img/paperspace/paperspace-creation-4-storage.png" alt="Paperspace Ubuntu 14.04 machine creation">
+
+<p>The default storage option of <b>50 GB</b> should be more than sufficient for ROS simulations. Paperspace charges a monthly fee for storage, even when you are paying for the machine hourly. This allows you to shutdown the machine while still having your machine's image safely stored, and able to be booted up again in the future.</p>
+
+<img src="{{ site.baseurl }}/assets/img/paperspace/paperspace-creation-5-name.png" alt="Paperspace Ubuntu 14.04 machine creation">
+
+<p>You can name this machine now. I'm going to call my machine <b>ROS</b>.</p>
+
+<img src="{{ site.baseurl }}/assets/img/paperspace/paperspace-creation-6-options.png" alt="Paperspace Ubuntu 14.04 machine creation">
+
+<p>The final two options include the auto snapshot feature and public IP. I <b>deselected both</b> because I don't want that functionality and want to save money (they both cost extra). The auto snapshot is useful for ensuring that you have a machine backup at specific time intervals.</p>
+
+<img src="{{ site.baseurl }}/assets/img/paperspace/paperspace-creation-7-payment.png" alt="Paperspace Ubuntu 14.04 machine creation">
+
+<p>Review the machine options you selected one final time and enter payment details (if you haven't already). You should see the $10 credit you received in the payment list on the right. Once you've checked everything, click <b>Create Your Paperspace</b>. The machine will be provisioned over the next few mintues.</p>
+
+<h2>Machine Settings</h2>
+
+<p>Before we get started with the machine, let's look at the machine settings by clicking on the machine's card on the Machines page in the console.</p>
+
+<p>I think the most important feature to change is the <b>Auto-shutdown</b> setting. This will automatically turn off the machine after a specified amount of time of you not using it. I use <b>1 Hour</b> for my machine. If you are running long term training sessions, you might want to disable this feature.</p>
+
+<h2>Launching the Desktop</h2>
+
+<p>Launching the desktop is as easy as clicking <b>Launch</b> from the Machines page in the Paperspace console. Alternatively, you can launch the desktop or terminal from within the machine's setting page.</p>
+
+<p>Once the desktop loads within your browser, you should perform some system updates to ensure everything is up to date. You can do this by opening the terminal and typing:</p>
+
+{% highlight shell %}
+sudo apt update && sudo apt upgrade -y
+{% endhighlight %}
+
+<p>You will be prompted to enter the paperspace user password. You can find the temporary password in an email Paperspace will email you once the machine finishes provisioning itself.</p>
+
+<p>You should now change this temporary password by going to the <b>User Accounts</b> section in the <b>System Settings</b>.</p>
+
+<h2>Installing ROS</h2>
+
+<p>Since we are using Ubuntu 14.04, we must use <a href="http://wiki.ros.org/indigo" target="_blank">ROS Indigo Igloo</a> instead of Kinetic or Lunar. I will be following the official installation instructions provided by ROS <a href="http://wiki.ros.org/indigo/Installation/Ubuntu" target="_blank">here</a>.</p>
+
+<h2>Setup Udacity Pick & Place Project</h2>
+
+<p>I wanted to test this ROS instance using the Udacity Robotics Nanodegree Pick & Place project. I used the installation instructions found <a href="https://github.com/udacity/RoboND-Kinematics-Project" target="_blank">here</a>.
+
