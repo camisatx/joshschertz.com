@@ -1,0 +1,74 @@
+---
+layout: post
+title: "Paperspace with Fusion 360"
+date: 2017-08-09
+tags: ["design", "virtualization"]
+---
+
+<p>In order to build truly innovative products, you need to design and plan them within a 3D environment, preferably a CAD based system. One of the best CAD systems is <a href="https://www.autodesk.com/products/fusion-360/overview" target="_blank">Autodesk's Fusion 360</a>, which offers a free license to students, startups and enthusiasts. However, Fusion only works on Windows and Mac, meaning that my Ubuntu based laptop won't work. A simple solution for me is to rent a virtual Windows desktop. Not only is this solution immediate, but I only have to pay for the time I use the system.</p>
+
+<p>There are multiple vendors offering virtual Windows desktops, however, few offer a system backed by dedicated GPUs. Dedicated GPUs gives a system much more power for designing and processing sophisticated models and simulations, along with speeding up the training of machine learning models. <a href="https://www.paperspace.com" target="_blank">Paperspace</a> is a front runner for providing cost effective GPU backed virtual desktops.</p>
+
+<p>In this post, I will outline the benefits of using Paperspace, along with how to get Fusion 360 working in a virtualized GPU desktop.</p>
+
+<h3>Virtual Desktops</h3>
+
+<p>It is cheap to rent a remote server from Amazon, Google or Azure, however, their GPU based virtual desktops are very limited and expensive. Paperspace on the other hand offers a wide spectrum of GPU based virtual desktops at cost efficient prices. Paperspace's basic desktops use shared GPUs, and their more powerful systems include dedicated GPUs.</p>
+
+<p>GPU based virtual desktops are perfect for machine learning, heavy workstation applications (CAD, 3D design, VFX, etc.), and even gaming. This is very exciting because it means you can use a low powered laptop to access a very powerful computer from any location in the world (albeit you still want to be physically close to the data center to reduce latency). You can now quickly and cheaply work on projects that require powerful hardware without spending time and money building the best system.</p>
+
+<p>Paperspace allows you to connect to the remote machines via a web browser or local application (Windows and Mac). Using a web browser is great because you can connect to the virtual desktop while running Windows, Mac or Linux without having to download anything.</p>
+
+<p>Paperspace has many other neat features, including multiple monitor support, drag and drop functionality (between local and virtual desktops), shared drives, snapshots and public IPs. Do note that the later two are an extra cost per month.</p>
+
+<h3>System Setup</h3>
+
+<p>To get started, the first step is to create an account with Paperspace. You can <b><a href="https://www.paperspace.com/&R=M77NNX" target="_blank">sign up here</a>, where you will get a $10 credit</b> (I will earn a $15 credit once you spend more than $25). Next we can create a new machine!</p>
+
+<p>Starting from the Paperspace homepage, click on <b>Launch Console</b> in the top right. The console is where you will create, access and edit machines, along with getting access to your billing and account information. Within the console, navigate to the <b>Machine</b> section, and click on <b>New Machine</b>.</p>
+
+<img src="{{ site.baseurl }}/assets/img/paperspace/paperspace-console.png" alt="Paperspace console">
+
+<p>When creating a new machine, the first option is to specify the region where the machine should be located. Since I am near New York right now, I am selected the <b>East Coast</b> location.</b>
+
+<img src="{{ site.baseurl }}/assets/img/paperspace/paperspace-creation-1-region.png" alt="Paperspace Windows machine creation">
+
+<p>Next we can choose the operating system for our machine. You will notice that we can select either Windows 7 or 10, or Linux Ubuntu 14.04 or 16.04. However, none of the Linux template machines offer a virtual desktop right now (as of Aug 2017); they only provide access via SSH. Since Fusion works in Windows, we will select the Windows 10 template.</p>
+
+<img src="{{ site.baseurl }}/assets/img/paperspace/paperspace-creation-2-os.png" alt="Paperspace Windows 10 template">
+
+<p>Now the fun part of selecting which machine we want to run. We have multiple options, including systems with a shared GPU and systems with dedicated GPUs. For most CAD work, a system with a shared GPU will be sufficient. I am using the <b>Advanced</b> system that includes 6 CPU cores, 16GB of RAM, and 2 GB in the GPU, for $0.20 per hour. If you think you will need more performance, you can select a more powerful system. Since Fusion saves all work to the Audodesk cloud, it is easy to delete an old system and create a more power system where all your prior projects will sync once you download and log into Fusion.</p>
+
+<p>Also select how you want the machine to be billed. The two options are billed hourly or monthly. You can save almost 50% by selecting monthly, however, for our use case right now, I think it makes better financial sense to select <b>hourly</b> and just shutdown the machine when you are not using it. If you know you are going to be running long simulations or ML training sessions on the machine, then maybe selecting monthly would be better.</p>
+
+<img src="{{ site.baseurl }}/assets/img/paperspace/paperspace-creation-3-machine.png" alt="Paperspace Windows machine creation">
+
+<p>The default storage option of <b>50 GB</b> should be enough for us. Paperspace charges a monthly fee for storage, even when you are paying for the machine hourly. This allows you to shutdown the machine while still having your machine's image safely stored, and able to be booted up again in the future. You can expand the system's storage at a later date, too.</p>
+
+<img src="{{ site.baseurl }}/assets/img/paperspace/paperspace-creation-4-storage.png" alt="Paperspace Windows  machine creation">
+
+<p>You can name this machine now. I'm going to call my machine <b>Fusion 360</b>.</p>
+
+<img src="{{ site.baseurl }}/assets/img/paperspace/paperspace-creation-5-name.png" alt="Paperspace Windows machine creation">
+
+<p>The final two options include the auto snapshot feature and public IP. I <b>deselected both</b> because I don't want that functionality and want to save money (they both cost extra). The auto snapshot is useful for ensuring that you have a machine backup at specific time intervals.</p>
+
+<img src="{{ site.baseurl }}/assets/img/paperspace/paperspace-creation-6-options.png" alt="Paperspace Windows machine creation">
+
+<p>Review the machine options you selected one final time and enter payment details (if you haven't already). You should see the $10 credit you received in the payment list on the right. Once you've verified everything, click <b>Create Your Paperspace</b>. The machine will be provisioned over the next few minutes.</p>
+
+<img src="{{ site.baseurl }}/assets/img/paperspace/paperspace-creation-7-payment.png" alt="Paperspace Windows machine creation">
+
+<h3>Machine Settings</h3>
+
+<p>Before we get started with the machine, let's look at the machine settings by clicking on the machine's card on the Machines page in the console.</p>
+
+<p>I think the most important feature to change is the <b>Auto-shutdown</b> setting. This will automatically turn off the machine after a specified amount of time of you not using it. I use <b>1 Hour</b> for my machine. If you are running long term simulations or training sessions, you might want to extend or disable this feature.</p>
+
+<h3>Launching the Desktop</h3>
+
+<p>Launching the desktop is as easy as clicking <b>Launch</b> from the Machines page in the Paperspace console. Alternatively, you can launch the desktop from within the machine's setting page.</p>
+
+<p>Once the desktop loads within your browser, you are ready to download Fusion 360 from Autodesk's website. When you log in, you will see any prior projects you worked on sync. If you are an enthusiast, startup or student, don't forget to claim your free 1 year license (you'll have to re-claim the license yearly).</p>
+
+<p>Now go design some amazing models!</p>
