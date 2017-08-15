@@ -1,0 +1,149 @@
+---
+layout: post
+title: "Robotics Nanodegree Project 3 - 3D Perception"
+date: 2017-08-14
+tags: ["robotics", "udacity"]
+---
+
+<p>The third project of the Udacity Robotics Nanodegree focused on 3D perception using a PR2 robot simulation in Gazebo. The robot used a RGB-D camera to capture the color and depth of objects within its field of view. A SVM was used to train a model that was used to recognize what each object was. With each object identified, the robot was able to pick and place each object into the correct bin based on prior instructions.</p>
+
+<p>The goal of perception is to convert sensor input into a point cloud image that can be used to identify specific objects, allowing the system to make decisions as to what should happen with each object. The three main parts of perception include filtering the point cloud, clustering relevant objects, and recognizing objects.</p>
+
+<h3>Filtering</h3>
+
+<p>The first part of the perception pipeline filters the raw point cloud to keep only the essential data, removing adversarial data points and compressing the cloud data.</p>
+
+<p>The raw point cloud object from the PR2 simulation looks like this:</p>
+
+<img src="{{ site.baseurl }}/assets/img/robotics-nd/3d-perception/pipeline-0-raw-cloud.png" alt="PR2 robot simulation raw point cloud">
+
+<h4>Outlier Removal Filter</h4>
+
+<p>Outlier filters can remove outliers from the point cloud. These outliers are often caused by external factors like dust in the environment, humidity in the air, or presence of various light sources. One such filter is PCL's <a href="http://pointclouds.org/documentation/tutorials/statistical_outlier.php" target="_blank">StatisticalOutlierRemoval</a> filter that computes the distance to each point's neighbors, then calculates a mean distance. Any points whose mean distances are outside a defined interval are removed.</p>
+
+<p>For the PR2 simulation, I found that a mean k value of <b>20</b>, and a standard deviation threshold of <b>0.1</b> provided the optimal outlier filtering.</p>
+
+<p>Here is the cloud after performing the outlier removal filter.<p>
+
+<img src="{{ site.baseurl }}/assets/img/robotics-nd/3d-perception/pipeline-1-outlier-removal-filter.png" alt="PR2 robot simulation outlier removal filter">
+
+<h4>Voxel Grid Filter</h4>
+
+<p>The raw point cloud will often have more details than required, causing excess processing time when analyzing it. A voxel grid filter down-samples the data by taking a spatial average of the points in the cloud confined by each voxel. The set of points which lie within the bounds of a voxel are assigned to that voxel, and are statistically combined into one output point.</p>
+
+<p>I used an X, Y, and Z voxel grid filter leaf size of <b>0.01</b>. This value represents the voxels per cubic meter, thus increasing the number adds more detail and processing time. Using 0.01 was a good compromise of leaving enough detail while minimizing processing time, however, increasing the number would increase the model's accuracy (and increase processing time).</p>
+
+<p>Here is the cloud after using the voxel grid filter:</p>
+
+<img src="{{ site.baseurl }}/assets/img/robotics-nd/3d-perception/pipeline-2-voxel-grid-filter.png" alt="PR2 robot simulation voxel grid filter">
+
+<h4>Passthrough Filter</h4>
+
+<p>The passthrough filter allows a 3D point cloud to be cropped by specifying an axis with cut-off values along the axis. The region allows to pass through is often called the region of interest.</p>
+
+<p>The PR2 robot simulation required passthrough filters for both the Y and Z axis (global axis). This prevented processing values outside the area immediately in front of the robot. For the Y axis, I used a range of <b>-0.4</b> to <b>0.4</b>, and for the Z axis, I used a range of <b>0.61</b> to <b>0.9</b>.
+
+<p>Here is the point cloud after using the passthrough filter:</p>
+
+<img src="{{ site.baseurl }}/assets/img/robotics-nd/3d-perception/pipeline-3-passthrough-filter.png" alt="PR2 robot simulation passthrough filter of the Y and Z axis">
+
+<h4>RANSAC Place Segmentation</h4>
+
+<p>Random Sample Consensus (RANSAC) is used to identify points in the dataset that belong to a particular model. It assumes that all of the data in a dataset is composed of both inliers and outliers, where inliers can be defined by a particular model with a specific set of parameters, and outliers don't.</p>
+
+<p>I used a RANSAC max distance value of <b>0.01</b>.</p>
+
+<p>The extracted inliers included the table. It looks like this:</p>
+
+<img src="{{ site.baseurl }}/assets/img/robotics-nd/3d-perception/pipeline-4-extracted-inliers.png" alt="PR2 robot simulation extracted inliers (table)">
+
+<p>The extracted outliers contained the objects on the table. It looks like this:</p>
+
+<img src="{{ site.baseurl }}/assets/img/robotics-nd/3d-perception/pipeline-5-extracted-outliers.png" alt="PR2 robot simulation extracted outliers (objects)">
+
+<h3>Clustering for Segmentation</h3>
+
+<p>With a cleaned point cloud, it is possible to identify individual objects within it. One straightforward approach is to use Euclidean clustering to perform this calculation.<p>
+
+<p>The two main algorithms possible include:</p>
+
+<ul>
+    <li>K-means</li>
+    <li>DBSCAN</li>
+</ul>
+
+<h4>K-means</h4>
+
+<p>K-means clustering algorithm is able to group data points into n groups based on their distance to randomly chosen centroids. However, K-means clustering requires that you know the number of groups to be clustered, which may not always be the case.</p>
+
+<h4>DBSCAN</h4>
+
+<p>Density-based spatial cluster of applications with noise (DBSCAN) (sometimes called *Euclidean clustering*) is a clustering algorithm that creates clusters by grouping data points that are within some threshold distance from their nearest neighbor.</p>
+
+<p>DBSCAN is unique over k-means because you don't need to know how many clusters to expect in the data. However, you do need to know something about the density of the data points being clustered.</p>
+
+<p>Performing a DBSCAN within the PR2 simulation required converting the XYZRGB point cloud to a XYZ point cloud, making a k-d tree (decreases the computation required), preparing the Euclidean clustering function, and extracting the clusters from the cloud. This process generates a list of points for each detected object.</p>
+
+<p>By assigning random colors to the isolated objects within the scene, I was able to generate this cloud of objects:</p>
+
+<img src="{{ site.baseurl }}/assets/img/robotics-nd/3d-perception/dbscan-object-cluster.png" alt="PR2 robot simulation DBSCAN object clustering">
+
+<h3>Object Recognition</h3>
+
+<p>The object recognition code allows each object within the object cluster to be identified. In order to do this, the system first needs to train a model to learn what each object looks like. Once it has this model, the system will be able to make predictions as to which object it sees.</p>
+
+<h4>Capture Object Features</h4>
+
+<p>Color histograms are used to measure how each object looks when captured as an image. Each object is positioned in random orientations to give the model a more complete understanding. For better feature extraction, the RGB image can be converted to HSV before being analyzed as a histogram. The number of bins used for the histogram changes how detailed each object is mapped, however too many bins will over-fit the object.</p>
+
+<p>The code for building the histograms can be found in <a href="https://github.com/camisatx/RoboticsND/blob/master/projects/perception/PR2-Project/sensor_stick/src/sensor_stick/features.py" target="_blank">features.py</a>.</p>
+
+<p>The <a href="https://github.com/camisatx/RoboticsND/blob/master/projects/perception/PR2-Project/sensor_stick/scripts/capture_features_pr2.py" target="_blank">capture_features_pr2.py</a> script saved the object features to a file named <i>training_set_pr2.sav</i>. It captured each object in <b>50</b> random orientations, using the <b>HSV</b> color space and <b>128</b> bins when creating the image histograms.</p>
+
+<h4>Train SVM Model</h4>
+
+<p>A support vector machine (SVM) is used to train the model (specifically a SVC). The SVM loads the training set generated from the <i>capture_features_pr2.py</i> script, and prepares the raw data for classification. I found that a <b>linear kernel</b> using a C value of <b>0.1</b> builds a model with good accuracy.</p>
+
+<p>I experimented with cross validation of the model and found that a <b>50</b> fold cross validation worked best. A <b>leave one out</b> cross validation strategy provided marginally better accuracy results, however, it required much longer to process.</p>
+
+<p>In the end, I was able to generate an accuracy score of 92.17%. The <a href="https://github.com/camisatx/RoboticsND/blob/master/projects/perception/PR2-Project/RoboND-Perception-Project/pr2_robot/scripts/train_svm.py" target="_blank">train_svm.py</a> script trained the SVM, saving the final model as <i>model.sav</i>.</p>
+
+<p>The confusion matrices below shows the non-normalized and normalized results for a test case using the trained model generated above.</p>
+
+<img src="{{ site.baseurl }}/assets/img/robotics-nd/3d-perception/confusion-matrices.png" alt="PR2 robot simulation confusion matrices using SVC trained on object color histogram features">
+
+<h3>PR2 Robot Simulation</h3>
+
+<p>The PR2 robot simulation has three test scenarios to evaluate the object recognition performance. The following sections demonstrate each scenario.
+
+<h4>Test 1</h4>
+
+<img src="{{ site.baseurl }}/assets/img/robotics-nd/3d-perception/test-1-object-recognition.png" alt="PR2 robot simulation object recognition test 1">
+
+<p>View the goal <a href="https://github.com/camisatx/RoboticsND/blob/master/projects/perception/PR2-Project/RoboND-Perception-Project/pr2_robot/config/pick_list_1.yaml" target="_blank">pick list</a>, and the calculated <a href="https://github.com/camisatx/RoboticsND/blob/master/projects/perception/PR2-Project/RoboND-Perception-Project/pr2_robot/scripts/output_1.yaml" target="_blank">output values</a>.</p>
+
+<h4>Test 2</h4>
+
+<img src="{{ site.baseurl }}/assets/img/robotics-nd/3d-perception/test-2-object-recognition.png" alt="PR2 robot simulation object recognition test 2">
+
+<p>View the goal <a href="https://github.com/camisatx/RoboticsND/blob/master/projects/perception/PR2-Project/RoboND-Perception-Project/pr2_robot/config/pick_list_2.yaml" target="_blank">pick list</a>, and the calculated <a href="https://github.com/camisatx/RoboticsND/blob/master/projects/perception/PR2-Project/RoboND-Perception-Project/pr2_robot/scripts/output_2.yaml" target="_blank">output values</a>.</p>
+
+<h4>Test 3</h4>
+
+<img src="{{ site.baseurl }}/assets/img/robotics-nd/3d-perception/test-3-object-recognition.png" alt="PR2 robot simulation object recognition test 3">
+
+<p>View the goal <a href="https://github.com/camisatx/RoboticsND/blob/master/projects/perception/PR2-Project/RoboND-Perception-Project/pr2_robot/config/pick_list_3.yaml" target="_blank">pick list</a>, and the calculated <a href="https://github.com/camisatx/RoboticsND/blob/master/projects/perception/PR2-Project/RoboND-Perception-Project/pr2_robot/scripts/output_3.yaml" target="_blank">output values</a>.</p>
+
+<h3>Future Work</h3>
+
+<p>This project can be expanded to get the PR2 to actually grab each object and drop it to the correct bin. I have most of the code required to get this working, however, I need to finish the code that adjusts the collision map to remove each object that is to be picked up. Otherwise, the robot will never pick up the objects because it thinks it will collide with them.</p>
+
+<h3>Code Sources</h3>
+
+<p>The original Udacity perception exercise code can be found <a href="https://github.com/udacity/RoboND-Perception-Exercises" target="_blank">here</a>. To install the exercise data on your own computer, view the installation guide <a href="https://github.com/camisatx/RoboticsND/blob/master/projects/perception/Install_Guide.md" target="_blank">here</a>.</p>
+
+<p>The PR2 3D perception project code source can be found <a href="https://github.com/udacity/RoboND-Perception-Project" target="_blank">here</a>. Follow the instructions in the README.md to get the demo code working.</p>
+
+<h3>Run the Simulation</h3>
+
+<p>View the instructions <a href="https://github.com/camisatx/RoboticsND/blob/master/projects/perception/PR2-Project/RoboND-Perception-Project/pr2_robot/scripts/README.md" target="_blank">here</a> to get the code mentioned above working.<p>
