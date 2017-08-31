@@ -12,7 +12,7 @@ redirect_from:
             {% if project.url contains "https://" %}
                 <h3><a href="{{ project.url }}" target="_blank">{{ project.name }}</a></h3>
             {% else %}
-                <h3><a href="{{ project.url | prepend: site.baseurl }}" target="_blank">{{ project.name }}</a></h3>
+                <h3><a href="{{ project.url | prepend: site.baseurl }}">{{ project.name }}</a></h3>
             {% endif %}
         {% else %}
             <h3>{{ project.name }}</h3>
