@@ -1,0 +1,30 @@
+---
+layout: page
+title: Robotics
+---
+
+<p>In addition to building, simulating and controlling a 5 degree of freedom robot arm, I am experimenting with pneumatic jamming and soft grippers, and Dex-Net 2.0 image processing. I will link all relevant posts to this page as I progress.</p>
+
+<h3>5 DoF Robot Arm</h3>
+
+<h4>Arm Construction</h4>
+
+<p>Constructing the arm was a multi-step process. The <a href="{{ site.baseurl }}{% post_url 2017-07-15-Robot-Arm-Part-1-Arm-Build %}">first</a> step covered the basic arm build. To increase the arm's stability, I added a rotatable platform in the <a href="{{ site.baseurl }}{% post_url 2017-07-17-Robot-Arm-Part-2-Rotatable-Platform %}">second</a> step. The <a href="{{ site.baseurl }}{% post_url 2017-07-19-Robot-Arm-Part-3-Electronics %}">third</a> step covered integrating all of the servos and electronics. I briefly covered basic code in step <a href="{{ site.baseurl }}{% post_url 2017-07-23-Robot-Arm-Part-5-Basic-Arm-Code %}">five</a>.</p>
+
+<img src="{{ site.baseurl }}/assets/img/robot-arm/robot-arm-kit-finished-2.jpg" alt="Robot arm build complete">
+
+<h4>CAD Model</h4>
+
+<p>Even though I have a working physical arm, I needed a CAD model of the arm so that I could perform Gazebo simulations. Simulations are useful for building the kinematic algorithms to control and move the arm.
+
+<img src="{{ site.baseurl }}/assets/img/robot-arm/robot-arm-cad-render.jpg" alt="Robot arm CAD render">
+
+<p>I used Fusion 360 to design the arm from scratch, except for the servos and the Arduino Mega. You can explore the model here:</p>
+
+<iframe src="https://myhub.autodesk360.com/ue2b039b5/shares/public/SHabee1QT1a327cf2b7a4d90a97294cd22b4?mode=embed" width="800" height="600" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"  frameborder="0"></iframe>
+
+<p>Each arm joint is able to rotate, including each gripper link. I estimate that the model has an measurement error tolerance of 0 - 1 mm per component (I had to use a ruler to measure each item since I didn't have a caliper).</p>
+
+<h3>Pneumatic Grippers</h3>
+
+<p>In order to provide a better mechanism for picking up objects, I am experimenting with pneumatic grippers, including the jamming and soft grippers. These grippers use soft rubbers to interface with objects, meaning delicate objects can be manipulated without damage. The grippers are also easier to orient when picking up an object.</p>
