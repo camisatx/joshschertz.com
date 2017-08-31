@@ -1,6 +1,6 @@
 - name:  Robotics
   url:   robotics
-  descr: I am building a 5 degree of freedom robot arm that will use cutting edge techniques for the controlling software, gripper design, and perception pipeline. The arm uses ROS for control via a Ubuntu to Arduino serial connection. View my current progress <a href="https://joshschertz.com/projects/robotics">here</a>. I am documenting the process of building the arm, designing the CAD model, experimenting with pneumatic grippers, writing the cyclic coordinate descent (CCD) inverse kinematic control software, and integrating Dex-Net 2.0 into the perception pipeline.
+  descr: I am building a 5 degree of freedom robot arm that will use cutting edge techniques for the controlling software, gripper design, and perception pipeline. The arm uses <font color="red">ROS</font> for control via a <font color="red">Ubuntu</font> to <font color="red">Arduino</font> serial connection. View my current progress <a href="https://joshschertz.com/projects/robotics">here</a>. I am documenting the process of building the arm, designing the <font color="red">CAD</font> model, experimenting with <font color="red">pneumatic grippers</font>, writing the <font color="red">cyclic coordinate descent</font> (CCD) inverse kinematic control software, and integrating <font color="red">Dex-Net 2.0</font> into the perception pipeline.
 
 - name:  pySecMaster
   url:   https://github.com/camisatx/pySecMaster
