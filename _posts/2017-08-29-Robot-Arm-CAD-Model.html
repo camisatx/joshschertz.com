@@ -1,0 +1,42 @@
+---
+layout: post
+title: "Robot Arm CAD Model"
+date: 2017-08-29
+tags: ["robotics", "design"]
+---
+
+<img src="{{ site.baseurl }}/assets/img/robot-arm/robot-arm-cad-render.jpg" alt="Robot arm CAD redner">
+
+<p>I just finished designing a Fusion 360 3D CAD model of the <a href="{{ site.baseurl }}{% post_url 2017-07-15-Robot-Arm-Part-1-Arm-Build %}">robot arm</a> I have been working with. This has been my first large CAD project, and I'm very happy with the results. Not only are all of the measurements within 1 mm error tolerance (which for my purposes is great), but all of the joints and links rotate and move, just like the physical model.</p>
+
+<p>I designed the 3D CAD model of the robot arm because I wanted to perform simulations of the arm within ROS and Gazebo. Performing simulations is very useful when building the controlling algorithms because you can experiment without risking damage to the arm or environment. My goal is to design an inverse kinematics algorithm that uses either cyclic coordinate descent (CCD) or a reinforcement learning model.</p>
+
+<h3>Fusion 360</h3>
+
+<p>I've been learning how to work with Fusion 360 over the past month, and I am very please with it. I initially started with simple designs, including a conduit junction box and a 3D printable swirl lamp shade. I then moved on to designing a case for an Arduino Uno, which involved more advanced modeling techniques.</p>
+
+<p>I really admire the work Autodesk has done towards Fusion. I am stunned at the amazing integration between Fusion 360 and A360, which automatically stores all files on Autodesk's servers. This allows users to work, access and collaborate on files from any machine, either within the native application, in the web browser, or on a mobile phone (albeit you can only perform advanced model edits within the native application). Honestly, it really feels like magic when I'm able to view a model on my iPhone moments after I save the model on my desktop. It makes it easy to share what I've been working on at dinner!</p>
+
+<p>Additionally, I love how Autodesk supports the community. Specifically, it is fantastic to see them grant free licenses to enthusiasts and startups. This really pushed me to use Fusion over an alternative CAD solution, such as Solidworks.</p>
+
+<p>Finally, Fusion 360 really is an all-in-one 3D CAD solution. Not only can you design a realistic model within Fusion, but you can render, animate, simulate, and create drawings of the model. This means that you don't have to spend time moving files between applications, and can instead focus on the work you need to do.</p>
+
+<h3>Model</h3>
+
+<p>Aside from the Arduino Mega and servos, I designed the entire model from scratch. This required measuring each component of the arm, and creating digital equivalents. Unfortunately, I only had a ruler on hand during this process, forcing me to measure each dimension multiple times. I made sure to order myself a digital caliper for next time!</p>
+
+<p>Aside from the measurement difficulties, the design process was very straight forward. The original arm was made from bent sheet metal screwed together. This made the model creation easy, albeit tedious. I used rigid joints for each screw and nut assembly, thus there were dozens and dozens of joints throughout the model. I don't know if this is the correct way of building models like this, but it meant the components automatically aligned themselves.</p>
+
+<p>The main servo joints were a unique challenge because some joints required the servo itself to rotate, and other joints required only the components attached to the servo horn to rotate. These differences were specified by the order of components selected when creating the joints. The other critical step required when creating these revolute joints was specifying which components should be grounded. Since the model used linearly connected revolute joints, only the rotatable base needed to be grounded.</p>
+
+<p>The most difficult part of the model was the gripper assembly. Not only was each finger supposed to move in coordination with each other, but each finger had multiple support brackets that had to move in relation to their relevant finger. Fortunately, Fusion automatically handled computing the ratio required for moving each support bracket's joints to the correct orientation.</p>
+
+<h3>Interactive Viewer</h3>
+
+<p>You can explore the robot arm model I built using the viewer below. This is another fantastic feature of Autodesk's A360. Unfortunately, you aren't able to rotate each of the joints, but it's still cool being able to interact with the model.</p>
+
+<iframe src="https://myhub.autodesk360.com/ue2b039b5/shares/public/SHabee1QT1a327cf2b7a4d90a97294cd22b4?mode=embed" width="800" height="600" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"  frameborder="0"></iframe>
+
+<p>If you are interested in getting a copy of this model, send me a message. I may share the model on the Fusion 360 community area (or GrabCAD), however, I will need to remove the servos and Arduino models to prevent any copyright issues.</p>
+
+<p>I hope you've enjoyed hearing about my thoughts on Fusion 360 and designing this model. Let me know if you have any questions!</p>
