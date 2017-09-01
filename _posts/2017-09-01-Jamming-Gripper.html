@@ -1,0 +1,94 @@
+---
+layout: post
+title: "Jamming Gripper"
+date: 2017-09-01
+tags: ["robotics"]
+---
+
+<img src="{{ site.baseurl }}/assets/img/jamming-gripper/jamming-gripper.jpg" alt="Jamming gripper prototype">
+
+<p>This is my first prototype of a jamming gripper. Jamming grippers use a soft rubber bag filled with a granular material that can expand and contract based on air pressure. The granular material is able to surround an object when pressed onto it. When the air is removed, the material solidifies around the object, locking the object to the gripper. For my prototype, I used a balloon, funnel, syringe and coffee grounds to perform this task.</p>
+
+<p>If you are interested in learning more about jamming grippers, view the <a href="https://github.com/camisatx/RoboticsND/blob/master/notes/robot_grasping/papers/Universal_robotic_gripper_based_on_the_jamming_of_granular_material.pdf" target="_blank">Universal robotic gripper based on the jamming of granular material</a> by Eric Brown et al. that describes this concept in much more detail.</p>
+
+<h3>Components</h3>
+
+<p>Here are all of the components I used for this prototype. They include a 100 mL syringe, a 12 inch balloon, a 3 inch funnel, coffee grounds, and a coffee filter. In total, I spent about $12 for all of these components on Amazon, including the highest quality coffee ($2 for the 12 ounce bag). I also used some packing tape, although duct tape would provide a better seal.</p>
+
+<img src="{{ site.baseurl }}/assets/img/jamming-gripper/jamming-gripper-components.jpg" alt="Jamming gripper components">
+
+<p>Here is a nice view of the fresh coffee grounds. Mmmm!</p>
+
+<img src="{{ site.baseurl }}/assets/img/jamming-gripper/coffee-grounds.jpg" alt="Fresh coffee grounds">
+
+<h3>Assembly</h3>
+
+<p>The first step in assembly involves filling the balloon with as much coffee as you can fit in it. Ultimately, it would be ideal to pressurize the balloon when adding coffee into it, however, that is exceedingly complicated. I'm not even entirely sure how to do that.</p>
+
+<img src="{{ site.baseurl }}/assets/img/jamming-gripper/assembly-1-add-coffee.jpg" alt="Jamming gripper assembly step 1 - add coffee">
+
+<p>Once the balloon is filled with coffee, place the balloon inside the upside down funnel, and force balloon neck through the small opening of the funnel. Then you can fold the balloon's neck back onto the funnel so it hangs on securely.</p>
+
+<img src="{{ site.baseurl }}/assets/img/jamming-gripper/assembly-2-arrange-balloon.jpg" alt="Jamming gripper assembly step 2 - arrange balloon in funnel">
+
+<p>Now to add the coffee filter to prevent coffee grounds from being sucked back into the syringe. I cut out a small piece from the whole filter to use for this purpose.</p>
+
+<img src="{{ site.baseurl }}/assets/img/jamming-gripper/assembly-3-add-filter.jpg" alt="Jamming gripper assembly step 3 - add filter">
+
+<p>Originally, I tried to wrap the filter around the outside of the funnel and balloon. However, when I tried to attach the syringe's hose to this, I could never create an air tight seal, even with lots of tape.</p>
+
+<img src="{{ site.baseurl }}/assets/img/jamming-gripper/assembly-4-outer-filter.jpg" alt="Jamming gripper assembly step 4 - outer filter failure">
+
+<p>The solution was to squeeze both the filter and syringe hose within the balloon opening through the funnel. This created an air tight seal simply due to the tightness of the opening. I added some tape around this area to prevent any item from moving.</p>
+
+<img src="{{ site.baseurl }}/assets/img/jamming-gripper/assembly-5-inner-filter.jpg" alt="Jamming gripper assembly step 5 - inner filter">
+
+<p>The finished jamming gripper looks like this:</p>
+
+<img src="{{ site.baseurl }}/assets/img/jamming-gripper/jamming-gripper.jpg" alt="Jamming gripper">
+
+<h3>Testing</h3>
+
+<p>With the finished gripper, it's time to test it out. I collected a few odds and ends to test it with. I was especially interested to see it's performance with small, flat objects. Thus I made sure to include some M3 screws and nuts, and a micro SD card. Here are the items I tested.</p>
+
+<img src="{{ site.baseurl }}/assets/img/jamming-gripper/test-objects.jpg" alt="Objects to test with the jamming gripper">
+
+<p>Unfortunately, the gripper wasn't able to pick up the screw, nut or micro SD card. The balloon just isn't able to surround the objects enough, preventing the coffee grounds from securing them in place. The micro SD card would especially be difficult to grab due to both it's small size and thinness. Here is the indention left by the screw.</p>
+
+<img src="{{ site.baseurl }}/assets/img/jamming-gripper/test-screw-indention.jpg" alt="Screw indention in the jamming gripper">
+
+<p>Even though the micro SD card wasn't able to be picked up, I was curious if a normal size SD card would work. Sure enough, the gripper was able to pick it up. It appears that the extra thickness around the card is enough for the gripper to secure it in place.</p>
+
+<img src="{{ site.baseurl }}/assets/img/jamming-gripper/test-sd-card.jpg" alt="SD card test with the jamming gripper">
+
+<p>The next test used a soft silicon piece, which the gripper was able to easily pick up. I think this was due to a combination of it being thick enough, and it sticking to the latex balloon.</p>
+
+<img src="{{ site.baseurl }}/assets/img/jamming-gripper/test-soft-silicon.jpg" alt="Soft silicon test with the jamming gripper">
+
+<p>The gripper was easily able to grab a AA battery. The balloon nearly surrounded it completely, forming a secure grip.</p>
+
+<img src="{{ site.baseurl }}/assets/img/jamming-gripper/test-aa-battery.jpg" alt="AA battery test with the jamming gripper">
+
+<p>Surprisingly it wasn't as easy to grab the pen as it was to grab the AA battery. I think that was because the gripper wasn't able to wrap enough material around the pen.</p>
+
+<img src="{{ site.baseurl }}/assets/img/jamming-gripper/test-pen.jpg" alt="Pen test with the jamming gripper">
+
+<p>Finally, I tested the small Buddha statue, which had lots of grooves in it, meaning it should be easy for the gripper. And indeed it was. Aside from the gripper wanting to roll the statue around when being pressed down on it, the gripper securely held it.</p>
+
+<img src="{{ site.baseurl }}/assets/img/jamming-gripper/test-buddha.jpg" alt="Buddha statue test with the jamming gripper">
+
+<p>You can even see the deep indentation left in the gripper when the statue was removed. This is an ideal object for the gripper to grab.</p>
+
+<img src="{{ site.baseurl }}/assets/img/jamming-gripper/test-buddha-indentation.jpg" alt="Buddha statue indentation in the jamming gripper">
+
+<h3>Future Work</h3>
+
+<p>Now that I have proven the concept of the jamming gripper with this prototype, I am eager to work on a new and improved version.</p>
+
+<p>One of the main improvements I will make is using a vacuum pump to automate the process of inflating and deflating the gripper's bag. It is impractical to use a syringe to do this  because it requires two hands just to operate it, where one hand is also required to hold down the gripper over an object.</p>
+
+<p>I also want to experiment with other materials inside the gripper. Specifically, I want to try to find a material that does a better job surround objects while having similar properties as the coffee had. Perhaps using a more finely ground coffee will provide a better material.</p>
+
+<p>Lastly, I want to develop a more structurally robust gripper mechanism that can be mounted onto a robotic arm. This would allow me to perform much more experiments with this idea.</p>
+
+<p>Let me know if you have any questions related to this idea, prototype or future ideas!</p>
