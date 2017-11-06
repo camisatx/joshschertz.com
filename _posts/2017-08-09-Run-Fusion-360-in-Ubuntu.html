@@ -7,11 +7,15 @@ tags: ["design", "virtualization"]
 
 <img src="{{ site.baseurl }}/assets/img/paperspace/paperspace-fusion-360-in-ubuntu.png" alt="Running Fusion 360 in Ubuntu with Paperspace">
 
-<p>In order to build truly innovative products, you need to design and plan them within a 3D environment, such as a CAD based system. <a href="https://www.autodesk.com/products/fusion-360/overview" target="_blank">Autodesk's Fusion 360</a> is one such system, which is a cloud based 3D CAD, CAM, and CAE tool. Fusion 360 is great because you can design, test and fabricate a component within it, while syncing your progress on the cloud, allowing you to work anywhere and collaborate with others. Autodesk even offers a free license to students, startups and enthusiasts.</p>
+<p>Updated: Nov 6, 2017</p>
 
-<p>However, Fusion 360 only works on Windows and Mac, meaning that my Ubuntu based laptop won't work. A simple solution for me is to rent a virtual Windows desktop. Not only is this solution immediate, but I only have to pay for the time I use the system.</p>
+<p><i>tldr: Autodesk doesn't make a Linux version of their Fusion 360 software, but you can run it within a Windows based VM (like Paperspace) or in the browser. Currently, the browser based Fusion only offers limited functionality, thus I use (and recommend) a Windows based VM, with Paperspace offering an easy and affordable remote VM.</i></p>
 
-<p>There are multiple vendors offering virtual Windows desktops, however, few offer a system backed by dedicated GPUs. Dedicated GPUs give a system much more power for designing and processing sophisticated models and simulations, along with speeding up the training of machine learning models. <a href="https://www.paperspace.com" target="_blank">Paperspace</a> is a front runner for providing cost effective GPU backed virtual desktops.</p>
+<p>3D CAD systems can help you visualize and build any component or system. <a href="https://www.autodesk.com/products/fusion-360/overview" target="_blank">Autodesk's Fusion 360</a> is one of the most popular CAD systems. In total, it's a cloud based 3D CAD, CAM, and CAE tool. Fusion 360 is great because you can design, test and fabricate a component within it, while syncing your progress on the cloud, allowing you to work anywhere and collaborate with others. Autodesk even offers a free license to students, startups and enthusiasts.</p>
+
+<p>However, Fusion 360 only works on Windows and Mac, meaning any Linux user is left high and dry. The two solutions include using Fusion 360 within the browser, or using a virtual Windows desktop. The browser option would be perfect, but it has limited functionality (and assumes the computer is powerful enough to run it). My preferred solution is to rent a virtual Windows desktop. In addition to getting access to very powerful hardware, you only pay for the time that you use the system for.</p>
+
+<p>There are multiple vendors offering virtual Windows desktops, however, few offer a system backed by dedicated GPUs. Dedicated GPUs give the system much more power for designing and processing sophisticated models and simulations, along with speeding up the training of machine learning models. <a href="https://www.paperspace.com" target="_blank">Paperspace</a> is a front runner for providing cost effective GPU backed virtual desktops.</p>
 
 <p>In this post I will outline the benefits of using Paperspace, along with the steps required to get Fusion 360 working in a virtualized GPU desktop.</p>
 
@@ -33,7 +37,7 @@ tags: ["design", "virtualization"]
 
 <img src="{{ site.baseurl }}/assets/img/paperspace/paperspace-console.png" alt="Paperspace console">
 
-<p>When creating a new machine, the first option is to specify the region where the machine should be located. Since I am near New York right now, I am selected the <b>East Coast</b> location.</b>
+<p>When creating a new machine, the first option is to specify the region where the machine should be located. Paperspace now offers 3 locations, with one on each US coast, and their recently opened Amsterdam location. Since I am near New York right now, I am selected the <b>East Coast</b> location. </b>
 
 <img src="{{ site.baseurl }}/assets/img/paperspace/paperspace-creation-1-region.png" alt="Paperspace Windows machine creation">
 
@@ -41,9 +45,11 @@ tags: ["design", "virtualization"]
 
 <img src="{{ site.baseurl }}/assets/img/paperspace/paperspace-creation-2-os.png" alt="Paperspace Windows 10 template">
 
-<p>Now the fun part of selecting which machine we want to run. We have multiple options, including systems with a shared GPU and systems with dedicated GPUs. For most CAD work, a system with a shared GPU will be sufficient. I am using the <b>Advanced</b> system that includes 6 CPU cores, 16GB of RAM, and 2 GB in the GPU, for $0.20 per hour. If you realize your system isn't powerful enough, Paperspace allows you to upgrade your system to a more powerful system at a later date.</p>
+<p>Now the fun part of selecting which machine we want to run. We have multiple options, including systems with a shared GPU and systems with dedicated GPUs. For most CAD work, a system with a shared GPU will be sufficient. I am using the <b>Advanced</b> system that includes 6 CPU cores, 16GB of RAM, and a K160Q Nvidia GPU (2GB VRAM), for $0.18 per hour. If you realize your system isn't powerful enough, you can upgrade the system at a later date.</p>
 
 <p>Also select how you want the machine to be billed. The two options are billed hourly or monthly. You can save almost 50% by selecting monthly, however, for our use case right now, I think it makes better financial sense to select <b>hourly</b> and just shutdown the machine when you are not using it. If you know you are going to be running long simulations or ML training sessions on the machine, then maybe selecting monthly would be better.</p>
+
+<p>NOTE: When you shutdown the machine, all of your settings and files are saved in an attached storage node. Thus you don't have to worry about losing files when you shut down the machine. The storage node can be deleted when you terminate the machine.</p>
 
 <img src="{{ site.baseurl }}/assets/img/paperspace/paperspace-creation-3-machine.png" alt="Paperspace Windows machine creation">
 
@@ -59,7 +65,7 @@ tags: ["design", "virtualization"]
 
 <img src="{{ site.baseurl }}/assets/img/paperspace/paperspace-creation-6-options.png" alt="Paperspace Windows machine creation">
 
-<p>Review the machine options you selected one final time and enter payment details (if you haven't already). You should see the $10 credit you received in the payment list on the right. Once you've verified everything, click <b>Create Your Paperspace</b>. The machine will be provisioned over the next few minutes.</p>
+<p>Review the machine options you selected one final time and enter payment details (if you haven't already). If you clicked on my referral link above, you should see the $10 credit you received in the payment list on the right. Once you've verified everything, click <b>Create Your Paperspace</b>. The machine will be provisioned over the next few minutes.</p>
 
 <h3>Machine Settings</h3>
 
@@ -75,8 +81,10 @@ tags: ["design", "virtualization"]
 
 <img src="{{ site.baseurl }}/assets/img/paperspace/paperspace-windows-in-ubuntu.png" alt="Running Windows 10 in Ubuntu with Paperspace">
 
-<p>Once the desktop loads within your browser, you are ready to download Fusion 360 from Autodesk's website. When you log in, you will see any prior projects you worked on sync. If you are an enthusiast, startup or student, don't forget to claim your free 1 year license (you'll have to re-claim the license yearly).</p>
+<p>Once the desktop loads within your browser, you are ready to download Fusion 360 from Autodesk's website. When you log in, Fusion will sync all of the prior projects you've worked on. If you are an enthusiast, startup or student, don't forget to claim your free 1 year license (you'll have to re-claim the license yearly).</p>
 
 <p>If you are new to Fusion 360, <a href="https://www.youtube.com/user/cadcamstuff/videos" target="_blank">Lars Christensen</a> makes some great tutorials on YouTube that you can watch. For a bit of fun, here are some tutorials for designing an <a href="https://youtu.be/E0bhdr84FNU" target="_blank">Arduino Uno enclosure</a> and a <a href="https://youtu.be/3PnKBSOulwo" target="_blank">3D printed lampshade</a>.</p>
+
+<p>Here is the model of a <a href="{{ site.baseurl }}{% post_url 2017-08-29-Robot-Arm-CAD-Model %}">robot arm</a> I created while running Fusion 360 in a Paperspace machine.</p>
 
 <p>Now go design some amazing models!</p>
