@@ -37,7 +37,7 @@ tags: ["ethereum", "aws", "crypto currencies"]
 
 <h4>Claymore</h4>
 
-<p>Straight out of the gate, Claymore failed to detect the V100 (see image below). There is an open <a href="https://github.com/nanopool/Claymore-Dual-Miner/issues/123" target="_blank">issue</a> for this issue, so it might get resolved.</p>
+<p>Straight out of the gate, Claymore failed to detect the V100 (see image below). There is an open <a href="https://github.com/nanopool/Claymore-Dual-Miner/issues/123" target="_blank">issue</a> for this bug, so it might get resolved.</p>
 
 <img src="{{ site.baseurl }}/assets/img/crypto-currencies/v100-eth-mining-claymore-error.png" alt="Claymore error message when trying to mine with V100">
 
@@ -57,26 +57,26 @@ tags: ["ethereum", "aws", "crypto currencies"]
 
 <p>So is 90Mh/s enough to cover the server operating costs? Let's look into this.</p>
 
-<p>Using the US East AWS region, the p3.2xlarge instance costs $3.06 per hour (<a href="https://aws.amazon.com/ec2/pricing/on-demand/" target="_blank">on-demand</a> prices). Multiplied for the whole day, the V100 instance would cost $73.44. Plus there will be the cost of EBS storage (50 GB at $0.10/month) and bandwidth.</p>
+<p>Using the US East AWS region, the p3.2xlarge instance costs $3.06 per hour (<a href="https://aws.amazon.com/ec2/pricing/on-demand/" target="_blank">on-demand</a> prices). Multiplied for the whole day, the V100 instance would cost $73.44 per day. Plus there will be the cost of EBS storage (50 GB at $0.10/month) and bandwidth.</p>
 
-<p>At today's mining difficulty and ETH price ($293), a machine producing 90Mh/s would generate about 0.014 ETH per day, or about <b>$4.07 per day in revenue</b>.
+<p>At today's mining difficulty and Ethereum price ($293), a machine producing 90Mh/s would generate about 0.014 Ethereum per day, or about <b>$4.07 per day in revenue</b>.
 
 <img src="{{ site.baseurl }}/assets/img/crypto-currencies/v100-eth-mining-revenue.png" alt="Revenue from mining ETH using a p3.2xlarge AWS instance">
 
-<p>Taking the instance costs into consideration, the final profit would be about <b>-$70 per day</b>. In other words, you would be loosing about $70 per day if you used a p3.2xlarge instance to mine Ethereum.</p>
+<p>However, after taking the instance costs into consideration, the final profit would be about <b>-$70 per day</b>. In other words, you would be loosing about $70 per day if you used a p3.2xlarge instance to mine Ethereum.</p>
 
 <img src="{{ site.baseurl }}/assets/img/crypto-currencies/v100-eth-mining-profitability.png" alt="Profit from mining ETH using a p3.2xlarge AWS instance">
 
-<p>You couldn't even use a p3.2xlarge <a href="https://aws.amazon.com/ec2/spot/pricing/" target="_blank">spot instance</a> to mine profitably because it is still too expensive per hour. Currently the spot price in the US East AWS region is about $0.674 per hour, whereas it would generate about $0.17 per hour in revenue, costing you over $0.5 to run the instance per hour.</p>
+<p>You couldn't even use a p3.2xlarge <a href="https://aws.amazon.com/ec2/spot/pricing/" target="_blank">spot instance</a> to mine profitably because it is still too expensive per hour. Currently the spot price in the US East AWS region is about $0.674 per hour, whereas the instance would generate about $0.17 per hour in revenue, costing you over $0.5 to run the instance per hour.</p>
 
 <h3>Conclusion</h3>
 
 <p>Even though the V100 is currently the world's most powerful Ethereum mining card, the large cost of acquiring or renting one make mining with it unprofitable.</p>
 
 
-<p>Ultimately, this was an exciting experiment. It is fun to think about the economics of cloud mining crypto coins, and reasons why it often doesn't make financial sense. If you are serious about mining, you have to take the risk and acquire the hardware yourself. There is money to be made mining, however, you must be aware of the risks involved.</p>
+<p>Ultimately, this was an exciting experiment. It's fun to think about the economics of cloud mining crypto coins, and reasons why it often doesn't make financial sense. If you are serious about mining, you have to take the risk and acquire the hardware yourself.</p>
 
-<p>Since this didn't work out profitably, I'll be sticking with local GPU mining.</p>
+<p>Since this didn't work out profitably, I'll be sticking with local GPU mining. :)</p>
 
 <h3>Resources</h3>
 
