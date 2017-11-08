@@ -1,0 +1,85 @@
+---
+layout: post
+title: "Ethereum Mining on Nvidia V100"
+date: 2017-11-07
+tags: ["ethereum", "aws", "crypto currencies"]
+---
+
+<p>I recently found myself asking the question, "Can you mine Ethereum on an AWS instance?" When the ground breaking Nvidia V100 was finally added on AWS, I knew I had to test it's mining prowess. So how did it perform? Well, <b>the V100 is currently the world's best Ethereum ming card</b>, but is it good enough to cover all costs?</p>
+
+<p>Short answer: No.</p>
+
+<h3>Nvidia V100</h3>
+
+<p>The <a href="https://www.nvidia.com/en-us/data-center/tesla-v100/" target="_blank">Nvidia V100</a> is currently the world's most advanced compute card. It is specifically made for AI training and other HPC applications. The V100 offers a staggering 125 teraflops (or 112 teraflops for the PCIe variant) for specific deep learning, single floating point computation. This is possible due to the card having 5,120 CUDA cores and 672 tensor cores, which dramatically aid machine learning operations. The <a href="https://arstechnica.com/gadgets/2017/05/nvidia-tesla-v100-gpu-details/" target="_blank">V100</a> offers 15.7 teraflops for single precision computation, compared to 11.3 teraflops for the <a href="https://www.anandtech.com/show/11172/nvidia-unveils-geforce-gtx-1080-ti-next-week-699" target="_blank">GTX 1080 Ti</a> and 12.66 teraflops of the <a href="https://arstechnica.com/gadgets/2017/07/amd-rx-vega-64-56-specs-price-release-date/" target="_blank">AMD RX Vega 64</a>.</p>
+
+<p>Additionally, the V100 packs 16 GB of HBM2 memory, whose extremely quick speeds and large bandwidth aid computation performance. All of this should mean that the V100 should perform very well at Ethereum mining, which is heavily reliant on single precision computation and quick memory.</p>
+
+<p>The tricky part is getting access to a V100. I have found that it is only possible to purchase a V100 through a system integrator, such as <a href="http://www.thinkmate.com/systems/servers/gpx/v100" target="_blank">thinkmate</a>, and they are charging <b>$8,000</b> per V100. That's quite the price for a card, although this card is normally used by businesses, so the price isn't that unrealistic.</p>
+
+<p>An alternative to actually buying the card is to find a VPS that includes one, and rent it out for mining, err, performance tests.
+
+<h3>V100 VPS Providers</h3>
+
+<p>The two providers I've found that offer the V100 include AWS and Paperspace.</p>
+
+<p>In addition to the normal frills of AWS, you can spin up a p3 instance with 1, 4, or 8 V100s. That's crazy power! However, don't forget that you also have to budget for storage space and network traffic.</p>
+
+<p>Paperspace only offers an instance with one V100, however they are cheaper (and include free bandwidth!). If you're interested in trying out Paperspace, you can <a href="https://www.paperspace.com/&R=M77NNX" target="_blank">sign up here</a> using my affiliate link, where you will get a <b>$10 credit</b> (and I will earn a $15 credit once you spend more than $25).</p>
+
+<p>However, since I had some AWS credits, I decided to use AWS for these tests.</p>
+
+<h3>V100 Mining</h3>
+
+<p>I spun up a p3.2xlarge instance based on the <a href="https://aws.amazon.com/marketplace/pp/B076TGJHY1" target="_blank">Deep Learning Ubuntu (Cuda 9)</a> AMI. It's important to note that the V100 requires Cuda 9 to work. Using this AMI is perfect because you don't have to spend half an hour downloading and installing all the packages required to utilize the V100; this just works straight out of the box.</p>
+
+<p>For mining software, I tested both <a href="https://github.com/ethereum-mining/ethminer" target="_blank">ethminer</a> and <a href="https://github.com/nanopool/Claymore-Dual-Miner" target="_blank">Claymore</a>.</p>
+
+<h4>Claymore</h4>
+
+<p>Straight out of the gate, Claymore failed to detect the V100 (see image below). There is an open <a href="https://github.com/nanopool/Claymore-Dual-Miner/issues/123" target="_blank">issue</a> for this issue, so it might get resolved.</p>
+
+<img src="{{ site.baseurl }}/assets/img/crypto-currencies/v100-eth-mining-claymore-error.png" alt="Claymore error message when trying to mine with V100">
+
+<h4>ethminer</h4>
+
+<p>ethminer had no issues with the V100, and started mining less than a minute after starting the program. This beast instance had no problem building the DAG in seconds. I ran ethminer with the following command:</p>
+
+{% highlight bash %}
+./ethminer --farm-recheck 200 -G -F http://eth-us.dwarfpool.com:80/#####
+{% endhighlight %}
+
+<p>Using these settings, the V100 was able to mine at <b>90Mh/s</b>. Here is the system after mining for 48 minutes:</p>
+
+<img src="{{ site.baseurl }}/assets/img/crypto-currencies/v100-eth-mining-1.png" alt="Mining ETH using ethminer on a p3.2xlarge AWS instance">
+
+<h3>Profitability</h3>
+
+<p>So is 90Mh/s enough to cover the server operating costs? Let's look into this.</p>
+
+<p>Using the US East AWS region, the p3.2xlarge instance costs $3.06 per hour (<a href="https://aws.amazon.com/ec2/pricing/on-demand/" target="_blank">on-demand</a> prices). Multiplied for the whole day, the V100 instance would cost $73.44. Plus there will be the cost of EBS storage (50 GB at $0.10/month) and bandwidth.</p>
+
+<p>At today's mining difficulty and ETH price ($293), a machine producing 90Mh/s would generate about 0.014 ETH per day, or about <b>$4.07 per day in revenue</b>.
+
+<img src="{{ site.baseurl }}/assets/img/crypto-currencies/v100-eth-mining-revenue.png" alt="Revenue from mining ETH using a p3.2xlarge AWS instance">
+
+<p>Taking the instance costs into consideration, the final profit would be about <b>-$70 per day</b>. In other words, you would be loosing about $70 per day if you used a p3.2xlarge instance to mine Ethereum.</p>
+
+<img src="{{ site.baseurl }}/assets/img/crypto-currencies/v100-eth-mining-profitability.png" alt="Profit from mining ETH using a p3.2xlarge AWS instance">
+
+<p>You couldn't even use a p3.2xlarge <a href="https://aws.amazon.com/ec2/spot/pricing/" target="_blank">spot instance</a> to mine profitably because it is still too expensive per hour. Currently the spot price in the US East AWS region is about $0.674 per hour, whereas it would generate about $0.17 per hour in revenue, costing you over $0.5 to run the instance per hour.</p>
+
+<h3>Conclusion</h3>
+
+<p>Even though the V100 is currently the world's most powerful Ethereum mining card, the large cost of acquiring or renting one make mining with it unprofitable.</p>
+
+
+<p>Ultimately, this was an exciting experiment. It is fun to think about the economics of cloud mining crypto coins, and reasons why it often doesn't make financial sense. If you are serious about mining, you have to take the risk and acquire the hardware yourself. There is money to be made mining, however, you must be aware of the risks involved.</p>
+
+<p>Since this didn't work out profitably, I'll be sticking with local GPU mining.</p>
+
+<h3>Resources</h3>
+
+<ul>
+    <li><a href="https://www.cryptocompare.com/mining/calculator/eth" target="_blank">Ethereum Mining Calculator</a></li>
+</ul>
