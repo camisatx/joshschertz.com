@@ -9,8 +9,9 @@
 - name:  Sayv Bot
   descr: Event driven trading system with automated strategies that use machine learning to trade stocks and options. Built in <font color="red">Python</font> using <font color="red">Pandas</font>, <font color="red">Numpy</font>, and <font color="red">Scikit-Learn</font>. The main strategy used a supervised <font color="red">Multi-layer Perceptron (MLP)</font> classifier to generate a model that placed each tradable stock into one of two buckets based on their prior trading performance. This sorted data was then used to calculate the projected profit probability of a hypothetical trade using current market prices. The hypothetical trades with the best profit probabilities were then executed with our broker. This strategy generated a stable weekly return of 0.5% over the 6 months it was run.
 
-- name: Panoply Images
-  descr: Image processing web app that allows you to prepare your photos for the web. Not only can images be compressed and resized, but their EXIF data can be cleaned up or removed. For privacy, it is especially important to remove the GPS EXIF data from images. This web site is build in Flask, and is hosted on an AWS EC2 instance.
+- name:  Panoply Images
+  url:   https://panoplyimages.com
+  descr: Image processing web app that allows you to prepare your photos for the web. Not only can images be compressed and resized, but their EXIF data can be cleaned up or removed. For privacy, it is especially important to remove the GPS EXIF data from images. This web site is build in <font color="red">Flask</font>, and is hosted on an <font color="red">AWS EC2 instance</font>.
 
 - name:  Help Me Vote
   descr: Revolutionizing how people prepare for elections. Help Me Vote was a website that visualized how politicians act in office, showing relationships that might have influence their decisions. <i>Transparency is required for health democracies.</i> The site was built on <font color="red">Django</font> using <font color="red">Postgres</font> and <font color="red">Nginx</font>, and was run in <font color="red">Docker</font> containers on an <font color="red">Ubuntu</font> server.
