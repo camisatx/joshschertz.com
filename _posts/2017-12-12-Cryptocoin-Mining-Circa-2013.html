@@ -1,0 +1,118 @@
+---
+layout: post
+title: "Cryptocoin Mining - Circa 2013"
+date: 2017-12-12
+tags: ["cryptocurrencies"]
+---
+
+<img src="{{ site.baseurl }}/assets/img/crypto-currencies/mining-machine-2013/full-system-1-psu.jpg" alt="The first dedicated GPU mining machine I built in late 2013">
+
+<p>It is amazing to see crytpcurrencies finally becoming mainstream. I first got involved with cryptocoins in mid-2013, and started to mine them by that fall. I have so many stories of greed, scams and loose money. If you think today's crpto scene is crazy, you should have seen it back then. It was like the lone ranger days of the Wild West (read <a href="http://amzn.to/2AQY3xY" target="_blank">Cormac McCarthy's Blood Meridian</a> for more imagery (and a slap in the face)).</p>
+
+<p>In this post, I want to share and document my early days of mining cryptocoins. Now, this wasn't the earliest days of cryptos, as that was 4 to 5 years prior (the Bitcoin genesis block was mined in January 2009), but cryptocurrencies were still a niche field within the tech scene.</p>
+
+<p>I wish I could remember how I latched onto the idea to mine cryptocoins, but I don't. I can't even remember where I first heard about Bitcoin, but it must have been one of the tech sites I visited. This was before I knew what Slashdot and HackerNews was, so maybe Toms or Wired. In any case, I was initially drawn to the financial implications to Bitcoin, specifically its ability to transfer massive amounts of money around the world effortlessly (my background is in finance after all). Furthermore, I found it stunning that simply running a program on your computer allowed you to make money. Upon learning that, I had to try it out for myself.</p>
+
+<h3>Cryptocurrencies in 2013</h3>
+
+<p>By 2013, mining Bitcoin on desktop computers was uneconomical due to the introduction of ASICs. Avalon and Butterfly Labs both released their first ASICs early that year, while BitFury, Bitmain, Cointerra, and KncMiner all released their first ASICs by that fall. This was a crazy period where everyone was trying to get their hands on an ASIC before the Bitcoin difficulty rose. It was amazing to watch the hash rate and difficulty rise consistently during this time. This was the beginning of the mega Bitcoin mines in China.</p>
+
+<p>However, even though the Bitcoin GPU era was over, there were multiple coins using algorithms resistant to these first gen ASICs. These coins came to be called "alt-coins". Most of these alt-coins used the Scrypt algorithm (instead of SHA256 like Bitcoin uses). During the second half of 2013, a flood of Scrypt coins were created (literally hundreds!). Most Scrypt coins were simply pump and dump coins, whose insiders pre-mined them before marketing them heavily to pump up the price, before exiting their positions.</p>
+
+<img src="{{ site.baseurl }}/assets/img/crypto-currencies/cryptocoins.png" alt="Some of the cryptocoins that were created in 2013 include Fastcoin, Grandcoin, Frank and Sexcoin, along with many were created well before, like Bitcoin and Litecoin, along with a few created after, like Ethereum and Monero.">
+
+<p>It was with Scrypt coin mining that I got my start.</p>
+
+<h3>Mining Machine</h3>
+
+<p>I was fortunate that I got my first corporate job the summer of 2013 (well, on-going internship), where I was able to make decent money (a massive $20/hour, which admittedly was better than most other gigs in town, although the 40 hour weeks plus 5 college classes was something fierce! There was a lot of sleeping while the boss is talking to me. Haha!). Since I was flush with this oil money, I could afford to build some machines.</p>
+
+<h4>First Personal Computer</h4>
+
+<p>Before deciding to build a dedicated mining machine, I built my first personal computer, with a screaming i7-4770k and Nvidia GTX 780. This eventually became a test beds for crypto mining.</p>
+
+<img src="{{ site.baseurl }}/assets/img/crypto-currencies/first-computer-2013.jpg" alt="The first personal computer I built, which has an i7-4770k and Nvidia 780">
+
+<p>Funny story about that 4770k. After 4 years of running like a champ, it finally let out the magic smoke. I think keeping it maxed out at a 4.5 Ghz overclock was a bit much for it... I'm making sure to treat the replacement 4790k a little better... mostly! Hehe.</p>
+
+<p>Even though this machine was using a top of the line GPU, Nvidia cards just did not perform well at mining Scrypt coins. I forget the exact mining performance of the 780, but AMD cards were multiple times better. Even with the wrong hardware, I was able to learn mining basics, and what hardware an ideal system would make.</p>
+
+<p>The most exciting event during this time was the release of a brand new line of AMD GPUs with the Hawaii chipset. The card with the top price to performance ratio from this new lineup was the R9 290. This was the card that I built a mining machine around.</p>
+
+<h4>Dedicated Mining Machine</h4>
+
+<p>Many of the prior generation GPU mining rigs used the AMD 7970 GPUs, which delivered extremely good results while underclocked. However, I really wanted to get a card with the new architecture. Immediately after the cards were released on Newegg, I order 4 R9 290s.</p>
+
+<p>I knew that cryptocoin mining might not always make financial sense, so I built the rest of the system to function as a storage server (a serious OP storage server at that!). With this mindset, I didn't feel bad about selecting high quality components, including an i5-4670k, an Asus Z87-WS motherboard ($290!), and an 80+ gold EVGA SuperNOVA 1300 watt (!!) power supply. I think it is prudent to select high quality components when you will be pushing to hardware to its operating limits, especially when you'll be operating it 24/7.</p>
+
+<p>Here is the final part list for all components:</p>
+
+<img src="{{ site.baseurl }}/assets/img/crypto-currencies/mining-machine-2013/part-list.png" alt="Final part list for the alt-coin mining machine I ordered in November 2013">
+
+<h5>GPUs</h5>
+
+<p>Since the R9 290s were just released, no AMD partners had released their own cards with aftermarket coolers yet, so I could only get the reference cooler. Normally, reference coolers have terrible noise to performance ratios. And these R9 290s were some of the worst! To compound this issue, the R9 290s were infamous for being very hot cards. When running under full load, they felt and sounded like a hair dryer on high!</p>
+
+<p>Fun fact with the reference R9 290s: by default, the fans will only spin up to 40% of their maximum speed. Why is that? I guess the AMD engineers knew the reference cooler at max fan speed would cause anyone near it to go deaf, so they knowingly made the cards sacrifice performance to limit noise.</p>
+
+<p>Another fun fact with the reference R9 290s: the card will happily(?) sit at 94C before underclocking the GPU (toasty!). This means the card will won't push the fan past 40% even though it's cooking itself alive. Imagine the fun of trying to overclock these cards!</p>
+
+<img src="{{ site.baseurl }}/assets/img/crypto-currencies/mining-machine-2013/gpus.jpg" alt="3 of the 4 AMD R9 290s used cryptocoin mining">
+
+<h5>Motherboard</h5>
+
+<p>The Asus Z-87 WS motherboard was seriously expensive (and a little OP), but it was one of the few boards that supported 4 PCI-E x16 slots (including SLI and CrossFire support) along with a dedicated 6 pin power port just for the PCI-E slots. The R9 290s can use 300 watts each, so I didn't want to fully rely on the 24 pin power connector to supply the supplemental PCI-E power to the 4 cards, thus the dedicated 6 pin power port was a welcome addition.</p>
+
+<p>Also, the gold of the motherboard is special. There is no doubt that it gives the system several extra hashes per second! Haha.</p>
+
+<img src="{{ site.baseurl }}/assets/img/crypto-currencies/mining-machine-2013/motherboard.jpg" alt="Asus Z87-WS motherboard used with 4 R9 290 GPUs for cryptocoin mining">
+
+<h5>Power Supply</h5>
+
+<p>To power this machine I used an EVGA SuperNOVA 1300 watt 80+ gold PSU. I knew I had to get a high quality power supply since I'd be pushing it to its rated limit, while running it 24/7. Ultimately, I didn't want the thing to blow up and catch on fire, so I didn't mind getting something good.</p>
+
+<p>2013 was the first year you started to see more high wattage power supplies enter the market. We still see this trend continuing today, even though GPUs have become more energy efficient. Cryptocoin miners are keeping these markets alive.</p>
+
+<img src="{{ site.baseurl }}/assets/img/crypto-currencies/mining-machine-2013/psu.jpg" alt="EVGA SuperNOVA 1300 watt 80+ gold power supply for 2013 mining machine">
+
+<p>This was the only time I've maxed out this power supply. In fact, with all GPUs running at max, this power supply might have even been under powered! I was consistently seeing the system pull 1540 watts(!!) from the wall. This was even enough power to make the 14 awg PSU power cable feel warm.<p>
+
+<p>To help prolong the life of the PSU, I set up a 1000 watt Coolermaster PSU to power 2 of the GPUs. It was a little janky running a single system with 2 PSUs, but it worked fine using special PSU to PSU connectors (which told the slave PSU when to turn on).</p>
+
+<p>Here is the full system with both PSUs:</p>
+
+<img src="{{ site.baseurl }}/assets/img/crypto-currencies/mining-machine-2013/full-system-2-psu.jpg" alt="Full system with both PSUs power the 4 R9 290s, often pulling over 1500 watts from the wall">
+
+<h5>Cooling</h5>
+
+<p>To maintain a cool and <i>quiet</i> operation of the system, I set it up in my garage in front of a vent. Fortunately, it was winter when running this setup, thus the system could breath the cool, frosty air. This setup was enough to warm the 2 car garage (with 20 foot ceilings) up 20-30 degrees above the outside temperature.</p>
+
+<p>Another benefit of putting the system in the garage was that I could set the GPU fans to 100%. Not only did this prevent them from thermal throttling, but it allowed me to overclock the GPUs by 16%. When the fans were spinning this fast, you could easily hear them from outside the garage doors.</p>
+
+<p>Running 4 GPUs right next to each other did cause some air starvation issues for the inner cards, making them have higher temperatures. To help alleviate this, I tried to angle the cards away from each other using spacers (ie, DVI covers). Fortunately, the PCI-E slots have some play in them. It looks more sketchy than it actually was.</p>
+
+<img src="{{ site.baseurl }}/assets/img/crypto-currencies/mining-machine-2013/gpus-back.jpg" alt="Back of the 4 R9 290s, each with a spacer between them to increase the airflow to the inner cards">
+
+<h4>Dedicated Mining Machine Performance</h4>
+
+<p>With all 4 overclocked R9 290s running, I could get the system to mine Scrypt coins at 3.4 Mh/s (each card averaging 870 Mh/s) drawing about 1500 watts. The system was running Windows 8.1, thus I used cgminer.</p>
+
+<img src="{{ site.baseurl }}/assets/img/crypto-currencies/mining-machine-2013/cgminer-4-gpu.jpg" alt="cgminer output when running 4 R9 290s in the 2013 mining machine">
+
+<p>At the time, I switched constantly between different coins. Overall, the main coins I mined included Fastcoin, Sexcoin, Goldcoin, Grandcoin and Franko. Towards December of 2013, I mostly used mining pools that automatically switched to the most profitable Scrypt coins, cashing out to Bitcoin every few hours.</p>
+
+<p>Amusingly, a few of these coins actually still have value, with some being at all time highs. But they still performed worse than Bitcoin itself.</p>
+
+<h3>Mining Machine Outcome</h3>
+
+<p>You may be asking at this point, "So, did you actually make any money with this miner?" Well, late 2013 was a crazy time for alt-coin mining. This system often had days where it earned more per day than I did at my corporate internship! Those days made me reevaluate my life. Haha!</p>
+
+<p>Overall, not only was I able to cover all electricity costs, but I was able to recover the costs of this system after 3 months of mining. Plus, all of the hardware was in high demand in the used market. With the R9 290s being only a few months past their release date, I decided to sell 2 of them in March of 2014. The cryptocoin market was cooling fast, thus I decided to fire sell them on an online tech forum. They sold before I had to answer if they were used for mining... (What kind of dumb question is that? It's an AMD card in the hottest mining scene we had seen up until then. Anyone saying they have a top end AMD card that wasn't used for mining is lying or has really high electricity costs(?).)</p>
+
+<h3>More</h3>
+
+<p>This has only been a small part of my cryptocoin experience. For the most part, this was all positive. There were a few scams I fell prey to and a few wild, terrible trading mistakes I made. I guess those are part of any <i>crypto lifestyle</i>. Maybe I'll talk about those in a future post.</p>
+
+<p>Also, this system has morphed a lot since these early mining days. It's spend most of its life as a lowly storage server, but I've recently resurrected it to mine once again, albeit I've switched up the GPUs. This system just prints money left and right!</p>
+
+<p><a href="{{ site.baseurl }}/contact">Let me know</a> if you'd like to hear more!</p>
