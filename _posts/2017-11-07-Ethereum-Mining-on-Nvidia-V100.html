@@ -35,6 +35,8 @@ tags: ["ethereum", "aws", "cryptocurrencies"]
 
 <p>For mining software, I tested both <a href="https://github.com/ethereum-mining/ethminer" target="_blank">ethminer</a> and <a href="https://github.com/nanopool/Claymore-Dual-Miner" target="_blank">Claymore</a>.</p>
 
+<p>If you are not using an AWS instance (or not using the Deep Learning Ubuntu AMI), you can use the <a href="{{ site.baseurl }}/assets/code/cryptocoins/ubuntu-miner-and-cuda-setup.sh" target="_blank">ubuntu-miner-and-cuda-setup.sh</a> shell script I made. This script will install CUDA 9 on the Ubuntu machine, along with giving you the options to install ethminer, Claymore's Dual miner, and xmr-stak (CPU and GPU Monero miner) (<b>NOTE</b>: I've noticed that xmr-stak fails to compile on some machines, so your mileage may vary).</p>
+
 <h4>Claymore</h4>
 
 <p>Straight out of the gate, Claymore failed to detect the V100 (see image below). There is an open <a href="https://github.com/nanopool/Claymore-Dual-Miner/issues/123" target="_blank">issue</a> for this bug, so it might get resolved.</p>
