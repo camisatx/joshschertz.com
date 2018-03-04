@@ -1,0 +1,78 @@
+---
+layout: post
+title: "Dockerize the pySecMaster"
+date: 2018-03-04
+tags: ["docker", "containers", "pysecmaster"]
+---
+
+<p>In an attempt to simplify the startup procedure for the <a href="https://github.com/camisatx/pySecMaster" target="_blank">pySecMaster</a>, I've setup Docker for containerizing the system. The beautiful part of containerization is that I can now plan for the exact environment the scripts and database will be run in. Not only does this simplify the scripts I have to prepare, but it means that users can quickly get up and running.</p>
+
+<h3>Container Architecture</h3>
+
+<p>The pySecMaster structure is currently straightforward, with the Postgres database for storing all the values, and the python files for downloading, parsing and cleaning the data to be put into the database. I following this structure when establishing the generic Docker structure.</p>
+
+<p>The first container stores the Postgres database engine, where I used the <a href="https://store.docker.com/images/postgres/" target="_blank">Postgres 10-alpine</a> Docker image. The alpine images are much smaller than other distributions (~5MB), and is based on Alpine Linux. Following Docker best practices, I specified the database store the actual data in a dedicated volume container. This allows the Postgres engine container to be updated without worrying about the actual database values being impacted. Additionally, this container needs to be accessible from the localhost, thus the container's port 5432 needs to be exposed.</p>
+
+<p>All of the Python files are run from a dedicated application container. I used the <a href="https://store.docker.com/images/python" target="_blank">Python 3</a> container, where all of the pySecMaster files are copied into it via a Dockerfile. The Dockerfile also installs all dependent libraries required, and establishes the normal entrypoint and default commands. This container is dependent on the Postgres container, thus it must wait until Postgres is ready before starting up.</p>
+
+<p>The entire Docker process is orchestrated by a <a href="https://docs.docker.com/compose/" target="_blank">Docker Compose</a> file, which specifies the containers to create and what parameters they require. The file is listed below.</p>
+
+{% highlight yml %}
+version: '3'
+
+services:
+    postgres:
+        container_name: postgres_pysecmaster
+        image: postgres:10-alpine
+        volumes:
+            - ./database:/docker-entrypoint-initdb.d/
+            - postgres_pysecmaster_data:/var/lib/postgresql
+        restart: always
+        ports:
+            - "127.0.0.1:5432:5432"
+
+    app:
+        container_name: pysecmaster
+        build: .
+        environment:
+            - "PYTHONUNBUFFERED=1"  # Prevent python prints from using buffer
+        volumes:
+            - ./load_tables:/load_tables/
+        depends_on:
+            - postgres
+
+volumes:
+    postgres_pysecmaster_data:
+{% endhighlight %}
+
+<h3>Running the System</h3>
+
+<p>Getting the system up and running by:</p>
+
+<ol>
+    <li>Installing <a href="https://www.docker.com/community-edition" target="_blank">Docker Community Edition (CE)</a></li>
+    <li>Downloading the <a href="https://github.com/camisatx/pySecMaster" target="_blank">pySecMaster</a> repository to your computer</li>
+    <li>Navigate to `pySecMaster/pySecMaster`</li>
+    <li>Open the `utilities/user_dir.py` file:</li>
+    <ol>
+        <li>Change the default name (josh) to your system user name (line 30)</li>
+        <li>Add your <a href="https://docs.quandl.com/docs#section-authentication" target="_blank">Quandl API Key</a> to both the root and your user section (lines 28 and 50)</li>
+        <li>[optional] Change the `main_password` (lines 16 and 38) and `pysecmaster_password` (lines 23 and 45) in both the root and your user sections; Also change the passwords within the `pySecMaster/pySecMaster/database/init.sql` file on lines 2 and 12 to the same respective passwords you used in the `user_dir.py` file; You can also change or remove the special `remote_users` password and users created between lines 16 and 33 within the `init.sql` file.</li>
+    </ol>
+    <li>Run `docker-compose up`, and the system will start building itself using the variables specified <a href="https://github.com/camisatx/pySecMaster/blob/a6ebcab9c5e81c2fc163997df79ea3a230b8f238/pySecMaster/Dockerfile#L17" target="_blank">here</a>. To view the arguments you can provide, either run `pySecMaster/pySecMaster/pySecMaster.py -h` or view the arguments <a href="https://github.com/camisatx/pySecMaster/blob/a6ebcab9c5e81c2fc163997df79ea3a230b8f238/pySecMaster/pySecMaster.py#L388" target="_blank">here</a>.</li>
+    </ol>
+</ol>
+
+<p>If a script breaks or you need to change a parameter, you can rebuild the containers (required) by running:</p>
+
+{% highlight bash %}
+docker-compose up --build
+{% endhighlight %}
+
+<p>This will copy any file changes you make to the pySecMaster code into the Python container.</p>
+
+<p>The Docker Compose script specifies that the Postgres container should always be restarted. Meaning that if the computer is rebooted or the container crashes, Docker will restart it.</p>
+
+<p>By default, the pySecMaster will download the daily prices from Quandl, and only run the cross validator for the prior 30 days. You can change this default behavior by modifying the commands given in the `pySecMaster/pySecMaster/Dockerfile`.</p>
+
+<p>Let me know if you have any questions. There is a lot of information I haven't mentioned here.</p>
