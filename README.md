@@ -14,11 +14,11 @@ These are the instructions for running this Jekyll website locally. Check out th
 
 `sudo apt install ruby ruby-all-dev`
 
-2. Install RubyGems by downloading the [latest version](https://rubygems.org/pages/download) and then running this from within the downloaded folder:
+Might also need to run the following to allow ffi and nokogiri to install:
 
-`ruby setup.rb`
+`sudo apt install ruby-dev zlib1g-dev`
 
-3. Install Jekyll with either:
+2. Install Jekyll with either:
 
 `sudo apt install jekyll`
 
@@ -26,7 +26,7 @@ or
 
 `gem install jekyll`
 
-4. Install the bundle gems from within the main website folder:
+3. Install the bundle gems from within the main website folder:
 
 `bundle install`
 
@@ -34,7 +34,7 @@ If the install fails due to the gems needing an update, run:
 
 `bundle update`
 
-5. Run the Jekyll preview server:
+4. Run the Jekyll preview server:
 
 `bundle exec jekyll serve`
 
