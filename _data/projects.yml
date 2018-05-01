@@ -1,6 +1,5 @@
-- name:  Robotics
-  url:   robotics
-  descr: I am building a 5 degree of freedom robot arm that will use cutting edge techniques for the controlling software, gripper design, and perception pipeline. The arm uses <font color="red">ROS</font> for control via a <font color="red">Ubuntu</font> to <font color="red">Arduino</font> serial connection. View my current progress <a href="https://joshschertz.com/projects/robotics">here</a>. I am documenting the process of building the arm, designing the <font color="red">CAD</font> model, experimenting with <font color="red">pneumatic grippers</font>, writing the <font color="red">cyclic coordinate descent</font> (CCD) inverse kinematic control software, and integrating <font color="red">Dex-Net 2.0</font> into the perception pipeline.
+- name:  Space Map
+  descr: An application that provides consolidated data on resource rich asteroids. Not only are existing data sources on asteroids fragmented, but they focus on scientific uses and not commercial uses, such as asteroid mining. Developing a novel AI system to infer asteroid compositions based on planetesimal formation theory and existing asteroid observations.
 
 - name:  pySecMaster
   url:   https://github.com/camisatx/pySecMaster
@@ -8,6 +7,10 @@
 
 - name:  Sayv Bot
   descr: Event driven trading system with automated strategies that use machine learning to trade stocks and options. Built in <font color="red">Python</font> using <font color="red">Pandas</font>, <font color="red">Numpy</font>, and <font color="red">Scikit-Learn</font>. The main strategy used a supervised <font color="red">Multi-layer Perceptron (MLP)</font> classifier to generate a model that placed each tradable stock into one of two buckets based on their prior trading performance. This sorted data was then used to calculate the projected profit probability of a hypothetical trade using current market prices. The hypothetical trades with the best profit probabilities were then executed with our broker. This strategy generated a stable weekly return of 0.5% over the 6 months it was run.
+
+- name:  Robotics
+  url:   robotics
+  descr: I am building a 5 degree of freedom robot arm that will use cutting edge techniques for the controlling software, gripper design, and perception pipeline. The arm uses <font color="red">ROS</font> for control via a <font color="red">Ubuntu</font> to <font color="red">Arduino</font> serial connection. View my current progress <a href="https://joshschertz.com/projects/robotics">here</a>. I am documenting the process of building the arm, designing the <font color="red">CAD</font> model, experimenting with <font color="red">pneumatic grippers</font>, writing the <font color="red">cyclic coordinate descent</font> (CCD) inverse kinematic control software, and integrating <font color="red">Dex-Net 2.0</font> into the perception pipeline.
 
 - name:  Panoply Images
   url:   https://panoplyimages.com
