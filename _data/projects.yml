@@ -1,6 +1,6 @@
 - name:  grokSpace
-  url:   https://grokspace.net
-  descr: An application that provides consolidated data on resource rich asteroids and the Moon. Not only are existing data sources fragmented, but they have inconsistent structures and varying accessibilities. grokSpace is providing the consolidateed database, powerful analytics tools and the education to empower anyone to learn about, explore, and research space data.
+  url:   https://grokspace.io
+  descr: grokSpace is streamlining and enabling novel space analysis by building a comprehensive dataset with accompanying tools and high accuracy orbital models. In traditional space research, fragmented data from separate sources is analyzed in silos, resulting in duplicated work and wasted resources. Only when the many rich yet disparate sources of space data are brought together in one location can that information reveal its full insights, while enabling users to focus on their core goal. We empower users to learn and explore space data, where they can perform their own analysis and interact directly with published results.
 
 - name:  pySecMaster
   url:   https://github.com/camisatx/pySecMaster
