@@ -1,6 +1,6 @@
 - name:  Web Development
   url:   webdev
-  descr: Design and build custom websites, including this site, which is built in <font color="red">Jekyll</font>. Other sites have been built in <font color="red">Flask</font>, <font color="red">Wordpress</font>, and <font color="red">SquareSpace</font>.
+  descr: Rapip design and development of custom websites. I generally use <font color="red">Flask</font> for intermediate and advanced sites and <font color="red">SquareSpace</font> for simple sites. Check out my portfolio <a href="https://joshschertz.com/projects/webdev">here</a>.
 
 - name:  grokSpace
   url:   https://grokspace.io
