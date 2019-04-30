@@ -1,10 +1,10 @@
 - name:  12 Startups in 12 Months
   url:   https://joshschertz.com/2018/12/06/12-Startups-in-12-Months
-  descr: A personal challenge to build and market 12 startups in 12 months. Started in late November 2018, the goal is to iterate through many ideas and try to get traction with the MVP I build for each startup. Current startups include <a href="https://thecontact.guru" target="_blank">The Contact Guru</a> and <a href="https://thespaceresource.com" target="_blank">The Space Resource</a>.
+  descr: A personal challenge to build and market 12 startups in 12 months. Started in late November 2018, the goal is to iterate through many ideas and try to get traction with the MVP I build for each startup. Current startups include <a href="https://thecontact.guru" target="_blank">The Contact Guru</a>, <a href="https://thespaceresource.com" target="_blank">The Space Resource</a>, and <a href="https://thevibe.city" target="_blank">The Vibe</a>.
 
 - name:  Web Development
   url:   webdev
-  descr: Rapip design and development of custom websites. I generally use <font color="red">Flask</font> for intermediate and advanced sites and <font color="red">SquareSpace</font> for simple sites. Check out my portfolio <a href="https://joshschertz.com/projects/webdev">here</a>.
+  descr: Rapip design and development of custom websites. For advanced projects I use <font color="red">React</font> for the frontend and <font color="red">Flask</font> for the backend API. I use <font color="red">SquareSpace</font> for simple sites. Check out my portfolio <a href="https://joshschertz.com/projects/webdev">here</a>.
 
 - name:  grokSpace
   url:   https://grokspace.io
