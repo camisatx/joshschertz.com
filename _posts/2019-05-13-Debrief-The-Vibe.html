@@ -1,0 +1,62 @@
+---
+layout: post
+title: "Debrief: The Vibe"
+date: 2019-05-13
+tags: ["startup", "tech", "business"]
+---
+
+<img src="{{ site.baseurl }}/assets/img/12startups/thevibe.png" alt="The Vibe home page">
+
+<p><b>In late November of 2018 I started a challenge of launching <a href="{{ site.baseurl }}{% post_url 2018-12-06-12-Startups-in-12-Months %}">12 startups in 12 months</a>. I am doing this to get faster at turning ideas into working applications. A month after I start each project I will write a debrief describing how it went. Over the past 4 months I have been building my third startup for this challenge, <a href="https://thevibe.city" target="_blank">The Vibe</a>, which is the Yelp of atmosphere, ranking places by their <i>vibe</i>. This is what happened:</b></p>
+
+<h3>Build</h3>
+
+<p>This was the most advanced project I have ever built. I certainly did not intend for it to become this, especially since the whole point of this challenge is to build and test applications quickly. However, I decided I needed a new toolset for this and future projects because I felt I was building apps the hard way when using Flask for the frontend. I wanted to use React JS for the frontend framework, which is currently the most popular framework for frontend development. This frontend would then communicate with a backend API built in Flask. Additionally, both the frontend and backends required real time connections to third-party APIs.</p>
+
+<h4>Frontend</h4>
+
+<p>The frontend client includes the web app that users interact directly with when they visit the app's URL. Ultimately, the frontend applications will include options for accessing the app via the web, iOS, and Android. Separating the frontend logic from the backend logic allows client specific code to be used while still utilizing the same backend code for app logic.</p>
+
+<p>React requires a completely different approach of programming than Python. Instead of commands being executed linearly, React (and JavaScript) execute commands asynchronously. React is also unique in its approach of combining JavaScript, HTML, and CSS within the same file. The HTML within React components is called JSX, which is a combination of JavaScript and HTML. In total, I spent two months learning React and its best practices.</p>
+
+<p>In addition to using React, I used Material-UI for themes, icons, and interface components. Material-UI was built by Google, so has the look and feel of applications built by Google. I decided to use Material-UI because I liked how mobile focused it is, the breadth of its components, and it seems more extensible than Bootstrap.</p>
+
+<p>The frontend handles the both the user interface and map. I am using MapBox for providing global map coverage. I am using MapBox because they have a generous free tier and are not Google. MapBox uses OpenStreetMap, albeit via an easy to use interface. I considered using OpenStreetMap via leaf.js, but the MapBox API seemed easier to implement at the time.</p>
+
+<p>Another benefit of using MapBox is their search functionality that allows searching for geographic places, returning coordinates that can be used for place queries. Unfortunately, I had to split the place type search and the geographic search because I did not find a third party search that could handle both. Ideally, FourSquare would provide this, but their search only handles place type search. MapBox provides a closed beta of a search feature that integrates FourSquare data, but I wasn't able to get access to it. I could probably use a Google API for this, but that would require using a Google API.</p>
+
+<h4>Backend</h4>
+
+<p>I used Python and the Flask framework for the backend API. I did this because it was easy to migrate the existing Flask code I used from The Contact Guru to this app. The general user account logic was the same, along with the approach of querying the Postgres database for values. I also like the simplicity of Flask and Python, so I wanted to use it for parts of this application.</p>
+
+<p>The backend code handles two key tasks. The first is to handle the user authentication and the second is to process place and rank data. User authentication is required for logging into the app, changing account data, submitting survey data, and allowing users to favorite places. The place and rank data is important for providing relevant results to the user, along with ranking them using my custom algorithm.</p>
+
+<p>The place data is provided from FourSquare. I used FourSquare because they have a generous free account, have global coverage of places, and are not Google. I do not trust Google APIs because they shut them down unexpectedly, alter their prices suddenly, and don't have a free tier. The backend handles communicating with FourSquare, retrieving search results via a list of relevant places.</p>
+
+<p>The results from FourSquare power the ranking algorithm I developed, where ranks determine the atmosphere of each place. In addition to the actual quiet to loud scores provided, the algorithm returns the confidence for each rank. A key component of the ranks is provided from direct user feedback on how each place actually was.</p>
+
+<p>I think the Flask API will grow with the app. I would like to eventually add maching learning to the ranking process. I think there are trends within the survey data and place metadata for determining their atmosphere.<p>
+
+<h3>Deployment</h3>
+
+<p>Deployment was very easy by using Docker and docker-compose. I utilized two separate docker-compose setups, with one for the backend and database, and the other for the frontend.</p>
+
+<p>The backend docker-compose contains the Postgres database and Flask API code. The frontend docker-compose only contains instructions for compiling the production React code, along with a static server for serving the compiled code. I am also using the docker-nginx-lets-encrypt Docker container for orchestrating the routing and SSL certificate generation.</p>
+
+<h3>Launch</h3>
+
+<p>So far, I have only soft-launched the app. I really believe in this app, thus want to receive feedback from friends and family before officially launching.</p>
+
+<h3>Lessons Learned</h3>
+
+<p>The key lesson I've learned so far is that nothing is impossible when you know how to use the right tools. I feel so empowered now that I know how to use React and other modern web developer tools. I enjoy React because it allows seamless and immediate user interactivity. Interactive elements always seemed like an afterthought to Flask web apps, but React handles them without difficulty.</p>
+
+<h3>What Now?</h3>
+
+<p>I am currently adding a few more important features to the app. Once I get many of them implemented, ideally in a week or two, I will launch on Twitter and LinkedIn. After a week or two of receiving feedback from my friends and family, I will try launching on Product Hunt. Ideally, I can get to the front page as a top five app for the day. Depending on how Product Hunt goes will determine if I even try posting to HackerNews.</p>
+
+<p>I definitely believe in The Vibe and what it is trying to achieve. Out of all the apps I've thought of, I think this has the best potential. I therefore want to continue developing it and getting it onto iOS and Android. Wide scale user adoption is key.</p>
+
+<hr>
+
+Checkout the <a href="{{ site.baseurl }}{% post_url 2018-12-06-12-Startups-in-12-Months %}">12 startups in 12 months</a> challenge I'm doing right now.
