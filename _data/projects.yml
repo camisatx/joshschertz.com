@@ -4,7 +4,7 @@
 
 - name:  Web Development
   url:   webdev
-  descr: Rapip design and development of custom websites. For advanced projects I use <font color="red">React</font> for the frontend and <font color="red">Flask</font> for the backend API. I use <font color="red">SquareSpace</font> for simple sites. Check out my portfolio <a href="https://joshschertz.com/projects/webdev">here</a>.
+  descr: Rapid design and development of custom websites. For advanced projects I use <font color="red">React</font> for the frontend and <font color="red">Flask</font> for the backend API. I use <font color="red">SquareSpace</font> for simple sites. Check out my portfolio <a href="https://joshschertz.com/projects/webdev">here</a>.
 
 - name:  grokSpace
   url:   https://grokspace.io
