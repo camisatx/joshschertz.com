@@ -1,0 +1,78 @@
+---
+layout: post
+title: "Robot Arm Part 6: Advanced Code"
+date: 2020-02-05
+tags: ["robotics"]
+---
+
+<p>After a three year hiatus, I have finally(!!) completed the code that allows an Arduino Uno based controller to wirelessly control the Arduino Mega2560 based 5 DoF robotic arm. If you are new here, you can start the robot arm series at <a href="{{ site.baseurl }}{% post_url 2017-07-15-Robot-Arm-Part-1-Arm-Build %}">part 1</a>.</p>
+
+<p>As a quick recap, I built a simple 5 degree of freedom (DoF) robot arm that was based on 6 low power servos connected to an Arduino Mega2560. A separate Arduino Uno controller contained two X/Y joysticks and a 16x2 LCD screen. Two nRF24L01+ chips allow wireless communication between the two Arduinos. The challenge (and why it took me so long to write this post) was writing Arduino capable code for transmitting commands from the controller to the robot arm. After dedicating a few weeks to this and reading the amazing guides at <a href="https://lastminuteengineers.com/" target="_blank">Last Minute Engineers</a>, I have developed code capable of providing this.</p>
+
+<img src="{{ site.baseurl }}/assets/img/robot-arm/robot-arm-kit-finished-2.jpg" alt="The 5 DoF robot arm with wireless controller.">
+
+<h2>Code</h2>
+
+<p>You can access the open source code <a href="https://github.com/camisatx/arduino-robot-arm" target="_blank">here</a>. If you want to duplicate the same development environment, I recommend you use <a href="https://code.visualstudio.com/" target="_blank">VSCode</a> and <a href="https://platformio.org/" target="_blank">PlatformIO</a>. PlatformIO handles complex Arduino projects better than native Arduino IDE. This is important for this project because it is using two Arduinos.</p>
+
+<p>While the code environment will require some modification for your specific system, the core <a href="https://github.com/camisatx/arduino-robot-arm/blob/master/src/controller/main.cpp" target="_blank">controller</a> and <a href="https://github.com/camisatx/arduino-robot-arm/blob/master/src/base/main.cpp" target="_blank">robot arm</a> code can be migrated elsewhere. Contact me or raise an issue if you have any questions.</p>
+
+<h2>Process</h2>
+
+<h3>Controller Input</h3>
+
+<p>The Arduino Uno controller uses two X/Y joysticks for control input. A noise processing check ensures that only actual joystick movements are processed, and not potentiometer noise or joystick misalignment (a common feature of check joysticks). The analog signals are converted into a byte, and packaged into an array for transmission to the robot.</p>
+
+<h3>Data Transmission</h3>
+
+<p>Wireless communication is handled using the <a href="https://lastminuteengineers.com/nrf24l01-arduino-wireless-communication/" target="_blank">nRF24L01 chip</a>, which is a 2.4 Ghz transceiver (transmitter and receiver) on a small circuit board. It allows two way communication utilizing the SPI bus. View the link above that provides an excellent overview.</p>
+
+<p>I used the <a href="http://www.airspayce.com/mikem/arduino/RadioHead/" target="_blank">RadioHead library</a> for interacting with the radios. In the end, I used a UDP style approach, where the transmitter did not need to wait for a receipt confirmation. The controller only waits 1 millisecond before sending the next transmission. I determined that it is more important to stream the current commands to the robot than to receive individual command confirmations. This provides a more fluid control experience due to shorter latency between human input and arm movement.</p>
+
+<p>The robot arm continually seeks new data. When a new packet is received and buffered, an error check ensures the value is between expected ranges, and converts the byte into a movement delta. The delta indicates how much a servo should move, with a higher number indicating more movement.</p>
+
+<h3>Robot Movement</h3>
+
+<p>Based on the movement delta, an error check ensures the command keeps the servo within its operational range. Some servos (like the shoulder rotation) can rotate through their full range, whereas others (like the end effector claw) have restricted movements.</p>
+
+<p>If the movement is valid, the movement delta is added or subtracted from the current servo angle. All movements are processed before the actual movement command is given. The current code commands the servos using microseconds instead of angles, giving the servos higher definition movements.</p>
+
+<h3>Controller Feedback</h3>
+
+<p>After processing the arm movement, the arm transmits its status back to the controller. These are the commands received while the controller waits the 1 millisecond after sending movement commands.</p>
+
+<p>The feedback information allows the controller to know whether it has a live connection with the robot, along with key servo angles (converted from microseconds to angles for readability). See the <a href="">controller display</a> section below for more details. Currently, this data is only used to inform the operator, and does not impact system operation.</p>
+
+<h2>Hardware Update</h2>
+
+<p>I started this project utilizing the electronics Sainsmart provided with the system, including an Arduino Mega2560 and a Sainsmart exclusive <a href="https://www.sainsmart.com/products/robotics-control-shield-for-arduino-mega-2560-r3" target="_blank">servo shield</a>. The servo shield provided a convenient way of plugging all 6 servos to the Mega2560, along with a ready to go plug for the nRF24L01. The board also had a 12 volt power plug, allowing an external power source for powering the servos.</p>
+
+<p>However, all PWM servo signals were not offloaded to a separate chip, being processed by the Mega2560 itself. If no other tasks were being processed, this would be fine. But this system requires the nRF24L01 to actively listen and transmit signals, via an SPI interrupt. The interrupt caused inconsistencies in timing for the PWM signals used for the servos, causing severe jitters for all servos. This could be mitigated by disabling the servo signal pins (setting them to `INPUT`), but this didn't fully solve the problem. The solution was to use a separate chip for PWM signal generation.</p>
+
+<p>The <a href="https://amzn.to/2S27oxi" target="_blank">PCA9685 I2C PWM Driver</a> provides the solution to this issue (you can get three <a href="https://amzn.to/31v0eon" target="_blank">non-Adafruit PCA9685 boards</a> for half the price). The I2C bus allows connections between this board and the Mega2560 (or any Arduino or Raspberry Pi). Each driver allows you to control up to 16 servos with no stutter. A dedicated 6 volt DC power input provides power to all servos. Just make sure your <a href="https://amzn.to/2vaSGuU" target="_blank">power supply</a> can provide enough current (2 Amps should be sufficient, but spikes could be higher).</p>
+
+<img src="{{ site.baseurl }}/assets/img/robot-arm/electronics/pca9685-integrated.jpg" alt="The PCA9685 driver allows up to 16 servos to connect to the Arduino via I2C. This dedicated driver provides smoother operation for the servos.">
+
+<p>The image above shows the six servos plugged into the PCA9685 board on pins 0 to 5. Notice I used a large capacitor across the DC power input. This smooths out the current when a servo is changes speed quickly. Make sure to not exceed 6 volts on this board (although Adafruit says you can supply 12 volts, it poses a risk of damaging the attached Arduino if you short the wrong pins).</p>
+
+<p>If you do use a PCA9685, you will not be able to use the standard Servo library. Instead, you will need to use a PWM based servo library, like the <a href="https://github.com/adafruit/Adafruit-PWM-Servo-Driver-Library" target="_blank">Adafruit PCA9685 PWM Servo Driver Library</a> (this will work with any PCA9685 driver). This library is NOT a drop in replacement, and requires some code modification. My current <a href="https://github.com/camisatx/arduino-robot-arm/blob/master/src/base/main.cpp" target="_blank">robot code</a> utilizes this library, so use it as an example. You can also watch this excellent <a href="https://youtu.be/kUHmYKWwuWs?t=1510" target="_blank">servo video</a> that shows the basics of using the PCA9685.</p>
+
+<h2>Controller Display</h2>
+
+<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/controller-complete.jpg" alt="The powered on controller, receiving signals from the robot">
+
+<p>The LCD display allows for two rows of text, each 16 characters long. The top row rows the direction each joystick is actively angled at, along with a signal icon indicating whether the controller is connected to the robot or not. The bottom row shows the current servo angles and status of the end effector claw (open or closed).</p>
+
+<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/controller-lcd-active.jpg" alt="The controller display showing an active status.">
+
+<p>When the connection fails between the controller and robot, the display shows an `X` in the top right, along with a status of `NA`. The top row joystick indicators still works, however.</p>
+
+<img src="{{ site.baseurl }}/assets/img/robot-arm/controller/controller-lcd-failed.jpg" alt="The controller display showing a failed connection to the robot.">
+
+<h2>Conclusion</h2>
+
+<p>This concludes the multi-part series on the simple robotic arm. I covered the build process for both the robot arm and controller, along with a simple code example and an advanced code setup.</p>
+
+<p>This is a good point for integrating the robot arm into ROS (Robot Operating System), allowing you to automate control of the arm. Examples include having the arm automatically find and pick up an object next to it, or having the arm track an object utilizing a camera attached to the end effector. Ultimately, the sky is the limit (well, maybe the hardware will limit you first...).</p>
+
+<p>If you do something cool with this code, or want to share your own project, please contact me. I'd love to see what you build!</p>
