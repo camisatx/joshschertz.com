@@ -21,10 +21,6 @@
   url:   robotics
   descr: I am building a 5 degree of freedom robot arm that will use cutting edge techniques for the controlling software, gripper design, and perception pipeline. The arm uses <font color="red">ROS</font> for control via a <font color="red">Ubuntu</font> to <font color="red">Arduino</font> serial connection. View my current progress <a href="https://joshschertz.com/projects/robotics">here</a>. I am documenting the process of building the arm, designing the <font color="red">CAD</font> model, experimenting with <font color="red">pneumatic grippers</font>, writing the <font color="red">cyclic coordinate descent</font> (CCD) inverse kinematic control software, and integrating <font color="red">Dex-Net 2.0</font> into the perception pipeline.
 
-- name:  Panoply Images
-  url:   https://panoplyimages.com
-  descr: Image processing web app that allows you to prepare your photos for the web. Not only can images be compressed and resized, but their EXIF data can be cleaned up or removed. For privacy, it is especially important to remove the GPS EXIF data from images. This web site is build in <font color="red">Flask</font>, and is hosted on an <font color="red">AWS EC2 instance</font>.
-
 - name:  Help Me Vote
   descr: Revolutionizing how people prepare for elections. Help Me Vote was a website that visualized how politicians act in office, showing relationships that might have influence their decisions. <i>Transparency is required for health democracies.</i> The site was built on <font color="red">Django</font> using <font color="red">Postgres</font> and <font color="red">Nginx</font>, and was run in <font color="red">Docker</font> containers on an <font color="red">Ubuntu</font> server.
 
